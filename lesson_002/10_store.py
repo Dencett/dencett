@@ -66,8 +66,6 @@ tables_price = tables_item['price']
 tables_cost = tables_quantity * tables_price
 print('Стол №2 -', tables_quantity, 'шт, стоимость', tables_cost, 'руб')
 
-
-
 sofa_code = goods['Диван']
 sofas_item = store[sofa_code][0]
 sofas_quantity = sofas_item['quantity']
@@ -81,9 +79,6 @@ sofas_quantity = sofas_item['quantity']
 sofas_price = sofas_item['price']
 sofas_cost = sofas_quantity * sofas_price
 print('Диван №2 -', sofas_quantity, 'шт, стоимость', sofas_cost, 'руб')
-
-
-
 
 chair_code = goods['Стул']
 chairs_item = store[chair_code][0]
@@ -107,7 +102,8 @@ chairs_cost = chairs_quantity * chairs_price
 print('Стул №3 -', chairs_quantity, 'шт, стоимость', chairs_cost, 'руб')
 
 # Номера для товаров поставил для удобства, чтобы не ошибиться
-
+# TODO вместо номеров нужно объединить между собой одинаковые типы товаров
+# TODO и подсчитать общие кол-ва и стоимости этих четырёх категорий
 
 ##########################################################################################
 # ВНИМАНИЕ! После того как __ВСЯ__ домашняя работа сделана и запушена на сервер,         #

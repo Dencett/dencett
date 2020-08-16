@@ -45,5 +45,8 @@ pocket_universe_songs = {
 Y = pocket_universe_songs['On Track'] + pocket_universe_songs['To the Sea'] + pocket_universe_songs['Beyond Mirrors']
 print('А другие три песни звучат приблизительно', round(Y, 2), 'минут')
 
+# TODO округлять так, как требуется в задании. Здесь нужно вывести целое количество минут
+
+
 # Обратите внимание, что делать много вычислений внутри print() - плохой стиль.
 # Лучше заранее вычислить необходимое, а затем в print(xxx, yyy, zzz)
