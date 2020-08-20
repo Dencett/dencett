@@ -39,3 +39,5 @@ print((point_2[0] ** 2 + point_2[1] ** 2) ** .5 < radius)
 # 77777.7777
 # False
 # False
+
+# зачёт! 🚀
