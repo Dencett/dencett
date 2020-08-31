@@ -12,7 +12,7 @@ rainbow_colors = (sd.COLOR_RED, sd.COLOR_ORANGE, sd.COLOR_YELLOW, sd.COLOR_GREEN
 i = 0
 x = 50
 a = 350
-for _ in range(7):
+for _ in range(7):  # TODO цвет можно получить сразу в цикле, если задать его по списку rainbow_colors, а не range()
     start_point = sd.get_point(x, 50)
     end_point = sd.get_point(a, 450)
     color = rainbow_colors[i]
@@ -32,8 +32,8 @@ for _ in range(7):
 point = sd.get_point(400, -180)
 radius = 500
 i = 7
-while i > 0:
-    i -= 1
+while i > 0:  # TODO гораздо проще задать цикл for сразу по списку цветов
+    i -= 1  # TODO а как задать обратный порядок цветов см. в предыдущей теме решение задания 07_secret.py ;)
     color = rainbow_colors[i]
     for _ in range(7):
         radius += 4

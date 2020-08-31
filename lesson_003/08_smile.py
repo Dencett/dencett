@@ -27,8 +27,12 @@ for _ in range(10):
     point = simple_draw.get_point(x, y)
     point1 = simple_draw.get_point(x - 25, y + 25)
     point2 = simple_draw.get_point(x + 25, y + 25)
+    # TODO строки 28 и 29 перенесите на 14 и 15 внутрь функции
     smiley(point=point, color=color)
 
+simple_draw.pause()
+
+# TODO строки до конца файла нужно удалить:
 # def smiley(coordinate_x, coordinate_y, color):
 #     for _ in range(1):
 #         simple_draw.ellipse(left_bottom=left_bottom, right_top=right_top, color=color, width=2)
@@ -57,4 +61,4 @@ for _ in range(10):
 
 # TODO здесь ваш код
 
-simple_draw.pause()
+

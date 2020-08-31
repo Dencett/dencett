@@ -13,5 +13,7 @@ educational_grant, expenses = 10000, 12000
 month = 0
 while month < 10:
     print('Студенту надо попросить', round(expenses - educational_grant, 2), 'рублей')
-    expenses *= 1.03
+    expenses *= 1.03  # TODO подсчёт расходов неверный
     month += 1
+# TODO ответ неверный. Выводить в консоль нужно только одну строку - финальный ответ
+# TODO промежуточные вычисления тут не нужны

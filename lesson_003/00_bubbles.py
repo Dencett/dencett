@@ -13,6 +13,7 @@ for _ in range(3):
     sd.circle(center_position=point, radius=radius, color=COLOR_DARK_RED, width=2)
 
 # Написать функцию рисования пузырька, принммающую 3 (или более) параметра: точка рисования, шаг и цвет
+# TODO назвать метод нужно по принципу того, что он делает. В данном случае будет логичнее draw_bubble
 def bubble(point, step, color):
     radius = 50
     for _ in range(3):
@@ -25,7 +26,8 @@ color = COLOR_DARK_RED
 bubble(point=point, step=10, color=color)
 #
 # # Нарисовать 10 пузырьков в ряд
-def bubble(point, step, color):
+def bubble(point, step, color):  # TODO копипастить код функции под каждую часть задания не нужно
+    # TODO она объявлена одна на весь код и работает универсально в любой части задания
     radius = 50
     for _ in range(3):
         radius += step
@@ -64,3 +66,7 @@ for _ in range(100):
     bubble(point=point, step=5, color=color)
 
 sd.pause()
+
+# TODO начиная с 3го модуля нужно строго соблюдать PEP8
+#  воспользуйтесь пунктом меню Code → Reformat code, это отформатирует код по правилам записи
+#  дополнительно контролируйте строки импорта. Они должны оставаться в самом вначале кода
