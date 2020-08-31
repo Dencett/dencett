@@ -64,3 +64,5 @@ for goods_name, code in goods.items():
         total_quantity += goods['quantity']
         total_cost += goods['price'] * total_quantity0
     print(goods_name, '-', total_quantity, 'шт, стоимость', total_cost, 'руб')
+
+# зачёт! 🚀
