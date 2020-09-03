@@ -8,33 +8,19 @@
 
 # Номер месяца получать от пользователя следующим образом
 user_input = input('Введите, пожалуйста, номер месяца: ')
-month = int(user_input)
-print('Вы ввели', month)
-
-if month == 1:
-    print('В этом месяце 31 день!')
-elif month == 2:
-    print('В этом месяце 28 дней!')
-elif month == 3:
-    print('В этом месяце 31 день!')
-elif month == 4:
-    print('В этом месяце 30 дней!')
-elif month == 5:
-    print('В этом месяце 31 день!')
-elif month == 6:
-    print('В этом месяце 30 дней!')
-elif month == 7:
-    print('В этом месяце 31 день!')
-elif month == 8:
-    print('В этом месяце 31 день!')
-elif month == 9:
-    print('В этом месяце 30 дней!')
-elif month == 10:
-    print('В этом месяце 31 день!')
-elif month == 11:
-    print('В этом месяце 30 дней!')
-elif month == 12:
-    print('В этом месяце 31 день!')
+month1 = [1, 3, 5, 7, 8, 10, 12]
+month2 = [4, 6, 9, 11]
+if user_input.isdigit():
+    month = int(user_input)
+    print('Вы ввели:', month)
+    if month in month1:
+        print('В этом месяце 31 день!')
+    elif month in month2:
+        print('В этом месяце 30 дней!')
+    elif month == 2:
+        print('В этом месяце 28 дней!')
+    else:
+        print('Hомер месяца некорректен!')
 else:
-    print('Hомер месяца некорректен!')
-
+    print('Вы ввели:', user_input)
+    print('Ввод некорректен!')
