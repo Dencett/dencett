@@ -11,12 +11,14 @@ import simple_draw
 
 def smiley(point, color):
     radius = 50
+    # TODO все координаты можно сохранить в список без создания отдельных переменных
     point1 = simple_draw.get_point(x - 25, y + 20)
     point2 = simple_draw.get_point(x + 25, y + 20)
     point3 = simple_draw.get_point(x - 20, y - 15)
     point4 = simple_draw.get_point(x - 10, y - 25)
     point5 = simple_draw.get_point(x + 10, y - 25)
     point6 = simple_draw.get_point(x + 20, y - 15)
+    # TODO далее в этом методе циклы не нужны. Какой смысл в них, если задавать только одну итерацию? :)
     for _ in range(1):
         simple_draw.circle(center_position=point, radius=radius, color=color, width=1)
     radius -= 40
