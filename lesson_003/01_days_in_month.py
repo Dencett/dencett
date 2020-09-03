@@ -24,3 +24,5 @@ if user_input.isdigit():
 else:
     print('Вы ввели:', user_input)
     print('Ввод некорректен!')
+
+# зачёт! 🚀

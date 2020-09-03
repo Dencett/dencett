@@ -51,3 +51,5 @@ for _ in range(100):
     draw_bubble(point=point, step=5, color=color)
 
 sd.pause()
+
+# зачёт! 🚀
