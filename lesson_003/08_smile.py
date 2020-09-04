@@ -20,7 +20,6 @@ def smiley(point, color):
     simple_draw.line(start_point=point[5], end_point=point[6], color=color, width=3)
 
 
-
 for _ in range(10):
     color = simple_draw.COLOR_YELLOW
     x = simple_draw.random_number(0, 550)
