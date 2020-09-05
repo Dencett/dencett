@@ -24,6 +24,10 @@ for _ in range(10):
     color = simple_draw.COLOR_YELLOW
     x = simple_draw.random_number(0, 550)
     y = simple_draw.random_number(0, 550)
+    # TODO этот список должен быть задан внутри функции, передавать его аргументом - решение ошибочное потому, что
+    # TODO представьте, Вам метод отрисовки смайла нужно вызывать много раз и каждый раз копипастить этот список
+    # TODO будет весьма накладно. Поэтому лучше его сделать частью функции, а в качестве параметров вместо point=point
+    # TODO передавать только x и y или объект Point, сформированный на основе этих координат
     point = [simple_draw.get_point(x, y), simple_draw.get_point(x - 25, y + 20),
              simple_draw.get_point(x + 25, y + 20), simple_draw.get_point(x - 20, y - 15),
              simple_draw.get_point(x - 10, y - 25), simple_draw.get_point(x + 10, y - 25),
