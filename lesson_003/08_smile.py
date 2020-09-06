@@ -32,3 +32,5 @@ for _ in range(10):
     smiley(x=x, y=y, color=color)
 
 simple_draw.pause()
+
+# зачёт! 🚀
