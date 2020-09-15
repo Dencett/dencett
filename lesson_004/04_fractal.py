@@ -26,7 +26,41 @@ import simple_draw as sd
 
 # можно поиграть -шрифтами- цветами и углами отклонения
 
-# TODO здесь ваш код
+def draw_branches(start_point, angle, length):
+    if length >= 10:
+        if length >= 100:
+            width = 10
+            color = COLOR_BROWN
+        elif 70 < length < 100:
+            width = 7
+            color = COLOR_BROWN
+        elif 30 < length <= 70:
+            width = 5
+            color = COLOR_BROWN
+        elif length <= 30:
+            width = 3
+            color = sd.COLOR_DARK_GREEN
+        else:
+            return
+    else:
+        return
+    v1 = sd.get_vector(start_point=start_point, angle=angle, length=length, width=width)
+    v1.draw(color=color)
+    next_point = v1.end_point
+    next_angle = angle + delta
+    next_length = length * coefficient
+    draw_branches(start_point=next_point, angle=next_angle, length=next_length)
+    next_angle = angle - delta
+    next_length = length * coefficient
+    draw_branches(start_point=next_point, angle=next_angle, length=next_length)
+
+
+COLOR_BROWN = (131, 9, 0)
+
+delta = 30
+coefficient = .75
+root_point = sd.get_point(300, 30)
+draw_branches(start_point=root_point, angle=90, length=100)
 
 # 4) Усложненное задание (делать по желанию)
 # - сделать рандомное отклонение угла ветвей в пределах 40% от 30-ти градусов
@@ -35,5 +69,42 @@ import simple_draw as sd
 
 # Пригодятся функции
 # sd.random_number()
+
+
+def draw_branches(start_point, angle, length):
+    if length >= 10:
+        if length >= 100:
+            width = 10
+            color = COLOR_BROWN
+        elif 70 < length < 100:
+            width = 7
+            color = COLOR_BROWN
+        elif 30 < length <= 70:
+            width = 5
+            color = COLOR_BROWN
+        elif length <= 30:
+            width = 3
+            color = sd.COLOR_DARK_GREEN
+        else:
+            return
+    else:
+        return
+    v1 = sd.get_vector(start_point=start_point, angle=angle, length=length, width=width)
+    v1.draw(color=color)
+    next_point = v1.end_point
+    next_angle = angle + delta + delta * sd.random_number(-40, 40) / 100
+    next_length = length * (coefficient + coefficient * sd.random_number(-20, 20) / 100)
+    draw_branches(start_point=next_point, angle=next_angle, length=next_length)
+    next_angle = angle - delta + delta * sd.random_number(-40, 40) / 100
+    next_length = length * (coefficient + coefficient * sd.random_number(-20, 20) / 100)
+    draw_branches(start_point=next_point, angle=next_angle, length=next_length)
+
+
+COLOR_BROWN = (131, 9, 0)
+
+delta = 30
+coefficient = .75
+root_point = sd.get_point(300, 30)
+draw_branches(start_point=root_point, angle=90, length=100)
 
 sd.pause()

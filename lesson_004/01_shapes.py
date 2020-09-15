@@ -35,8 +35,57 @@ import simple_draw as sd
 # sd.get_vector()
 # sd.line()
 # Результат решения см lesson_004/results/exercise_01_shapes.jpg
+color = sd.COLOR_ORANGE
 
-# TODO здесь ваш код
+
+def triangle(point, length):
+    current_point = point
+    for angle_incline in range(0, 360, 120):
+        v1 = sd.get_vector(start_point=current_point, angle=angle_incline, length=length, width=4)
+        v1.draw(color=color)
+        current_point = v1.end_point
+
+
+point = sd.get_point(100, 100)
+triangle(point=point, length=150)
+
+
+def quadrangle(point, length):
+    current_point = point
+    for angle_incline in range(0, 360, 90):
+        v1 = sd.get_vector(start_point=current_point, angle=angle_incline, length=length, width=4)
+        v1.draw(color=color)
+        current_point = v1.end_point
+
+
+point = sd.get_point(400, 100)
+quadrangle(point=point, length=120)
+
+
+def pentagon(point, length):
+    current_point = point
+    for angle_incline in range(0, 360, 72):
+        v1 = sd.get_vector(start_point=current_point, angle=angle_incline, length=length, width=4)
+        v1.draw(color=color)
+        current_point = v1.end_point
+
+
+point = sd.get_point(120, 400)
+pentagon(point=point, length=100)
+
+
+def pentagon(point, length):
+    current_point = point
+    for angle_incline in range(0, 360, 60):
+        v1 = sd.get_vector(start_point=current_point, angle=angle_incline, length=length, width=4)
+        v1.draw(color=color)
+        current_point = v1.end_point
+
+
+point = sd.get_point(420, 400)
+pentagon(point=point, length=90)
+
+
 
 # Часть 1-бис.
 # Попробуйте прикинуть обьем работы, если нужно будет внести изменения в этот код.
