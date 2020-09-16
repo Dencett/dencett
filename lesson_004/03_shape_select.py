@@ -46,6 +46,9 @@ print('''Возможные цвета:
 
 list_colors = {1: sd.COLOR_RED, 2: sd.COLOR_ORANGE, 3: sd.COLOR_YELLOW, 4: sd.COLOR_GREEN, 5: sd.COLOR_CYAN,
                6: sd.COLOR_BLUE, 7: sd.COLOR_PURPLE}
+# TODO словарь с целыми числами по порядку в качестве ключей это же список!
+# TODO поэтому нужно отредактировать эту структуру данных и подобрать для неё более оправданный тип коллекции
+
 while True:
     user_input = input('Введите желаемый цвет: ')
     if user_input.isdigit():
@@ -65,6 +68,8 @@ def figure(point, length):
         v1 = sd.get_vector(start_point=current_point, angle=angle_incline, length=length, width=4)
         v1.draw(color=color)
         current_point = v1.end_point
+
+# TODO все замечания по функции отрисовки фигуры см. в 01_shapes.py
 
 
 figure(point=point, length=length)

@@ -38,7 +38,10 @@ import simple_draw as sd
 color = sd.COLOR_ORANGE
 
 
+# TODO назвать методы нужно по принципу того, что они делают. В данном случае будет логичнее draw_[figure]
+# TODO задание гласит: # Все функции должны принимать 3 параметра
 def triangle(point, length):
+    # TODO нет параметра для угла наклона - олжна быть возможность "поворачивать" фигуры относительно их центральной оси
     current_point = point
     for angle_incline in range(0, 360, 120):
         v1 = sd.get_vector(start_point=current_point, angle=angle_incline, length=length, width=4)
@@ -46,9 +49,12 @@ def triangle(point, length):
         current_point = v1.end_point
 
 
+# TODO по правилам оформления кода все методы всегда должны находиться выше остального кода, их использующего
 point = sd.get_point(100, 100)
 triangle(point=point, length=150)
 
+
+# TODO для всех остальных функций замечания аналогичные что и по первой
 
 def quadrangle(point, length):
     current_point = point
