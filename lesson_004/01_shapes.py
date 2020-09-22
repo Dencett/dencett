@@ -38,58 +38,70 @@ import simple_draw as sd
 color = sd.COLOR_ORANGE
 
 
-# TODO назвать методы нужно по принципу того, что они делают. В данном случае будет логичнее draw_[figure]
-# TODO задание гласит: # Все функции должны принимать 3 параметра
-def triangle(point, length):
-    # TODO нет параметра для угла наклона - олжна быть возможность "поворачивать" фигуры относительно их центральной оси
+
+def draw_triangle(point, length, angle_incline):
     current_point = point
-    for angle_incline in range(0, 360, 120):
-        v1 = sd.get_vector(start_point=current_point, angle=angle_incline, length=length, width=4)
+    angle0 = angle_incline
+    for angle_change in range(0, 360, 120):
+        angle = angle0 + angle_change
+        v1 = sd.get_vector(start_point=current_point, angle=angle, length=length, width=4)
         v1.draw(color=color)
         current_point = v1.end_point
 
 
-# TODO по правилам оформления кода все методы всегда должны находиться выше остального кода, их использующего
 point = sd.get_point(100, 100)
-triangle(point=point, length=150)
+first_angle = 0
+
+draw_triangle(point=point, length=150, angle_incline=first_angle)
 
 
-# TODO для всех остальных функций замечания аналогичные что и по первой
 
-def quadrangle(point, length):
+def draw_quadrangle(point, length, angle_incline):
     current_point = point
-    for angle_incline in range(0, 360, 90):
-        v1 = sd.get_vector(start_point=current_point, angle=angle_incline, length=length, width=4)
+    angle0 = angle_incline
+    for angle_change in range(0, 360, 90):
+        angle = angle0 + angle_change
+        v1 = sd.get_vector(start_point=current_point, angle=angle, length=length, width=4)
         v1.draw(color=color)
         current_point = v1.end_point
 
 
 point = sd.get_point(400, 100)
-quadrangle(point=point, length=120)
+first_angle = 0
+
+draw_quadrangle(point=point, length=120, angle_incline=first_angle)
 
 
-def pentagon(point, length):
+def draw_pentagon(point, length, angle_incline):
     current_point = point
-    for angle_incline in range(0, 360, 72):
-        v1 = sd.get_vector(start_point=current_point, angle=angle_incline, length=length, width=4)
+    angle0 = angle_incline
+    for angle_change in range(0, 360, 72):
+        angle = angle0 + angle_change
+        v1 = sd.get_vector(start_point=current_point, angle=angle, length=length, width=4)
         v1.draw(color=color)
         current_point = v1.end_point
 
 
 point = sd.get_point(120, 400)
-pentagon(point=point, length=100)
+first_angle = 0
+
+draw_pentagon(point=point, length=100, angle_incline=first_angle)
 
 
-def pentagon(point, length):
+def draw_hexagon(point, length, angle_incline):
     current_point = point
-    for angle_incline in range(0, 360, 60):
-        v1 = sd.get_vector(start_point=current_point, angle=angle_incline, length=length, width=4)
+    angle0 = angle_incline
+    for angle_change in range(0, 360, 60):
+        angle = angle0 + angle_change
+        v1 = sd.get_vector(start_point=current_point, angle=angle, length=length, width=4)
         v1.draw(color=color)
         current_point = v1.end_point
 
 
 point = sd.get_point(420, 400)
-pentagon(point=point, length=90)
+first_angle = 0
+
+draw_hexagon(point=point, length=90, angle_incline=first_angle)
 
 
 

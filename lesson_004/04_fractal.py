@@ -45,6 +45,8 @@ def draw_branches(start_point, angle, length):
             return
     else:
         return
+    delta = 30
+    coefficient = .75
     v1 = sd.get_vector(start_point=start_point, angle=angle, length=length, width=width)
     v1.draw(color=color)
     next_point = v1.end_point
@@ -57,13 +59,8 @@ def draw_branches(start_point, angle, length):
 
 
 COLOR_BROWN = (131, 9, 0)
-
-delta = 30
-coefficient = .75
-# TODO раз эти значения выше используются в работе функции, они должны быть объявлены внутри неё
-#  или как минимум передаваться в качестве аргументов (но здесь не этот случай)
-#  задавать какие-либо значения вне функции, но при этом ссылаться на них извне функции - анти-паттерн программирования
 root_point = sd.get_point(300, 30)
+
 draw_branches(start_point=root_point, angle=90, length=100)
 
 
@@ -94,6 +91,8 @@ def draw_branches(start_point, angle, length):
             return
     else:
         return
+    delta = 30
+    coefficient = .75
     v1 = sd.get_vector(start_point=start_point, angle=angle, length=length, width=width)
     v1.draw(color=color)
     next_point = v1.end_point
@@ -105,12 +104,8 @@ def draw_branches(start_point, angle, length):
     draw_branches(start_point=next_point, angle=next_angle, length=next_length)
 
 
-COLOR_BROWN = (131, 9, 0)
-
-delta = 30
-coefficient = .75
-# TODO объявлять эти переменные повторно - не нужно
 root_point = sd.get_point(300, 30)
+
 draw_branches(start_point=root_point, angle=90, length=100)
 
 sd.pause()
