@@ -49,6 +49,7 @@ def draw_triangle(point, length, angle_incline):
         current_point = v1.end_point
 
 
+# TODO по правилам оформления кода все методы всегда должны находиться выше остального кода, их использующего
 point = sd.get_point(100, 100)
 first_angle = 0
 
@@ -104,6 +105,8 @@ first_angle = 0
 draw_hexagon(point=point, length=90, angle_incline=first_angle)
 
 
+# TODO оформить код по правилам PEP8
+#  рекомендую пользоваться пунктом меню Code → Reformat code, это отформатирует код по правилам записи PEP8.
 
 # Часть 1-бис.
 # Попробуйте прикинуть обьем работы, если нужно будет внести изменения в этот код.
