@@ -109,3 +109,5 @@ root_point = sd.get_point(300, 30)
 draw_branches(start_point=root_point, angle=90, length=100)
 
 sd.pause()
+
+# зачёт! 🚀
