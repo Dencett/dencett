@@ -22,69 +22,86 @@ print('''Возможные цвета:
         6 : blue
         7 : purple''')
 
-list_colors = {1: sd.COLOR_RED, 2: sd.COLOR_ORANGE, 3: sd.COLOR_YELLOW, 4: sd.COLOR_GREEN, 5: sd.COLOR_CYAN,
-               6: sd.COLOR_BLUE, 7: sd.COLOR_PURPLE}
+list_colors = [sd.COLOR_RED, sd.COLOR_ORANGE, sd.COLOR_YELLOW, sd.COLOR_GREEN, sd.COLOR_CYAN,
+               sd.COLOR_BLUE, sd.COLOR_PURPLE]
 # TODO словарь с целыми числами по порядку в качестве ключей это же список!
 # TODO поэтому нужно отредактировать эту структуру данных и подобрать для неё более оправданный тип коллекции
-while True:
-    user_input = input('Введите желаемый цвет: ')
-    if user_input.isdigit():
-        color = int(user_input)
-        if color in list_colors:
-            color = list_colors[color]
-            break
+for i, colors in enumerate(list_colors, 1):
+    while True:
+        user_input = input('Введите желаемый цвет: ')
+        if user_input.isdigit():
+            index = int(user_input)
+            if index == i:
+                color = list_colors[index]
+                break
+            else:
+                print('Номер некорректен!')
         else:
-            print('''Номер некорректен!''')
-    else:
-        print('''Ввод некорректен!''')
+            print('Ввод некорректен!')
 
 
-def triangle(point, length):
+def draw_triangle(point, length, angle_incline):
     current_point = point
-    for angle_incline in range(0, 360, 120):
-        v1 = sd.get_vector(start_point=current_point, angle=angle_incline, length=length, width=4)
+    angle0 = angle_incline
+    for angle_change in range(0, 360, 120):
+        angle = angle0 + angle_change
+        v1 = sd.get_vector(start_point=current_point, angle=angle, length=length, width=4)
         v1.draw(color=color)
         current_point = v1.end_point
 
 
 point = sd.get_point(100, 100)
-triangle(point=point, length=150)
+first_angle = 0
+
+draw_triangle(point=point, length=150, angle_incline=first_angle)
 
 
-def quadrangle(point, length):
+
+def draw_quadrangle(point, length, angle_incline):
     current_point = point
-    for angle_incline in range(0, 360, 90):
-        v1 = sd.get_vector(start_point=current_point, angle=angle_incline, length=length, width=4)
+    angle0 = angle_incline
+    for angle_change in range(0, 360, 90):
+        angle = angle0 + angle_change
+        v1 = sd.get_vector(start_point=current_point, angle=angle, length=length, width=4)
         v1.draw(color=color)
         current_point = v1.end_point
 
 
 point = sd.get_point(400, 100)
-quadrangle(point=point, length=120)
+first_angle = 0
+
+draw_quadrangle(point=point, length=120, angle_incline=first_angle)
 
 
-def pentagon(point, length):
+def draw_pentagon(point, length, angle_incline):
     current_point = point
-    for angle_incline in range(0, 360, 72):
-        v1 = sd.get_vector(start_point=current_point, angle=angle_incline, length=length, width=4)
+    angle0 = angle_incline
+    for angle_change in range(0, 360, 72):
+        angle = angle0 + angle_change
+        v1 = sd.get_vector(start_point=current_point, angle=angle, length=length, width=4)
         v1.draw(color=color)
         current_point = v1.end_point
 
 
 point = sd.get_point(120, 400)
-pentagon(point=point, length=100)
+first_angle = 0
+
+draw_pentagon(point=point, length=100, angle_incline=first_angle)
 
 
-def hexagon(point, length):
+def draw_hexagon(point, length, angle_incline):
     current_point = point
-    for angle_incline in range(0, 360, 60):
-        v1 = sd.get_vector(start_point=current_point, angle=angle_incline, length=length, width=4)
+    angle0 = angle_incline
+    for angle_change in range(0, 360, 60):
+        angle = angle0 + angle_change
+        v1 = sd.get_vector(start_point=current_point, angle=angle, length=length, width=4)
         v1.draw(color=color)
         current_point = v1.end_point
 
-# TODO все замечания по функциям отрисовки фигур аналогичны заданию 01_shapes.py
 
 point = sd.get_point(420, 400)
-hexagon(point=point, length=90)
+first_angle = 0
+
+draw_hexagon(point=point, length=90, angle_incline=first_angle)
 
 sd.pause()
