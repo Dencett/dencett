@@ -24,14 +24,17 @@ print('''Возможные цвета:
 
 list_colors = [sd.COLOR_RED, sd.COLOR_ORANGE, sd.COLOR_YELLOW, sd.COLOR_GREEN, sd.COLOR_CYAN,
                sd.COLOR_BLUE, sd.COLOR_PURPLE]
-# TODO словарь с целыми числами по порядку в качестве ключей это же список!
+# TODO словарь с целыми числами по порядку в качетве ключей это же список!
 # TODO поэтому нужно отредактировать эту структуру данных и подобрать для неё более оправданный тип коллекции
-for i, colors in enumerate(list_colors, 1):
+# TODO нужно всегда удалять все TODO по мере выполнения заданий
+
+for i, colors in enumerate(list_colors, 1):  # TODO этот цикл не нужен
     while True:
         user_input = input('Введите желаемый цвет: ')
         if user_input.isdigit():
             index = int(user_input)
-            if index == i:
+            if index == i:  # TODO вместо этого условия запишите проверку на вхождение index в нужный интервал чисел
+                # TODO условие будет звучать так: индекс in range(len(список_цветов))
                 color = list_colors[index]
                 break
             else:
