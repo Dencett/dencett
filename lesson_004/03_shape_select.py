@@ -36,43 +36,43 @@ while True:
         print('''Ввод некорректен!''')
 
 print('''Возможные цвета:
-        1 : red
-        2 : orange
-        3 : yellow
-        4 : green
-        5 : cyan
-        6 : blue
-        7 : purple''')
+        0 : red
+        1 : orange
+        2 : yellow
+        3 : green
+        4 : cyan
+        5 : blue
+        6 : purple''')
 
-list_colors = {1: sd.COLOR_RED, 2: sd.COLOR_ORANGE, 3: sd.COLOR_YELLOW, 4: sd.COLOR_GREEN, 5: sd.COLOR_CYAN,
-               6: sd.COLOR_BLUE, 7: sd.COLOR_PURPLE}
-# TODO словарь с целыми числами по порядку в качестве ключей это же список!
-# TODO поэтому нужно отредактировать эту структуру данных и подобрать для неё более оправданный тип коллекции
+list_colors = [sd.COLOR_RED, sd.COLOR_ORANGE, sd.COLOR_YELLOW, sd.COLOR_GREEN, sd.COLOR_CYAN,
+               sd.COLOR_BLUE, sd.COLOR_PURPLE]
 
 while True:
     user_input = input('Введите желаемый цвет: ')
     if user_input.isdigit():
-        color = int(user_input)
-        if color in list_colors:
-            color = list_colors[color]
+        index = int(user_input)
+        if index in range(len(list_colors)):
+            color = list_colors[index]
             break
         else:
-            print('''Номер некорректен!''')
+            print('Номер некорректен!')
     else:
-        print('''Ввод некорректен!''')
+        print('Ввод некорректен!')
+
+first_angle = 0
 
 
-def figure(point, length):
+def figure(point, length, angle_incline):
     current_point = point
-    for angle_incline in range(0, 360, angle_rejection):
-        v1 = sd.get_vector(start_point=current_point, angle=angle_incline, length=length, width=4)
+    angle0 = angle_incline
+    for angle_change in range(0, 360, angle_rejection):
+        angle = angle0 + angle_change
+        v1 = sd.get_vector(start_point=current_point, angle=angle, length=length, width=4)
         v1.draw(color=color)
         current_point = v1.end_point
 
-# TODO все замечания по функции отрисовки фигуры см. в 01_shapes.py
 
-
-figure(point=point, length=length)
+figure(point=point, length=length, angle_incline=first_angle)
 
 
 # def triangle(point, length):
