@@ -2,6 +2,7 @@
 
 import simple_draw as sd
 
+
 # Часть 1.
 # Написать функции рисования равносторонних геометрических фигур:
 # - треугольника
@@ -35,10 +36,6 @@ import simple_draw as sd
 # sd.get_vector()
 # sd.line()
 # Результат решения см lesson_004/results/exercise_01_shapes.jpg
-color = sd.COLOR_ORANGE
-
-point = sd.get_point(100, 100)
-first_angle = 0
 
 
 def draw_triangle(point, length, angle_incline):
@@ -51,12 +48,6 @@ def draw_triangle(point, length, angle_incline):
         current_point = v1.end_point
 
 
-draw_triangle(point=point, length=150, angle_incline=first_angle)
-
-point = sd.get_point(400, 100)
-first_angle = 0
-
-
 def draw_quadrangle(point, length, angle_incline):
     current_point = point
     angle0 = angle_incline
@@ -65,12 +56,6 @@ def draw_quadrangle(point, length, angle_incline):
         v1 = sd.get_vector(start_point=current_point, angle=angle, length=length, width=4)
         v1.draw(color=color)
         current_point = v1.end_point
-
-
-draw_quadrangle(point=point, length=120, angle_incline=first_angle)
-
-point = sd.get_point(120, 400)
-first_angle = 0
 
 
 def draw_pentagon(point, length, angle_incline):
@@ -83,12 +68,6 @@ def draw_pentagon(point, length, angle_incline):
         current_point = v1.end_point
 
 
-draw_pentagon(point=point, length=100, angle_incline=first_angle)
-
-point = sd.get_point(420, 400)
-first_angle = 0
-
-
 def draw_hexagon(point, length, angle_incline):
     current_point = point
     angle0 = angle_incline
@@ -99,7 +78,24 @@ def draw_hexagon(point, length, angle_incline):
         current_point = v1.end_point
 
 
+color = sd.COLOR_ORANGE
+
+point = sd.get_point(100, 100)
+first_angle = 0
+draw_quadrangle(point=point, length=120, angle_incline=first_angle)
+
+point = sd.get_point(400, 100)
+first_angle = 0
+draw_triangle(point=point, length=150, angle_incline=first_angle)
+
+point = sd.get_point(420, 400)
+first_angle = 0
+draw_pentagon(point=point, length=100, angle_incline=first_angle)
+
 draw_hexagon(point=point, length=90, angle_incline=first_angle)
+
+# зачёт первой части
+
 
 # Часть 1-бис.
 # Попробуйте прикинуть обьем работы, если нужно будет внести изменения в этот код.
