@@ -74,6 +74,7 @@ def figure(point, length, angle_incline):
 
 figure(point=point, length=length, angle_incline=first_angle)
 
+# TODO убрать лишний закомментированный и неиспользуемый в решении код (он всё равно останется в итории репозитория)
 
 # def triangle(point, length):
 #     current_point = point

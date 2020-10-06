@@ -25,21 +25,42 @@ snow_list = []
 
 for _ in range(N):
     snow_list.append([sd.random_number(40, 700), sd.random_number(600, 800), sd.random_number(20, 100)])
+# for snowflake in snow_list:
+for i in range(len(snow_list)):
+    x = snow_list[i][0]
+    y = snow_list[i][1]
+    length = snow_list[i][2]
+    print(x)
+    # while True:  # TODO этот цикл тут не нужен вообще
+    sd.clear_screen()
+    point = sd.get_point(x, y)
+    sd.snowflake(center=point, length=length)
+    y -= sd.random_number(2, 4)  # TODO отклонения должны получаться случайным образом
+    # TODO эта проверка должна быть вне цикла, иначе снегопад прервётся при первой же приземлившейся снежинке
+    if y < 50:
+        break
+    # x = x + 1  # TODO такое действие не изменить значения, сохранённые в snow_list
+    snow_list[i][0] += 1
+    snow_list[i][1] += 10
+    sd.sleep(0.1)
+    if sd.user_want_exit():
+        break
 
-for snowflake in snow_list:
+for snowflake in snow_list:  # TODO на этом месте должен быть цикл while True
     x = snowflake[0]
     y = snowflake[1]
     length = snowflake[2]
     print(x)
-    while True:
-        sd.clear_screen()
+    while True:  # TODO а здесь как раз-таки for snowflake in snow_list
+        sd.clear_screen()  # TODO см. примерный алгоритм отрисовки снежинок на 73 стр.
         point = sd.get_point(x, y)
         sd.snowflake(center=point, length=length)
         y -= sd.random_number(2, 4)  # TODO отклонения должны получаться случайным образом
         # TODO эта проверка должна быть вне цикла, иначе снегопад прервётся при первой же приземлившейся снежинке
         if y < 50:
             break
-        x = x + 1
+        x = x + 1  # TODO такое действие не изменить значения, сохранённые в snow_list.
+        # TODO изменять значения в списках с параметрами снежинок нужно примерно так snow_list[i][0] += 1
     sd.sleep(0.1)
     if sd.user_want_exit():
         break
@@ -48,7 +69,7 @@ for snowflake in snow_list:
 
 sd.pause()
 
-# Примерный алгоритм отрисовки снежинок
+# TODO Обратите внимание на этот примерный алгоритм отрисовки снежинок и сопоставьте его с реализованным кодом
 #   навсегда
 #     очистка экрана
 #     для индекс, координата_х из списка координат снежинок

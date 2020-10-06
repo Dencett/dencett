@@ -102,3 +102,5 @@ def draw_hexagon(point, length, angle_incline):
 draw_hexagon(point=point, length=90, angle_incline=first_angle)
 
 sd.pause()
+
+# TODO исправить расположение функций относительно остального кода по принципу исправлений в 01_shapes.py
