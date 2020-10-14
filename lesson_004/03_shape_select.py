@@ -74,3 +74,5 @@ first_angle = 0
 figure(point=point, length=length, angle_incline=first_angle)
 
 sd.pause()
+
+# зачёт! 🚀
