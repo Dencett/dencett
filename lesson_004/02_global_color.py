@@ -13,6 +13,48 @@ import simple_draw as sd
 # sd.get_vector()
 # и константы COLOR_RED, COLOR_ORANGE, COLOR_YELLOW, COLOR_GREEN, COLOR_CYAN, COLOR_BLUE, COLOR_PURPLE
 # Результат решения см lesson_004/results/exercise_02_global_color.jpg
+
+
+def draw_triangle(point, length, angle_incline):
+    current_point = point
+    angle0 = angle_incline
+    for angle_change in range(0, 360, 120):
+        angle = angle0 + angle_change
+        v1 = sd.get_vector(start_point=current_point, angle=angle, length=length, width=4)
+        v1.draw(color=color)
+        current_point = v1.end_point
+
+
+def draw_quadrangle(point, length, angle_incline):
+    current_point = point
+    angle0 = angle_incline
+    for angle_change in range(0, 360, 90):
+        angle = angle0 + angle_change
+        v1 = sd.get_vector(start_point=current_point, angle=angle, length=length, width=4)
+        v1.draw(color=color)
+        current_point = v1.end_point
+
+
+def draw_pentagon(point, length, angle_incline):
+    current_point = point
+    angle0 = angle_incline
+    for angle_change in range(0, 360, 72):
+        angle = angle0 + angle_change
+        v1 = sd.get_vector(start_point=current_point, angle=angle, length=length, width=4)
+        v1.draw(color=color)
+        current_point = v1.end_point
+
+
+def draw_hexagon(point, length, angle_incline):
+    current_point = point
+    angle0 = angle_incline
+    for angle_change in range(0, 360, 60):
+        angle = angle0 + angle_change
+        v1 = sd.get_vector(start_point=current_point, angle=angle, length=length, width=4)
+        v1.draw(color=color)
+        current_point = v1.end_point
+
+
 print('''Возможные цвета:
         0 : red
         1 : orange
@@ -39,68 +81,19 @@ while True:
 
 point = sd.get_point(100, 100)
 first_angle = 0
-
-
-def draw_triangle(point, length, angle_incline):
-    current_point = point
-    angle0 = angle_incline
-    for angle_change in range(0, 360, 120):
-        angle = angle0 + angle_change
-        v1 = sd.get_vector(start_point=current_point, angle=angle, length=length, width=4)
-        v1.draw(color=color)
-        current_point = v1.end_point
-
-
 draw_triangle(point=point, length=150, angle_incline=first_angle)
 
 point = sd.get_point(400, 100)
 first_angle = 0
-
-
-def draw_quadrangle(point, length, angle_incline):
-    current_point = point
-    angle0 = angle_incline
-    for angle_change in range(0, 360, 90):
-        angle = angle0 + angle_change
-        v1 = sd.get_vector(start_point=current_point, angle=angle, length=length, width=4)
-        v1.draw(color=color)
-        current_point = v1.end_point
-
-
 draw_quadrangle(point=point, length=120, angle_incline=first_angle)
 
 point = sd.get_point(120, 400)
 first_angle = 0
-
-
-def draw_pentagon(point, length, angle_incline):
-    current_point = point
-    angle0 = angle_incline
-    for angle_change in range(0, 360, 72):
-        angle = angle0 + angle_change
-        v1 = sd.get_vector(start_point=current_point, angle=angle, length=length, width=4)
-        v1.draw(color=color)
-        current_point = v1.end_point
-
-
 draw_pentagon(point=point, length=100, angle_incline=first_angle)
 
 point = sd.get_point(420, 400)
 first_angle = 0
-
-
-def draw_hexagon(point, length, angle_incline):
-    current_point = point
-    angle0 = angle_incline
-    for angle_change in range(0, 360, 60):
-        angle = angle0 + angle_change
-        v1 = sd.get_vector(start_point=current_point, angle=angle, length=length, width=4)
-        v1.draw(color=color)
-        current_point = v1.end_point
-
-
 draw_hexagon(point=point, length=90, angle_incline=first_angle)
 
 sd.pause()
 
-# TODO исправить расположение функций относительно остального кода по принципу исправлений в 01_shapes.py

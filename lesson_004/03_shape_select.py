@@ -9,6 +9,17 @@ import simple_draw as sd
 # Код функций из упр lesson_004/02_global_color.py скопировать сюда
 # Результат решения см lesson_004/results/exercise_03_shape_select.jpg
 
+
+def figure(point, length, angle_incline):
+    current_point = point
+    angle0 = angle_incline
+    for angle_change in range(0, 360, angle_rejection):
+        angle = angle0 + angle_change
+        v1 = sd.get_vector(start_point=current_point, angle=angle, length=length, width=4)
+        v1.draw(color=color)
+        current_point = v1.end_point
+
+
 print('''Возможные фигуры:
         1 : треугольник
         2 : квадрат
@@ -60,67 +71,6 @@ while True:
         print('Ввод некорректен!')
 
 first_angle = 0
-
-
-def figure(point, length, angle_incline):
-    current_point = point
-    angle0 = angle_incline
-    for angle_change in range(0, 360, angle_rejection):
-        angle = angle0 + angle_change
-        v1 = sd.get_vector(start_point=current_point, angle=angle, length=length, width=4)
-        v1.draw(color=color)
-        current_point = v1.end_point
-
-
 figure(point=point, length=length, angle_incline=first_angle)
-
-# TODO убрать лишний закомментированный и неиспользуемый в решении код (он всё равно останется в итории репозитория)
-
-# def triangle(point, length):
-#     current_point = point
-#     for angle_incline in range(0, 360, 120):
-#         v1 = sd.get_vector(start_point=current_point, angle=angle_incline, length=length, width=4)
-#         v1.draw(color=color)
-#         current_point = v1.end_point
-#
-#
-# point = sd.get_point(100, 100)
-# triangle(point=point, length=150)
-#
-#
-# def quadrangle(point, length):
-#     current_point = point
-#     for angle_incline in range(0, 360, 90):
-#         v1 = sd.get_vector(start_point=current_point, angle=angle_incline, length=length, width=4)
-#         v1.draw(color=color)
-#         current_point = v1.end_point
-#
-#
-# point = sd.get_point(400, 100)
-# quadrangle(point=point, length=120)
-#
-#
-# def pentagon(point, length):
-#     current_point = point
-#     for angle_incline in range(0, 360, 72):
-#         v1 = sd.get_vector(start_point=current_point, angle=angle_incline, length=length, width=4)
-#         v1.draw(color=color)
-#         current_point = v1.end_point
-#
-#
-# point = sd.get_point(120, 400)
-# pentagon(point=point, length=100)
-#
-#
-# def hexagon(point, length):
-#     current_point = point
-#     for angle_incline in range(0, 360, 60):
-#         v1 = sd.get_vector(start_point=current_point, angle=angle_incline, length=length, width=4)
-#         v1.draw(color=color)
-#         current_point = v1.end_point
-#
-#
-# point = sd.get_point(420, 400)
-# hexagon(point=point, length=90)
 
 sd.pause()

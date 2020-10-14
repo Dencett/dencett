@@ -17,69 +17,32 @@ N = 20
 # sd.random_number()
 # sd.user_want_exit()
 
-# x = sd.random_number(50, 450)
-# y = 500
-#
-# coordinate_snowflake = sd.get_point(x, y)
-snow_list = []
+snow_x_list = []
+snow_y_list = []
+length_list = []
 
 for _ in range(N):
-    snow_list.append([sd.random_number(40, 700), sd.random_number(600, 800), sd.random_number(20, 100)])
-# for snowflake in snow_list:
-for i in range(len(snow_list)):
-    x = snow_list[i][0]
-    y = snow_list[i][1]
-    length = snow_list[i][2]
-    print(x)
-    # while True:  # TODO этот цикл тут не нужен вообще
+    snow_x_list.append(sd.random_number(40, 700))
+    snow_y_list.append(sd.random_number(500, 700))
+    length_list.append(sd.random_number(20, 100))
+
+
+while True:
     sd.clear_screen()
-    point = sd.get_point(x, y)
-    sd.snowflake(center=point, length=length)
-    y -= sd.random_number(2, 4)  # TODO отклонения должны получаться случайным образом
-    # TODO эта проверка должна быть вне цикла, иначе снегопад прервётся при первой же приземлившейся снежинке
-    if y < 50:
-        break
-    # x = x + 1  # TODO такое действие не изменить значения, сохранённые в snow_list
-    snow_list[i][0] += 1
-    snow_list[i][1] += 10
-    sd.sleep(0.1)
-    if sd.user_want_exit():
-        break
-
-for snowflake in snow_list:  # TODO на этом месте должен быть цикл while True
-    x = snowflake[0]
-    y = snowflake[1]
-    length = snowflake[2]
-    print(x)
-    while True:  # TODO а здесь как раз-таки for snowflake in snow_list
-        sd.clear_screen()  # TODO см. примерный алгоритм отрисовки снежинок на 73 стр.
+    for i, x in enumerate(snow_x_list):
+        y = snow_y_list[i]
+        length = length_list[i]
         point = sd.get_point(x, y)
-        sd.snowflake(center=point, length=length)
-        y -= sd.random_number(2, 4)  # TODO отклонения должны получаться случайным образом
-        # TODO эта проверка должна быть вне цикла, иначе снегопад прервётся при первой же приземлившейся снежинке
-        if y < 50:
+        sd.snowflake(center=point, length=length, color=sd.COLOR_WHITE)
+        snow_y_list[i] -= 10
+        if snow_y_list[i] < 50:
             break
-        x = x + 1  # TODO такое действие не изменить значения, сохранённые в snow_list.
-        # TODO изменять значения в списках с параметрами снежинок нужно примерно так snow_list[i][0] += 1
     sd.sleep(0.1)
     if sd.user_want_exit():
         break
 
-# Можете подсказать, что я сделал не так (или не доелал)?
 
 sd.pause()
-
-# TODO Обратите внимание на этот примерный алгоритм отрисовки снежинок и сопоставьте его с реализованным кодом
-#   навсегда
-#     очистка экрана
-#     для индекс, координата_х из списка координат снежинок
-#       получить координата_у по индексу
-#       изменить координата_у и запомнить её в списке по индексу
-#       создать точку отрисовки снежинки по координатам
-#       нарисовать снежинку белым цветом в этой точке
-#     немного поспать
-#     если пользователь хочет выйти
-#       прервать цикл
 
 
 # Часть 2 (делается после зачета первой части)
