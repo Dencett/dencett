@@ -88,10 +88,12 @@ point = sd.get_point(400, 100)
 first_angle = 0
 draw_triangle(point=point, length=150, angle_incline=first_angle)
 
-point = sd.get_point(420, 400)
+point = sd.get_point(120, 400)
 first_angle = 0
 draw_pentagon(point=point, length=100, angle_incline=first_angle)
 
+point = sd.get_point(420, 400)
+first_angle = 0
 draw_hexagon(point=point, length=90, angle_incline=first_angle)
 
 # зачёт первой части
@@ -114,6 +116,50 @@ draw_hexagon(point=point, length=90, angle_incline=first_angle)
 #
 # Не забудте в этой общей функции придумать, как устранить разрыв в начальной/конечной точках рисуемой фигуры
 # (если он есть. подсказка - на последней итерации можно использовать линию от первой точки)
+
+def figure(point, length, angle_incline, angle_rejection):
+    current_point = point
+    angle0 = angle_incline
+    for angle_change in range(0, 360, angle_rejection):
+        angle = angle0 + angle_change
+        v1 = sd.get_vector(start_point=current_point, angle=angle, length=length, width=4)
+        v1.draw(color=color)
+        current_point = v1.end_point
+
+
+def draw_triangle(point, length, angle_incline):
+    figure(point=point, length=length, angle_incline=angle_incline, angle_rejection=120)
+
+
+def draw_quadrangle(point, length, angle_incline):
+    figure(point=point, length=length, angle_incline=angle_incline, angle_rejection=90)
+
+
+def draw_pentagon(point, length, angle_incline):
+    figure(point=point, length=length, angle_incline=angle_incline, angle_rejection=72)
+
+
+def draw_hexagon(point, length, angle_incline):
+    figure(point=point, length=length, angle_incline=angle_incline, angle_rejection=60)
+
+
+color = sd.COLOR_ORANGE
+
+point = sd.get_point(100, 100)
+first_angle = 0
+draw_quadrangle(point=point, length=120, angle_incline=first_angle)
+
+point = sd.get_point(400, 100)
+first_angle = 0
+draw_triangle(point=point, length=150, angle_incline=first_angle)
+
+point = sd.get_point(120, 400)
+first_angle = 0
+draw_pentagon(point=point, length=100, angle_incline=first_angle)
+
+point = sd.get_point(420, 400)
+first_angle = 0
+draw_hexagon(point=point, length=90, angle_incline=first_angle)
 
 # Часть 2-бис.
 # А теперь - сколько надо работы что бы внести изменения в код? Выгода на лицо :)

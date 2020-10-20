@@ -22,7 +22,7 @@ snow_y_list = []
 length_list = []
 
 for _ in range(N):
-    snow_x_list.append(sd.random_number(40, 700))
+    snow_x_list.append(sd.random_number(80, 800))
     snow_y_list.append(sd.random_number(500, 700))
     length_list.append(sd.random_number(20, 100))
 
@@ -42,7 +42,7 @@ while True:
         break
 
 
-sd.pause()
+
 
 # зачёт первой части
 
@@ -71,7 +71,26 @@ sd.pause()
 #     закончить рисование кадра
 #     немного поспать
 #     если пользователь хочет выйти
-#       прервать цикл
+#       прервать
+
+
+while True:
+    sd.start_drawing()
+    for i, x in enumerate(snow_x_list):
+        length = length_list[i]
+        point = sd.get_point(snow_x_list[i], snow_y_list[i])
+        sd.snowflake(center=point, length=length, color=sd.background_color)
+        if snow_y_list[i] > 50:
+            snow_y_list[i] -= 10
+            point_fall = sd.get_point(snow_x_list[i], snow_y_list[i])
+            sd.snowflake(point_fall, length=length, color=sd.COLOR_WHITE)
+        else:
+            last_point = sd.get_point(snow_x_list[i], snow_y_list[i])
+            sd.snowflake(last_point, length, color=sd.COLOR_WHITE)
+    sd.finish_drawing()
+    sd.sleep(0.1)
+    if sd.user_want_exit():
+        break
 
 
 # Усложненное задание (делать по желанию)
@@ -79,3 +98,27 @@ sd.pause()
 # - сделать сугоб внизу экрана - если снежинка долетает до низа, оставлять её там,
 #   и добавлять новую снежинку
 # Результат решения см https://youtu.be/XBx0JtxHiLg
+
+
+while True:
+    sd.start_drawing()
+    for i, x in enumerate(snow_x_list):
+        length = length_list[i]
+        point = sd.get_point(snow_x_list[i], snow_y_list[i])
+        sd.snowflake(center=point, length=length, color=sd.background_color)
+        if snow_y_list[i] > 50:
+            snow_y_list[i] -= 10
+            snow_x_list[i] -= sd.random_number(-10, 10)
+            point_fall = sd.get_point(snow_x_list[i], snow_y_list[i])
+            sd.snowflake(point_fall, length=length, color=sd.COLOR_WHITE)
+        else:
+            last_point = sd.get_point(snow_x_list[i], snow_y_list[i])
+            sd.snowflake(last_point, length, color=sd.COLOR_WHITE)
+            snow_y_list[i] += sd.random_number(600, 800)
+    sd.finish_drawing()
+    sd.sleep(0.1)
+    if sd.user_want_exit():
+        break
+
+
+sd.pause()
