@@ -168,3 +168,5 @@ draw_hexagon(point=point, length=90, angle_incline=first_angle)
 
 
 sd.pause()
+
+# зачёт! 🚀

@@ -26,7 +26,6 @@ for _ in range(N):
     snow_y_list.append(sd.random_number(500, 700))
     length_list.append(sd.random_number(20, 100))
 
-
 while True:
     sd.clear_screen()
     for i, x in enumerate(snow_x_list):
@@ -40,8 +39,6 @@ while True:
     sd.sleep(0.1)
     if sd.user_want_exit():
         break
-
-
 
 
 # зачёт первой части
@@ -122,3 +119,5 @@ while True:
 
 
 sd.pause()
+
+# зачёт! 🚀
