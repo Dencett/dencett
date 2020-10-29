@@ -35,3 +35,5 @@ cheese_function()
 ketchup_function()
 top_bun_function()
 print('Готово!')
+
+# зачёт! 🚀
