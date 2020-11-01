@@ -19,9 +19,9 @@ central_house1 = district.central_street.house1.room1.folks + district.central_s
 central_house2 = district.central_street.house2.room1.folks + district.central_street.house2.room2.folks
 soviet_house1 = district.soviet_street.house1.room1.folks + district.soviet_street.house1.room2.folks
 soviet_house2 = district.soviet_street.house2.room1.folks + district.soviet_street.house2.room2.folks
+# TODO можно не дублировать код типа "district.soviet_street.house2.room1."
+#  если в разделе импортов задать для них алиасы. Короткие псевдонимы, по которым можно будет к этим импортам обращяться
 
 people = central_house1 + central_house2 + soviet_house1 + soviet_house2
 
 print('На районе живут', ', '.join(people))
-
-
