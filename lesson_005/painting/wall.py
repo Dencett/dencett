@@ -33,8 +33,3 @@ def draw_wall():
             x1 += length
             x2 += length
         y += width
-
-
-draw_wall()
-
-sd.pause()

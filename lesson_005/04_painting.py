@@ -21,14 +21,15 @@
 
 
 import simple_draw as sd
-import painting.rainbow
-import painting.wall
+from painting import rainbow
+import painting.wall  # TODO исправить по примеру rainbow
+
 
 sd.resolution = (1200, 900)
 
 
-painting.rainbow.draw_rainbow()
-painting.wall.draw_wall()
+rainbow.draw_rainbow()
+wall.draw_wall()  # TODO аналогично, исправить по примеру с rainbow
 
 
 

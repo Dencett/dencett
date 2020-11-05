@@ -14,7 +14,7 @@ def draw_rainbow():
             radius += 2
             sd.circle(center_position=point, radius=radius, color=color, width=4)
 
-draw_rainbow()
+draw_rainbow()  # TODO эта строка не нужна
 
 
-sd.pause()
+sd.pause()  # TODO как и эта тоже. Всё это в основном модуле вызывается
