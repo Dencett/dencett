@@ -18,6 +18,22 @@
 # пример см. lesson_005/results/04_painting.jpg
 # Приправить своей фантазией по вкусу (коты? коровы? люди? трактор? что придумается)
 
+
+
+import simple_draw as sd
+import painting.rainbow
+import painting.wall
+
+sd.resolution = (1200, 900)
+
+
+painting.rainbow.draw_rainbow()
+painting.wall.draw_wall()
+
+
+
+sd.pause()
+
 # TODO здесь ваш код
 
 # Усложненное задание (делать по желанию)
