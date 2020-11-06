@@ -19,23 +19,34 @@
 # Приправить своей фантазией по вкусу (коты? коровы? люди? трактор? что придумается)
 
 
-
 import simple_draw as sd
+
 from painting import rainbow
-import painting.wall  # TODO исправить по примеру rainbow
+from painting import wall
+from painting import fractal
+from painting import window
+from painting import sun
+from painting import snowfall
+from painting import human
 
 
-sd.resolution = (1200, 900)
+sd.resolution = (1400, 900)
+COLOR_DARK_ORANGE = (127, 63, 0)
 
+sd.rectangle(left_bottom=sd.get_point(0, 0), right_top=sd.get_point(1400, 50), color=COLOR_DARK_ORANGE, width=0)
 
 rainbow.draw_rainbow()
-wall.draw_wall()  # TODO аналогично, исправить по примеру с rainbow
-
+wall.draw_wall()
+window.draw_window()
+wall.draw_roof()
+fractal.draw_branches(start_point=sd.get_point(1150, 50), angle=90, length=100)
+sun.draw_sun()
+human.draw_human()
+snowfall.draw_snowfall()
 
 
 sd.pause()
 
-# TODO здесь ваш код
 
 # Усложненное задание (делать по желанию)
 # Анимировать картину.
