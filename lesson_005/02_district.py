@@ -23,3 +23,5 @@ soviet_house2 = soviet_h2_1.folks + soviet_h2_2.folks
 people = central_house1 + central_house2 + soviet_house1 + soviet_house2
 
 print('На районе живут', ', '.join(people))
+
+# зачёт! 🚀
