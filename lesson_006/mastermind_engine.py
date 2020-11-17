@@ -14,14 +14,11 @@ def guess_number():
             i += 1
         if i == 3:
             break
-    # print(total_number)
+    print(total_number)
 
 
 def check_number(user_number):
-    if total_number == user_number:
-        return True
-    else:
-        return False
+    return total_number == user_number
 
 
 def fun_bulls_and_cows(user_number):
@@ -33,5 +30,3 @@ def fun_bulls_and_cows(user_number):
         elif user_number[x] in total_number:
             cow += 1
     print('быки - ', bull, 'коровы - ',  cow)
-    return
-
