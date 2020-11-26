@@ -30,3 +30,9 @@ def fun_bulls_and_cows(user_number):
         elif user_number[x] in total_number:
             cow += 1
     print('быки - ', bull, 'коровы - ',  cow)
+
+
+def end_game():
+    total_number.clear()
+    guess_number()
+

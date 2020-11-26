@@ -45,13 +45,12 @@
 # Точнее, в этом случае важен принцип единственной ответственности - https://goo.gl/rYb3hT
 
 
-from mastermind_engine import guess_number, check_number, fun_bulls_and_cows
+from mastermind_engine import guess_number, check_number, fun_bulls_and_cows, end_game
 
 guess_number()
-player_turn = 0
+player_turn = 1
+print('Ход: ', player_turn)
 while True:
-    player_turn += 1
-    print('Ход: ', player_turn)
     input_user = input('Загадайте четырехзначное число: ')
     if input_user.isdigit():
         user_number = [int(i) for i in input_user]
@@ -66,9 +65,24 @@ while True:
                 print('Вы выиграли')
                 print('Количество ходов: ', player_turn)
                 print('Хотите еще партию?')
-# TODO под вопросом "Хотите еще партию?" подразумевается, что нужно дать пользователю возможность сыграть ещё раз
-                break
+                print('Да - 1')
+                print('Нет - 2')
+                input_selection = input('Введите: ')
+                if input_selection.isdigit():
+                    player_selection = int(input_selection)
+                    if player_selection == 1:
+                        end_game()
+                        player_turn = 1
+                        continue
+                    elif player_selection == 2:
+                        break
+                    else:
+                        print('Ввод некорректен')
+                else:
+                    print('Ввод некорректен')
             else:
                 fun_bulls_and_cows(user_number)
+                player_turn += 1
+                print('Ход: ', player_turn)
     else:
         print('Ввод некорректен, введите числа')
