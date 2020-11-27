@@ -80,6 +80,7 @@ while True:
                         print('Ввод некорректен')
                 else:
                     print('Ввод некорректен')
+                    # TODO здесь переход происходит на новое загаданное число, а не повторную попытку ввода 1 или 2.
             else:
                 fun_bulls_and_cows(user_number)
                 player_turn += 1

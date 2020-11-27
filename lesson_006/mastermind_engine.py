@@ -14,7 +14,7 @@ def guess_number():
             i += 1
         if i == 3:
             break
-    print(total_number)
+    print(total_number)  # NOTE а это здесь нужно для отладочных целей ;)
 
 
 def check_number(user_number):
@@ -30,6 +30,9 @@ def fun_bulls_and_cows(user_number):
         elif user_number[x] in total_number:
             cow += 1
     print('быки - ', bull, 'коровы - ',  cow)
+    # TODO в mastermind_engine.py никаких сообщений пользователю выводить нельзя.
+    #  Представьте, что движок работает в паре в веб сайтом - у вебсайта консоли нет!
+    #  Все общение с пользователем должно быть в вызывающем движок коде (то есть 01_mastermind.py)
 
 
 def end_game():
