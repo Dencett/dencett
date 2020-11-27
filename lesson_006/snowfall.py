@@ -26,10 +26,7 @@ def move_snowflakes():
 
 def numbers_reached_down_screen():
     for coordinate in reversed(snow_list):
-        if coordinate[1] <= -60:
-            return True
-        else:
-            return False
+        return coordinate[1] <= -60  # так тоже можно
 
 
 def delete_snowflakes():
