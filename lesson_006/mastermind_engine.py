@@ -22,17 +22,13 @@ def check_number(user_number):
 
 
 def fun_bulls_and_cows(user_number):
-    bull = 0
-    cow = 0
+    bull, cow = 0, 0
     for x in range(4):
         if user_number[x] == total_number[x]:
             bull += 1
         elif user_number[x] in total_number:
             cow += 1
-    print('быки - ', bull, 'коровы - ',  cow)
-    # TODO в mastermind_engine.py никаких сообщений пользователю выводить нельзя.
-    #  Представьте, что движок работает в паре в веб сайтом - у вебсайта консоли нет!
-    #  Все общение с пользователем должно быть в вызывающем движок коде (то есть 01_mastermind.py)
+    return bull, cow
 
 
 def end_game():

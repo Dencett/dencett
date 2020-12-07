@@ -47,6 +47,8 @@
 
 from mastermind_engine import guess_number, check_number, fun_bulls_and_cows, end_game
 
+
+
 guess_number()
 player_turn = 1
 print('Ход: ', player_turn)
@@ -65,25 +67,28 @@ while True:
                 print('Вы выиграли')
                 print('Количество ходов: ', player_turn)
                 print('Хотите еще партию?')
-                print('Да - 1')
-                print('Нет - 2')
-                input_selection = input('Введите: ')
-                if input_selection.isdigit():
-                    player_selection = int(input_selection)
-                    if player_selection == 1:
+                while True:
+                    input_selection = input('Введите да/нет: ')
+                    if input_selection == str('да'):
                         end_game()
                         player_turn = 1
-                        continue
-                    elif player_selection == 2:
+                        print('Ход: ', player_turn)
+                        break
+                    elif input_selection == str('нет'):
                         break
                     else:
                         print('Ввод некорректен')
-                else:
-                    print('Ввод некорректен')
-                    # TODO здесь переход происходит на новое загаданное число, а не повторную попытку ввода 1 или 2.
+                        continue
+                if check_number(user_number):
+                    break
             else:
-                fun_bulls_and_cows(user_number)
+                bull, cow = fun_bulls_and_cows(user_number)
+                print('быки - ', bull, 'коровы - ', cow)
                 player_turn += 1
                 print('Ход: ', player_turn)
     else:
         print('Ввод некорректен, введите числа')
+
+
+
+
