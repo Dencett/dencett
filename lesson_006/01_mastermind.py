@@ -47,8 +47,6 @@
 
 from mastermind_engine import guess_number, check_number, fun_bulls_and_cows, end_game
 
-
-
 guess_number()
 player_turn = 1
 print('Ход: ', player_turn)
@@ -89,6 +87,4 @@ while True:
     else:
         print('Ввод некорректен, введите числа')
 
-
-
-
+# зачёт! 🚀
