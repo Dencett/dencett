@@ -13,9 +13,11 @@ N = 20
 snow_list = []
 for _ in range(N):
     snow_list.append([randint(80, 800), randint(500, 700), randint(20, 60)])
+# TODO в рамках этого задания код на строках 13-15 не нужен (он реализовывается в рамках get_snowflakes(amount))
 
 
 class Snowflake:
+    # TODO нужен метод __init__ для инициализации исходных параметров одной снежинки (координаты и длина лучиков)
     def clear_previous_picture(self, coordinate):
         sd.start_drawing()
         self.color = sd.background_color
@@ -26,22 +28,20 @@ class Snowflake:
 
     def move(self, coordinate):
         coordinate[1] -= 2
+        # TODO вторую координату тоже желательно менять
 
     def draw(self, coordinate):
-        sd.start_drawing()
+        sd.start_drawing()  # TODO эти методы должны вызываться в основном цикле работы снегопада
         self.color = sd.COLOR_WHITE
         self.length = coordinate[2]
         self.point = sd.get_point(coordinate[0], coordinate[1])
         sd.snowflake(center=self.point, length=self.length, color=self.color)
-        sd.finish_drawing()
+        sd.finish_drawing()  # TODO в паре с этим методом
 
     def can_fall(self, coordinate):
-        if coordinate[1] > -60:
-            return True
-        else:
-            return False
+        return coordinate[1] > 0  # так тоже можно
+    # TODO координата -60 - слишком "низкая" для признания снежинки приземлившейся
 
-    # TODO здесь ваш код
 
 
 flake = Snowflake()
@@ -81,7 +81,7 @@ for _ in range(N):
 
 def get_fallen_flakes():
     for coordinate in snow_list:
-        if coordinate[1] == -60:
+        if coordinate[1] == -60:  # TODO здесь нужно использовать метод can_fall
             snow_list.append([randint(80, 800), randint(500, 700), randint(20, 60)])
 
 
