@@ -8,17 +8,15 @@ from random import randint
 #  - отработку изменений координат
 #  - отрисовку
 
-N = 20
 
-snow_list = []
-for _ in range(N):
-    snow_list.append([randint(80, 800), randint(500, 700), randint(20, 60)])
-# TODO в рамках этого задания код на строках 13-15 не нужен (он реализовывается в рамках get_snowflakes(amount))
 
 
 class Snowflake:
-    # TODO нужен метод __init__ для инициализации исходных параметров одной снежинки (координаты и длина лучиков)
-    def clear_previous_picture(self, coordinate):
+
+    def __init__(self, coordinate):
+        self.coordinate = coordinate
+
+    def clear_previous_picture(self):
         sd.start_drawing()
         self.color = sd.background_color
         self.length = coordinate[2]
@@ -26,38 +24,32 @@ class Snowflake:
         sd.snowflake(center=self.point, length=self.length, color=self.color)
         sd.finish_drawing()
 
-    def move(self, coordinate):
-        coordinate[1] -= 2
-        # TODO вторую координату тоже желательно менять
+    def move(self, change_coordinate):
+        coordinate[1] -= change_coordinate
 
-    def draw(self, coordinate):
-        sd.start_drawing()  # TODO эти методы должны вызываться в основном цикле работы снегопада
+    def draw(self):
         self.color = sd.COLOR_WHITE
         self.length = coordinate[2]
         self.point = sd.get_point(coordinate[0], coordinate[1])
         sd.snowflake(center=self.point, length=self.length, color=self.color)
-        sd.finish_drawing()  # TODO в паре с этим методом
 
-    def can_fall(self, coordinate):
+    def can_fall(self):
         return coordinate[1] > 0  # так тоже можно
-    # TODO координата -60 - слишком "низкая" для признания снежинки приземлившейся
 
 
-
-flake = Snowflake()
-
-
-# coordinate = ([randint(80, 800), randint(500, 700), randint(20, 60)])
-#
-# while True:
-#     flake.clear_previous_picture(coordinate)
-#     flake.move(coordinate)
-#     flake.draw(coordinate)
-#     if not flake.can_fall(coordinate):
-#         break
-#     sd.sleep(0.01)
-#     if sd.user_want_exit():
-#         break
+coordinate = ([randint(80, 800), randint(500, 700), randint(20, 60)])
+flake = Snowflake(coordinate)
+while True:
+    sd.start_drawing()
+    flake.clear_previous_picture()
+    flake.move(randint(1, 4))
+    flake.draw()
+    if not flake.can_fall():
+        break
+    sd.finish_drawing()
+    sd.sleep(0.01)
+    if sd.user_want_exit():
+        break
 
 # шаг 2: создать снегопад - список объектов Снежинка в отдельном списке, обработку примерно так:
 # flakes = get_flakes(count=N)  # создать список снежинок
@@ -73,29 +65,38 @@ flake = Snowflake()
 #     if sd.user_want_exit():
 #         break
 
-N = 20
-snow_list = []
-for _ in range(N):
-    snow_list.append([randint(80, 800), randint(500, 700), randint(20, 60)])
+# N = 20
+#
+#
+# def get_flakes(coordinate):
+#     snow_list = []
+#     for _ in range(coordinate):
+#         snow_list.append([randint(80, 800), randint(500, 700), randint(20, 60)])
+#     return snow_list
 
 
-def get_fallen_flakes():
-    for coordinate in snow_list:
-        if coordinate[1] == -60:  # TODO здесь нужно использовать метод can_fall
-            snow_list.append([randint(80, 800), randint(500, 700), randint(20, 60)])
-
-
-while True:
-    for coordinate in snow_list:
-        flake.clear_previous_picture(coordinate)
-        flake.move(coordinate)
-        flake.draw(coordinate)
-    get_fallen_flakes()
-    # fallen_flakes = get_fallen_flakes()
-    # if fallen_flakes:
-    #     append_flakes(count=fallen_flakes)
-    sd.sleep(0.01)
-    if sd.user_want_exit():
-        break
+# flakes = get_flakes(N)
+#
+#
+# flake = Snowflake(snow_list)
+# def get_fallen_flakes():
+#     for coordinate in snow_list:
+#         if not flake.can_fall():  # TODO здесь нужно использовать метод can_fall
+#             snow_list.append([randint(80, 800), randint(500, 700), randint(20, 60)])
+#             # flake = Snowflake(coordinate)
+#
+#
+# while True:
+#     for flake in flakes:
+#         flake.clear_previous_picture()
+#         flake.move()
+#         flake.draw()
+#     get_fallen_flakes()
+#     fallen_flakes = get_fallen_flakes()
+#     if fallen_flakes:
+#         append_flakes(count=fallen_flakes)
+#     sd.sleep(0.01)
+#     if sd.user_want_exit():
+#         break
 
 sd.pause()
