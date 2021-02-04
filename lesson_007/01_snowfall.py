@@ -1,14 +1,14 @@
 # -*- coding: utf-8 -*-
 
-import simple_draw as sd
 from random import randint
+
+import simple_draw as sd
+
 
 # Шаг 1: Реализовать падение снежинки через класс. Внести в методы:
 #  - создание снежинки с нужными параметрами
 #  - отработку изменений координат
 #  - отрисовку
-
-
 
 
 class Snowflake:
@@ -37,8 +37,12 @@ class Snowflake:
         return coordinate[1] > 0  # так тоже можно
 
 
+# TODO эти параметры снежинки должны быть в конструкторе (метод __init__)
 coordinate = ([randint(80, 800), randint(500, 700), randint(20, 60)])
-flake = Snowflake(coordinate)
+flake = Snowflake(coordinate)  # TODO передавать их как аргумент - подход неверный
+# TODO при создании массива снежинок это создаст ненужную путаницу
+#  а так, если все координаты и длины для каждой снежинки - "внутри" её самой спрятаны - будет гораздо проще
+
 while True:
     sd.start_drawing()
     flake.clear_previous_picture()
@@ -50,6 +54,9 @@ while True:
     sd.sleep(0.01)
     if sd.user_want_exit():
         break
+
+# зачёт первой части
+
 
 # шаг 2: создать снегопад - список объектов Снежинка в отдельном списке, обработку примерно так:
 # flakes = get_flakes(count=N)  # создать список снежинок
