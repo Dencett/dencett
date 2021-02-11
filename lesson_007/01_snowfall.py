@@ -20,23 +20,24 @@ class Snowflake:
         self.change_coordinate = change_coordinate
 
     def clear_previous_picture(self):
-        sd.start_drawing()
-        self.color = sd.background_color
+        sd.start_drawing()  # TODO вызов этого метода лучше перенести в основной цикл работы программы
+        self.color = sd.background_color  # TODO для этой переменной self не нужен (потому, что она нужна только на уровне этого метода, а не класса в целом)
         self.length = self.length
-        self.point = sd.get_point(self.x, self.y)
+        self.point = sd.get_point(self.x, self.y)  # TODO для этой переменной self не нужен
         sd.snowflake(center=self.point, length=self.length, color=self.color)
-        sd.finish_drawing()
+        sd.finish_drawing()  # TODO аналогично (вызов этого метода лучше перенести в основной цикл работы программы)
 
     def move(self):
         self.y -= self.change_coordinate
+        # TODO по оси Х тоже стоит предусмотреть изменение координаты
 
     def draw(self):
-        self.color = sd.COLOR_WHITE
-        self.point = sd.get_point(self.x, self.y)
+        self.color = sd.COLOR_WHITE  # TODO для этой переменной self не нужен
+        self.point = sd.get_point(self.x, self.y)  # TODO для этой переменной self не нужен
         sd.snowflake(center=self.point, length=self.length, color=self.color)
 
     def can_fall(self):
-        return self.y > 0  # так тоже можно
+        return self.y > 0
 
 
 # flake = Snowflake(randint(80, 800), randint(500, 700), randint(20, 60), randint(1, 4))
@@ -77,7 +78,7 @@ N = 20
 def get_flakes(quantity):
     snow_list = []
     for _ in range(quantity):
-        snow_list.append(Snowflake(randint(80, 550), randint(600, 700), randint(20, 60), randint(2, 3)))
+        snow_list.append(Snowflake(randint(80, 550), randint(600, 700), randint(20, 60), randint(20, 30)))
     return snow_list
 
 
@@ -96,8 +97,7 @@ def get_fallen_flakes():
 
 def append_flakes(quantity):
     for _ in range(quantity):
-        flakes.append(Snowflake(randint(80, 550), randint(600, 700), randint(20, 60), randint(2, 3)))
-
+        flakes.append(Snowflake(randint(80, 550), randint(600, 700), randint(20, 60), randint(20, 30)))
 
 
 while True:
