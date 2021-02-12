@@ -13,36 +13,34 @@ import simple_draw as sd
 
 class Snowflake:
 
-    def __init__(self, x, y, length, change_coordinate):
+    def __init__(self, x, y, length, x_coordinate, y_coordinate):
         self.x = x
         self.y = y
         self.length = length
-        self.change_coordinate = change_coordinate
+        self.x_coordinate = x_coordinate
+        self.y_coordinate = y_coordinate
 
     def clear_previous_picture(self):
-        sd.start_drawing()  # TODO вызов этого метода лучше перенести в основной цикл работы программы
-        self.color = sd.background_color  # TODO для этой переменной self не нужен (потому, что она нужна только на уровне этого метода, а не класса в целом)
-        self.length = self.length
-        self.point = sd.get_point(self.x, self.y)  # TODO для этой переменной self не нужен
-        sd.snowflake(center=self.point, length=self.length, color=self.color)
-        sd.finish_drawing()  # TODO аналогично (вызов этого метода лучше перенести в основной цикл работы программы)
+        color = sd.background_color
+        point = sd.get_point(self.x, self.y)
+        sd.snowflake(center=point, length=self.length, color=color)
 
     def move(self):
-        self.y -= self.change_coordinate
-        # TODO по оси Х тоже стоит предусмотреть изменение координаты
+        self.x -= self.x_coordinate
+        self.y -= self.y_coordinate
 
     def draw(self):
-        self.color = sd.COLOR_WHITE  # TODO для этой переменной self не нужен
-        self.point = sd.get_point(self.x, self.y)  # TODO для этой переменной self не нужен
-        sd.snowflake(center=self.point, length=self.length, color=self.color)
+        color = sd.COLOR_WHITE
+        point = sd.get_point(self.x, self.y)
+        sd.snowflake(center=point, length=self.length, color=color)
 
     def can_fall(self):
         return self.y > 0
 
 
-# flake = Snowflake(randint(80, 800), randint(500, 700), randint(20, 60), randint(1, 4))
-
-
+# flake = Snowflake(randint(80, 550), randint(600, 700), randint(20, 60), randint(-5, 5), randint(20, 30))
+#
+#
 # while True:
 #     sd.start_drawing()
 #     flake.clear_previous_picture()
@@ -51,7 +49,7 @@ class Snowflake:
 #     if not flake.can_fall():
 #         break
 #     sd.finish_drawing()
-#     sd.sleep(0.01)
+#     sd.sleep(0.05)
 #     if sd.user_want_exit():
 #         break
 
@@ -78,7 +76,8 @@ N = 20
 def get_flakes(quantity):
     snow_list = []
     for _ in range(quantity):
-        snow_list.append(Snowflake(randint(80, 550), randint(600, 700), randint(20, 60), randint(20, 30)))
+        snow_list.append(Snowflake(randint(80, 550), randint(600, 700), randint(20, 60), randint(-5, 5),
+                                   randint(20, 30)))
     return snow_list
 
 
@@ -97,10 +96,12 @@ def get_fallen_flakes():
 
 def append_flakes(quantity):
     for _ in range(quantity):
-        flakes.append(Snowflake(randint(80, 550), randint(600, 700), randint(20, 60), randint(20, 30)))
+        flakes.append(Snowflake(randint(80, 550), randint(600, 700), randint(20, 60), randint(-5, 5),
+        randint(20, 30)))
 
 
 while True:
+    sd.start_drawing()
     for flake in flakes:
         flake.clear_previous_picture()
         flake.move()
@@ -108,7 +109,8 @@ while True:
     fallen_flakes = get_fallen_flakes()
     if fallen_flakes:
         append_flakes(fallen_flakes)
-    sd.sleep(0.01)
+    sd.finish_drawing()
+    sd.sleep(0.05)
     if sd.user_want_exit():
         break
 
