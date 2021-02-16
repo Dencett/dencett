@@ -43,11 +43,11 @@ from random import randint
 
 
 class House:
+    mud = 0
 
     def __init__(self):
         self.money = 100
         self.food = 50
-        self.mud = 0
 
     def __str__(self):
         return 'В доме еды осталось {}, денег осталось {}, грязи {}'.format(
@@ -55,7 +55,7 @@ class House:
         )
 
 
-class Husband(House):
+class Husband(House):  # TODO муж должен быть унаследован от Human (общий класс человека), а не от дома
 
     def __init__(self, name):
         self.name = name
@@ -108,13 +108,13 @@ class Husband(House):
         self.fullness -= 10
         self.money += 150
 
-
     def gaming(self):
         cprint('{} поиграл в World of Tanks'.format(self.name), color='green')
         self.fullness -= 10
         self.happiness += 20
 
 
+# TODO общие параметры и действия мужа и жены нужно вынести в отдельный класс человека
 class Wife(House):
 
     def __init__(self, name):
@@ -140,7 +140,7 @@ class Wife(House):
             self.eat()
         elif self.food < 50:
             self.shopping()
-        elif self.mud >= 100:
+        elif super().mud >= 100:
             self.clean_house()
         elif dice == 1:
             self.eat()
@@ -177,7 +177,6 @@ class Wife(House):
             cprint('{} деньги кончились!'.format(self.name), color='red')
             self.fullness -= 10
 
-
     def buy_fur_coat(self):
         if self.money <= 350:
             cprint('{} купила шубу'.format(self.name), color='green')
@@ -191,7 +190,7 @@ class Wife(House):
 
     def clean_house(self):
         cprint('{} убралась в доме'.format(self.name), color='magenta')
-        self.mud -= 100
+        super().mud -= 100
         if self.mud < 0:
             self.mud = 0
         self.fullness -= 20
