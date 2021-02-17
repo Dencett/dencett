@@ -68,13 +68,14 @@ class Human:
 
 class Husband(Human):
 
-    def __init__(self, name):
+    def __init__(self, name):  # TODO если метод полностью повторяет родительский, то переопределять его не нужно
         super().__init__(name)
 
-    def __str__(self):
+    def __str__(self):  # TODO см. замечание выше
         return super().__str__()
 
-    def act(self):
+    def act(self):  # TODO из этого метода нужно вынести общую часть для всех людей в аналогичный метод в классе Human
+        # TODO а в начале этого метода вызывать его родительскую реализацию
         if House.mud >= 90:
             self.happiness -= 10
         if self.fullness <= 0:
@@ -95,7 +96,7 @@ class Husband(Human):
         else:
             self.gaming()
 
-    def eat(self):
+    def eat(self):  # TODO этот метод - общий для всех людей, поэтому его нужно вынести в класс Human
         dice = randint(1, 3)
         if dice == 1:
             desire_to_eat = 30
@@ -128,10 +129,10 @@ class Husband(Human):
 
 class Wife(Human):
 
-    def __init__(self, name):
+    def __init__(self, name):  # TODO если метод полностью повторяет родительский, то переопределять его не нужно
         super().__init__(name)
 
-    def __str__(self):
+    def __str__(self):  # TODO см. замечание выше
         return super().__str__()
 
     def act(self):
@@ -159,7 +160,7 @@ class Wife(Human):
         else:
             self.buy_fur_coat()
 
-    def eat(self):
+    def eat(self):  # TODO этот метод - общий для всех людей, поэтому его нужно вынести в класс Human
         dice = randint(1, 3)
         if dice == 1:
             desire_to_eat = 30
