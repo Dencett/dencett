@@ -65,25 +65,39 @@ class Human:
             self.name, self.fullness, self.happiness
         )
 
-
-class Husband(Human):
-
-    def __init__(self, name):  # TODO если метод полностью повторяет родительский, то переопределять его не нужно
-        super().__init__(name)
-
-    def __str__(self):  # TODO см. замечание выше
-        return super().__str__()
-
-    def act(self):  # TODO из этого метода нужно вынести общую часть для всех людей в аналогичный метод в классе Human
-        # TODO а в начале этого метода вызывать его родительскую реализацию
+    def act(self):
         if House.mud >= 90:
             self.happiness -= 10
         if self.fullness <= 0:
-            cprint('{} умер от голода'.format(self.name), color='red')
+            cprint('{} умер(ла) от голода'.format(self.name), color='red')
             return
         if self.happiness <= 0:
-            cprint('{} умер от депрессии'.format(self.name), color='red')
+            cprint('{} умер(ла) от депрессии'.format(self.name), color='red')
             return
+
+    def eat(self):
+        dice = randint(1, 3)
+        if dice == 1:
+            desire_to_eat = 30
+        elif dice == 2:
+            desire_to_eat = 20
+        else:
+            desire_to_eat = 10
+        if House.food >= desire_to_eat:
+            cprint('{} поел(а)'.format(self.name), color='yellow')
+            self.fullness += desire_to_eat
+            House.food -= desire_to_eat
+            Outcome.food_eaten += desire_to_eat
+            return House.food, Outcome.food_eaten
+        else:
+            cprint('{} нет еды'.format(self.name), color='red')
+            self.fullness -= 10
+
+
+class Husband(Human):
+
+    def act(self):
+        super().act()
         dice = randint(1, 3)
         if self.fullness <= 20:
             self.eat()
@@ -95,24 +109,6 @@ class Husband(Human):
             self.eat()
         else:
             self.gaming()
-
-    def eat(self):  # TODO этот метод - общий для всех людей, поэтому его нужно вынести в класс Human
-        dice = randint(1, 3)
-        if dice == 1:
-            desire_to_eat = 30
-        elif dice == 2:
-            desire_to_eat = 20
-        else:
-            desire_to_eat = 10
-        if House.food >= desire_to_eat:
-            cprint('{} поел'.format(self.name), color='yellow')
-            self.fullness += desire_to_eat
-            House.food -= desire_to_eat
-            Outcome.food_eaten += desire_to_eat
-            return House.food, Outcome.food_eaten
-        else:
-            cprint('{} нет еды'.format(self.name), color='red')
-            self.fullness -= 10
 
     def work(self):
         cprint('{} сходил на работу'.format(self.name), color='blue')
@@ -129,21 +125,8 @@ class Husband(Human):
 
 class Wife(Human):
 
-    def __init__(self, name):  # TODO если метод полностью повторяет родительский, то переопределять его не нужно
-        super().__init__(name)
-
-    def __str__(self):  # TODO см. замечание выше
-        return super().__str__()
-
     def act(self):
-        if House.mud >= 90:
-            self.happiness -= 10
-        if self.fullness <= 0:
-            cprint('{} умерла от голода'.format(self.name), color='red')
-            return
-        if self.happiness <= 0:
-            cprint('{} умерла от депрессии'.format(self.name), color='red')
-            return
+        super().act()
         dice = randint(1, 6)
         if self.fullness <= 20:
             self.eat()
@@ -159,24 +142,6 @@ class Wife(Human):
             self.clean_house()
         else:
             self.buy_fur_coat()
-
-    def eat(self):  # TODO этот метод - общий для всех людей, поэтому его нужно вынести в класс Human
-        dice = randint(1, 3)
-        if dice == 1:
-            desire_to_eat = 30
-        elif dice == 2:
-            desire_to_eat = 20
-        else:
-            desire_to_eat = 10
-        if House.food >= desire_to_eat:
-            cprint('{} поела'.format(self.name), color='yellow')
-            self.fullness += desire_to_eat
-            House.food -= desire_to_eat
-            Outcome.food_eaten += desire_to_eat
-            return House.food, Outcome.food_eaten
-        else:
-            cprint('{} нет еды'.format(self.name), color='red')
-            self.fullness -= 10
 
     def shopping(self):
         if House.money >= 50:
