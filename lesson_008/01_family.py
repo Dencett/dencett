@@ -65,7 +65,7 @@ class Human:
             self.name, self.fullness, self.happiness
         )
 
-    def act(self):
+    def act(self):  # TODO в этом методе если одна из веток выполнилась - нужно возвращать True
         if House.mud >= 90:
             self.happiness -= 10
         if self.fullness <= 0:
@@ -97,7 +97,8 @@ class Human:
 class Husband(Human):
 
     def act(self):
-        super().act()
+        super().act()  # TODO чтобы строки в консоли не дублировались, здесь нужно добавить проверку.
+        # TODO если родительский метод act - не вернул True, то можно выполнять код ниже
         dice = randint(1, 3)
         if self.fullness <= 20:
             self.eat()
