@@ -65,15 +65,17 @@ class Human:
             self.name, self.fullness, self.happiness
         )
 
-    def act(self):  # TODO в этом методе если одна из веток выполнилась - нужно возвращать True
+    def act(self):
         if House.mud >= 90:
             self.happiness -= 10
         if self.fullness <= 0:
             cprint('{} умер(ла) от голода'.format(self.name), color='red')
-            return
+            return True
         if self.happiness <= 0:
             cprint('{} умер(ла) от депрессии'.format(self.name), color='red')
-            return
+            return True
+        else:
+            return False
 
     def eat(self):
         dice = randint(1, 3)
@@ -97,19 +99,20 @@ class Human:
 class Husband(Human):
 
     def act(self):
-        super().act()  # TODO чтобы строки в консоли не дублировались, здесь нужно добавить проверку.
-        # TODO если родительский метод act - не вернул True, то можно выполнять код ниже
-        dice = randint(1, 3)
-        if self.fullness <= 20:
-            self.eat()
-        elif House.money < 100:
-            self.work()
-        elif dice == 1:
-            self.work()
-        elif dice == 2:
-            self.eat()
+        if super().act():
+            return True
         else:
-            self.gaming()
+            dice = randint(1, 3)
+            if self.fullness <= 20:
+                self.eat()
+            elif House.money < 100:
+                self.work()
+            elif dice == 1:
+                self.work()
+            elif dice == 2:
+                self.eat()
+            else:
+                self.gaming()
 
     def work(self):
         cprint('{} сходил на работу'.format(self.name), color='blue')
@@ -127,22 +130,24 @@ class Husband(Human):
 class Wife(Human):
 
     def act(self):
-        super().act()
-        dice = randint(1, 6)
-        if self.fullness <= 20:
-            self.eat()
-        elif House.food <= 60:
-            self.shopping()
-        elif House.mud >= 100:
-            self.clean_house()
-        elif dice == 1 and 2:
-            self.eat()
-        elif dice == 3 and 4:
-            self.shopping()
-        elif dice == 5:
-            self.clean_house()
+        if super().act():
+            return True
         else:
-            self.buy_fur_coat()
+            dice = randint(1, 6)
+            if self.fullness <= 20:
+                self.eat()
+            elif House.food <= 60:
+                self.shopping()
+            elif House.mud >= 100:
+                self.clean_house()
+            elif dice == 1 and 2:
+                self.eat()
+            elif dice == 3 and 4:
+                self.shopping()
+            elif dice == 5:
+                self.clean_house()
+            else:
+                self.buy_fur_coat()
 
     def shopping(self):
         if House.money >= 50:
