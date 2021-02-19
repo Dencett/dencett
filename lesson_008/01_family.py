@@ -199,7 +199,7 @@ masha = Wife(name='Маша')
 outcome = Outcome()
 
 for day in range(1, 366):
-    House.mud += 5
+    House.mud += 5  # TODO это действие нужно вынести в отдельный метод в классе дома
     cprint('================== День {} =================='.format(day), color='red')
     serge.act()
     masha.act()
@@ -208,6 +208,9 @@ for day in range(1, 366):
     cprint(home, color='cyan')
 
 cprint(outcome, color='yellow')
+
+# зачёт первой части
+
 
 ######################################################## Часть вторая
 #
