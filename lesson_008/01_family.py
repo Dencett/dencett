@@ -52,6 +52,10 @@ class House:
             House.food, House.money, House.mud
         )
 
+    def mud_increase(self):
+        House.mud += 5
+        return House.mud
+
 
 class Human:
 
@@ -199,7 +203,7 @@ masha = Wife(name='Маша')
 outcome = Outcome()
 
 for day in range(1, 366):
-    House.mud += 5  # TODO это действие нужно вынести в отдельный метод в классе дома
+    home.mud_increase()
     cprint('================== День {} =================='.format(day), color='red')
     serge.act()
     masha.act()
