@@ -197,21 +197,21 @@ class Outcome:
         )
 
 
-home = House()
-serge = Husband(name='Сережа')
-masha = Wife(name='Маша')
-outcome = Outcome()
-
-for day in range(1, 366):
-    home.mud_increase()
-    cprint('================== День {} =================='.format(day), color='red')
-    serge.act()
-    masha.act()
-    cprint(serge, color='cyan')
-    cprint(masha, color='cyan')
-    cprint(home, color='cyan')
-
-cprint(outcome, color='yellow')
+# home = House()
+# serge = Husband(name='Сережа')
+# masha = Wife(name='Маша')
+# outcome = Outcome()
+#
+# for day in range(1, 366):
+#     home.mud_increase()
+#     cprint('================== День {} =================='.format(day), color='red')
+#     serge.act()
+#     masha.act()
+#     cprint(serge, color='cyan')
+#     cprint(masha, color='cyan')
+#     cprint(home, color='cyan')
+#
+# cprint(outcome, color='yellow')
 
 # зачёт первой части
 
@@ -270,25 +270,34 @@ class Cat:
 # отличия от взрослых - кушает максимум 10 единиц еды,
 # степень счастья  - не меняется, всегда ==100 ;)
 
-class Child:
-
-    def __init__(self):
-        pass
-
-    def __str__(self):
-        return super().__str__()
+class Child(Human):
 
     def act(self):
-        pass
+        if self.fullness <= 0:
+            cprint('{} умер от голода'.format(self.name), color='red')
+            return
+        dice = randint(1, 2)
+        if self.fullness <= 20:
+            self.eat()
+        elif dice == 1:
+            self.eat()
+        else:
+            self.sleep()
 
     def eat(self):
-        pass
+        if House.food >= 10:
+            cprint('{} поел(а)'.format(self.name), color='yellow')
+            self.fullness += 10
+            House.food -= 10
+            Outcome.food_eaten += 10
+            return House.food, Outcome.food_eaten
+        else:
+            cprint('{} нет еды'.format(self.name), color='red')
+            self.fullness -= 10
 
     def sleep(self):
-        pass
-
-
-# TODO после реализации второй части - отдать на проверку учителем две ветки
+        cprint('{} поспал.'.format(self.name), color='green')
+        self.fullness -= 10
 
 
 ######################################################## Часть третья
@@ -298,22 +307,25 @@ class Child:
 # отправить на проверку учителем.
 
 
-# home = House()
-# serge = Husband(name='Сережа')
-# masha = Wife(name='Маша')
-# kolya = Child(name='Коля')
+home = House()
+serge = Husband(name='Сережа')
+masha = Wife(name='Маша')
+kolya = Child(name='Коля')
 # murzik = Cat(name='Мурзик')
-#
-# for day in range(365):
-#     cprint('================== День {} =================='.format(day), color='red')
-#     serge.act()
-#     masha.act()
-#     kolya.act()
-#     murzik.act()
-#     cprint(serge, color='cyan')
-#     cprint(masha, color='cyan')
-#     cprint(kolya, color='cyan')
-#     cprint(murzik, color='cyan')
+outcome = Outcome()
+
+for day in range(365):
+    cprint('================== День {} =================='.format(day), color='red')
+    serge.act()
+    masha.act()
+    kolya.act()
+    # murzik.act()
+    cprint(serge, color='cyan')
+    cprint(masha, color='cyan')
+    cprint(kolya, color='cyan')
+    # cprint(murzik, color='cyan')
+
+cprint(outcome, color='yellow')
 
 
 # Усложненное задание (делать по желанию)
