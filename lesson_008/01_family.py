@@ -311,7 +311,6 @@ home = House()
 serge = Husband(name='Сережа')
 masha = Wife(name='Маша')
 kolya = Child(name='Коля')
-# murzik = Cat(name='Мурзик')
 outcome = Outcome()
 
 for day in range(365):
@@ -319,13 +318,13 @@ for day in range(365):
     serge.act()
     masha.act()
     kolya.act()
-    # murzik.act()
     cprint(serge, color='cyan')
     cprint(masha, color='cyan')
     cprint(kolya, color='cyan')
-    # cprint(murzik, color='cyan')
 
 cprint(outcome, color='yellow')
+
+# зачёт второй части бис
 
 
 # Усложненное задание (делать по желанию)
