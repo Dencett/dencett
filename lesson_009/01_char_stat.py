@@ -25,62 +25,15 @@
 #   см https://refactoring.guru/ru/design-patterns/template-method
 #   и https://gitlab.skillbox.ru/vadim_shandrinov/python_base_snippets/snippets/4
 
-# TODO здесь ваш код
-
-
 from operator import itemgetter
+from collections import defaultdict
 
-# zfile_name = 'C:\\Users\\Владимир\\PycharmProjects\\python_base\\lesson_009\\python_snippets\\voyna-i-mir.txt'
-#
-# stat = {}
-#
-# with open(zfile_name, 'r', encoding='cp1251') as file:
-#     for line in file:
-#         for char in line:
-#             if char.isalpha():
-#                 if char in stat:
-#                     stat[char] += 1
-#                 else:
-#                     stat[char] = 1
-#
-# stat_for_generate = sorted(stat.items(), key=itemgetter(1), reverse=True)
-# total = 0
-# print('''+---------+----------+
-# |  буква  | частота  |
-# +---------+----------+''')
-# for char in stat_for_generate:
-#     total += char[1]
-#     print(f'|{char[0]:^9}|{char[1]:^10}|')
-#
-#
-# print(f'''+---------+----------+
-# |{'итого':^9}|{total:^10}|
-# +---------+----------+''')
-
-# TODO: Какую цель мы преследуем?
-#  Мы хотим реализовать поведенческий паттерн проектирования "Шаблонный метод"
-#  в будущем (часть 2). Сначала прочтите описание этого простого шаблона по этой ссылке:
-#       https://refactoring.guru/ru/design-patterns/template-method.
-#  .
-#  Какие будут шаги, что мы преследуем?
-#  1. Сделать основной класс, который будет хранить весь алгоритм сбора данных с книги. Единственное, что не будет
-#     делать этот класс - он не будет заниматься сортировкой. Его метод "сортировать" будет пустым и не будет
-#     оказывать на собранные данные никакого эффекта. Хотя при этом, метод "сортировать" будет вызываться каждый раз
-#     как только мы собрали данные (в конце метода "собрать данные");
-#  2. Сделать классы-наследники. Несколько штук. Каждый из наследников перегружает только 1 метод. Какой?
-#     Абсолютно верно - метод "сортировать".
-#  .
-#  В итоге у нас будет 1 родительский класс, который хранит весь алгоритм + N классов-наследников, которые
-#  перегружая 1 метод "сортировать" будут корректировать работу основного алгоритма. Это и есть шаблонный метод)
-#  .
-#  Примечание: В шаблонном методе родитель может иметь больше 1 метода, которые надо перегрузить. Такой случай как
-#  раз в задаче 03_files_arrange.py.
 
 class Statistics:
 
     def __init__(self, filename):
         self.filename = filename
-        self.stat = {}
+        self.stat = defaultdict(int)
 
     def get_data(self):
         with open(self.filename, 'r', encoding='cp1251') as file:
@@ -90,73 +43,41 @@ class Statistics:
     def collect_for_line(self, line):
         for char in line:
             if char.isalpha():
-                # TODO: можно использовать defaultdict (см.ниже)
-                if char in self.stat:
-                    # TODO: вывод? почему вывод? Нам нужно посчитать сколько букв
-                    print(self.stat)
-                else:
-                    self.stat[char] = 1
+                self.stat[char] += 1
 
-    def generate(self):
-        stat_for_generate = sorted(self.stat.items(), key=itemgetter(1), reverse=True)
-        total = 0
-        print('''+---------+----------+
-        |  буква  | частота  |
-        +---------+----------+''')
-        # TODO: Используйте распаковку переменной "char". Посморите 03 модуль 05 задачу, мы уже так делали.
-        #  stat_for_generate - это тот же самый .items(), только отсортированный.
-        for char in stat_for_generate:
-            total += char[1]
-            print(f'|{char[0]:^9}|{char[1]:^10}|')
+    def generate_output(self, stat_for_generate, total):
+        print('''+---------+----------+ 
+|  буква  | частота  | 
++---------+----------+''')
+        for char, quantity in stat_for_generate:
+            total += quantity
+            print(f'|{char:^9}|{quantity:^10}|')
         print(f'''+---------+----------+
-        |{'итого':^9}|{total:^10}|
-        +---------+----------+''')
+|{'итого':^9}|{total:^10}|
++---------+----------+''')
 
 
-# TODO: используйте относительные пути.
-#  Путь указанный ниже, будет работать только на вашей машине. Нам нужно сделать так, чтобы программа запускалась
-#  на любой машине. (см. следующее TOD0)
-zfile_name = 'C:\\Users\\Владимир\\PycharmProjects\\python_base\\lesson_009\\python_snippets\\voyna-i-mir.txt'
-statistics = Statistics(zfile_name)
-statistics.generate()
+class Generation(Statistics):
 
-# TODO: создаем файл.
-with open('test.txt', encoding='utf-8', mode='w') as file:
-    file.write('hello, world!')
-# TODO: где создастся файл?
-#  В текущей папке. Где запустили программу. Это называется относительный путь, т.е. относительно скрипта, который мы
-#  запустили. Соответственно "C:\\Users\\Владимир\\PycharmProjects\\python_base\\lesson_009" - это лишнее.
-#  Мы по умочанию оказываемся в папке lesson_009.
+    def __init__(self, filename):
+        super().__init__(filename)
+
+    def get_data(self):
+        super().get_data()
+
+    def generate_output(self, stat_for_generate, total):
+        super().generate_output(stat_for_generate, total)
+
+    def generate(self, stat_for_generate):
+        total = 0
+        generation.generate_output(stat_for_generate, total)
 
 
-# TODO: можно использовать defaultdict
-#       from collections import defaultdict
-#  .
-#       s = 'mississippi'         # берем строку (итерируемый объект)
-#       d = defaultdict(int)      # создаем словарь (подробности ниже)
-#       for k in s:               # проходимся по строке и выполняем += 1 для каждой буквы.
-#           d[k] += 1
-#  .
-#       print(d.items())          # [('i', 4), ('p', 2), ('s', 4), ('m', 1)]
-#  .
-#  Почему код выше работает? Почему на строке "d[k] += 1" при попытке обращение к незаданному ранее ключу
-#  не происходит исключение?
-#  .
-#  Когда мы создаем словарь defaultdict, мы передаем ему ФУНКЦИЮ, которая будет вызываться для инициализации
-#  значения, если это значение не найдено в словаре. Поэтому когда мы обращаемся print(d[1000500]) в словаре
-#  будет создана пара ключ 1000500 и значение int() (т.е. 0, т.к. int() == 0)
-#  .
-#  Примеры:
-#       d_1 = defaultdict(int)      # {}
-#       d_1[100500] += 100          # {100500: 100}
-#       x = d_1[123]                # x = 0, d={100500: 100, 123: 0}
-#  .
-#       d_2 = default(list)         # {}
-#       x = d_2['hello']            # x = [], d={'hello': []}
-#       d_2['test'].append(123)     # d={'hello': [], 'test': [123]}
-#  .
-#  Поэтому мы можем удалить проверку условия и смело обращаться к значению по ключу (даже если его еще
-#  нет).
+zfile_name = 'python_snippets\\voyna-i-mir.txt'
+generation = Generation(zfile_name)
+generation.get_data()
+stat_for_generate = sorted(generation.stat.items(), key=itemgetter(1), reverse=True)
+generation.generate(stat_for_generate)
 
 # После зачета первого этапа нужно сделать упорядочивание статистики
 #  - по частоте по возрастанию
