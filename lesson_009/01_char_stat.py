@@ -45,52 +45,29 @@ class Statistics:
             if char.isalpha():
                 self.stat[char] += 1
 
-    def generate_output(self, stat_for_generate, total):
-        # TODO: посмотрите на print после цикла. Этот print надо так же причесать
+    def generate_output(self, stat_for_generate):
+        total = 0
         print('''+---------+----------+ 
 |  буква  | частота  | 
 +---------+----------+''')
-
-        # TODO: почему total попадает извне? логично было бы создать его здесь, ведь мы вывоим сколько символов
-        #  в stat_for_generate. Поэтому total всегда должен начинаться с 0.
         for char, quantity in stat_for_generate:
             total += quantity
             print(f'|{char:^9}|{quantity:^10}|')
 
-        print(f'+---------+----------+'
-              f'|{"итого":^9}|{total:^10}|'
-              f'+---------+----------+''')
+        print(f'''+---------+----------+
+|{"итого":^9}|{total:^10}|
++---------+----------+''')
 
+    def get_sorted_stat(self, stat_for_generate):
+        statistics.generate_output(stat_for_generate)
 
-class Generation(Statistics):
-    # TODO: если перегруженный метод ничего не делает, кроме как вызывает родительский метод,
-    #  то его не нужно создавать.
-    def __init__(self, filename):
-        super().__init__(filename)
-
-    # TODO: такой же метод. Закоментировал, а все работает. Почему?
-    #  ПОтому что если Интерпретатор не находит нужный метод у текущего класса, он сам идет искать тот же метод у
-    #  родительского класса.
-    # def get_data(self):
-    #     super().get_data()
-
-    # TODO: такой же метод
-    def generate_output(self, stat_for_generate, total):
-        super().generate_output(stat_for_generate, total)
-
-    def generate(self, stat_for_generate):
-        total = 0
-        generation.generate_output(stat_for_generate, total)
-
-# TODO: зачем создан класс Generation? Он ничего толком не делает.
 
 zfile_name = 'python_snippets\\voyna-i-mir.txt'
-generation = Generation(zfile_name)
-generation.get_data()
+statistics = Statistics(zfile_name)
+statistics.get_data()
 
-# TODO: сделайте метод get_sorted_stat внутри класса Statistics. Пусть generate_output вызывает этот метод внутри себя.
-stat_for_generate = sorted(generation.stat.items(), key=itemgetter(1), reverse=True)
-generation.generate(stat_for_generate)
+stat_for_generate = sorted(statistics.stat.items(), key=itemgetter(1), reverse=True)
+statistics.get_sorted_stat(stat_for_generate)
 
 # После зачета первого этапа нужно сделать упорядочивание статистики
 #  - по частоте по возрастанию

@@ -24,6 +24,15 @@
 #   и https://gitlab.skillbox.ru/vadim_shandrinov/python_base_snippets/snippets/4
 
 # TODO здесь ваш код
+file_name = 'events.txt'
+with open(file_name, mode='r') as file:
+    for line in file:
+        # print(line)
+        val1, val2, key = line.split()
+        if 'NOK' in line:
+            v = val1[1:] + ' ' + val2
+            print(v[:16])
+
 
 # После зачета первого этапа нужно сделать группировку событий
 #  - по часам
