@@ -23,7 +23,8 @@
 #   см https://refactoring.guru/ru/design-patterns/template-method
 #   и https://gitlab.skillbox.ru/vadim_shandrinov/python_base_snippets/snippets/4
 
-# TODO здесь ваш код
+# TODO ну давайте попробуем теперь упаковать это в класс и сделать часть 2.
+#  Спойлер: сейчас не слишком удачная структура, нам придется много копипастить, а это плохо.
 file_name = 'events.txt'
 with open(file_name, mode='r') as file:
     for line in file:
