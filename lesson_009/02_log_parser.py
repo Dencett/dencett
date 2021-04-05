@@ -23,17 +23,36 @@
 #   см https://refactoring.guru/ru/design-patterns/template-method
 #   и https://gitlab.skillbox.ru/vadim_shandrinov/python_base_snippets/snippets/4
 
-# TODO ну давайте попробуем теперь упаковать это в класс и сделать часть 2.
-#  Спойлер: сейчас не слишком удачная структура, нам придется много копипастить, а это плохо.
-file_name = 'events.txt'
-with open(file_name, mode='r') as file:
-    for line in file:
-        # print(line)
-        val1, val2, key = line.split()
-        if 'NOK' in line:
-            v = val1[1:] + ' ' + val2
-            print(v[:16])
 
+from collections import Counter
+
+
+class Events:
+
+    def __init__(self, filename):
+        self.filename = filename
+        self.val_list = []
+
+    def get_data(self, adjustment):
+        with open(self.filename, mode='r') as file:
+            for line in file:
+                val1, val2, key = line.split()
+                if 'NOK' in line:
+                    val = val1[1:] + ' ' + val2[:5]
+                    adjustment_val = '[' + val[:adjustment] + ']'
+                    self.val_list.append(adjustment_val)
+
+    def dictionary_output(self, file_name):
+        val_vocabulary = Counter(self.val_list)
+        with open(file_name, 'w', encoding='utf-8') as file:
+            for key, quantity in val_vocabulary.items():
+                file.write(f'{key} {quantity}\n')
+
+
+filename = 'events.txt'
+events = Events(filename)
+events.get_data(None)
+events.dictionary_output('result-file.txt')
 
 # После зачета первого этапа нужно сделать группировку событий
 #  - по часам
