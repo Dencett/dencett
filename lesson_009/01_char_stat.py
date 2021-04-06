@@ -45,42 +45,27 @@ class Statistics:
             if char.isalpha():
                 self.stat[char] += 1
 
-    def statistics_output(self):
+    def statistics_output(self, stat_for_generate):
         total = 0
         print('+---------+----------+\n'
               '|  буква  | частота  |\n' 
               '+---------+----------+')
-
-        # TODO: здесь вместо "self.stat" вызываем "get_sorted_stat"
-        for char, quantity in self.stat:
+        for char, quantity in stat_for_generate:
             total += quantity
             print(f'|{char:^9}|{quantity:^10}|')
         print(f'+---------+----------+\n'
               f'|{"итого":^9}|{total:^10}|\n'
               f'+---------+----------+')
 
-    # TODO: убираем параметр
-    def get_sorted_stat(self, stat_for_generate):
-        # TODO: вызываем sorted и возвращаем результат.
-        #  Внимание: перетирать значение поля self.stat - нельзя!
-        #  Почему? Потому это делает наш код не очевидным и не надежным.
-        #  Почему? Потому что если кто-то 2 раза попытается отстортировать "statistics.stat", то он получит ошибку.
-        #  Т.е. в первый раз statistics.stat - это словарь, а после первой сортировки - это уже кортеж из кортежей.
-        self.stat = stat_for_generate
-        return self.stat
+    def get_sorted_stat(self):
+        stat_for_generate = sorted(statistics.stat.items(), key=itemgetter(1), reverse=True)
+        self.statistics_output(stat_for_generate)
 
 
 zfile_name = 'python_snippets\\voyna-i-mir.txt'
 statistics = Statistics(zfile_name)
 statistics.get_data()
-
-# TODO: строка переедет в get_sorted_stat
-stat_for_generate = sorted(statistics.stat.items(), key=itemgetter(1), reverse=True)
-
-# TODO: убрать строку
-#statistics.get_sorted_stat(stat_for_generate)
-
-statistics.statistics_output()
+statistics.get_sorted_stat()
 
 # После зачета первого этапа нужно сделать упорядочивание статистики
 #  - по частоте по возрастанию

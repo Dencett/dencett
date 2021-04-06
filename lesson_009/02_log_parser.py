@@ -24,14 +24,14 @@
 #   и https://gitlab.skillbox.ru/vadim_shandrinov/python_base_snippets/snippets/4
 
 
-from collections import Counter
+from collections import defaultdict
 
 
 class Events:
 
     def __init__(self, filename):
         self.filename = filename
-        self.val_list = []
+        self.val_vocabulary = defaultdict(int)
 
     def get_data(self, adjustment):
         with open(self.filename, mode='r') as file:
@@ -40,22 +40,11 @@ class Events:
                 if 'NOK' in line:
                     val = val1[1:] + ' ' + val2[:5]
                     adjustment_val = '[' + val[:adjustment] + ']'
-
-                    # TODO: представьте, что лог содержит 1 млн записей в 1ую минуту.
-                    #  И мы вместо того, чтобы записать "первая минута - 1млн NOK событий", запише себе в память
-                    #  миллион раз "первая минута".
-                    #  .
-                    #  Изъян текущего способа - он тратит очень много памяти. Хранит число 1.000.000 на сотни порядков
-                    #  дешевле.
-                    #  .
-                    #  Попытка неплохая, и Counter удачно помогает, но плата слишком большая, слишком много памяти
-                    #  пожертвуем. Поэтому нам придется использовать словарь сразу.
-                    self.val_list.append(adjustment_val)
+                    self.val_vocabulary[adjustment_val] += 1
 
     def dictionary_output(self, file_name):
-        val_vocabulary = Counter(self.val_list)
         with open(file_name, 'w', encoding='utf-8') as file:
-            for key, quantity in val_vocabulary.items():
+            for key, quantity in self.val_vocabulary.items():
                 file.write(f'{key} {quantity}\n')
 
 
