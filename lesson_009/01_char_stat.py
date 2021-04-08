@@ -34,6 +34,7 @@ class Statistics:
     def __init__(self, filename):
         self.filename = filename
         self.stat = defaultdict(int)
+        self.stat_for_generate = None
 
     def get_data(self):
         with open(self.filename, 'r', encoding='cp1251') as file:
@@ -45,74 +46,70 @@ class Statistics:
             if char.isalpha():
                 self.stat[char] += 1
 
-    # TODO: как звучит задача:
-    # Вывести на консоль упорядоченную статистику в виде
-    # +---------+----------+
-    # |  буква  | частота  |
-    # +---------+----------+
-    # |    А    |   77777  |
-    # |    Б    |   55555  |
-    # |   ...   |   .....  |
-
-    # TODO: что это значит? это значит, что никак ничего, ни в каком другом порядке, выводить инфу данный класс не
-    #  должен. Только отстортированную в определенном порядке. Ниже, в части 2, у нас появится еще 3 класса,
-    #  которые будут сортировать и выводить информацию в определенном порядке.
-
-    # TODO: отсюда возникает логичный вопрос: почему мы можем вызвать statistics_output передав в него любые данные,
-    #  отсортированные в любом порядке.
-    #  Но это пол беды (см.ниже).
-    def statistics_output(self, stat_for_generate):
+    def statistics_output(self):
         total = 0
         print('+---------+----------+\n'
               '|  буква  | частота  |\n' 
               '+---------+----------+')
-        for char, quantity in stat_for_generate:
+        for char, quantity in self.stat_for_generate:
             total += quantity
             print(f'|{char:^9}|{quantity:^10}|')
         print(f'+---------+----------+\n'
               f'|{"итого":^9}|{total:^10}|\n'
               f'+---------+----------+')
 
-    # TODO: вот метод сортировки. И казалось бы все хорошо. Но почему же он вызывает statistics_output?
-    #  Метод называется "отдай отсортированную статистику", а он вместо отсотированных данных начинает выводить что-то
-    #  на экран.
     def get_sorted_stat(self):
-        stat_for_generate = sorted(statistics.stat.items(), key=itemgetter(1), reverse=True)
-        self.statistics_output(stat_for_generate)
-
-    # TODO: тут момент стиля написания кода. Нужно запомнить следующие правила:.
-    #  если название метода начинается с get_* - значит метод что-то должен возвращать.
-    #                                            Такие методы называют "геттерами".
-    #  если название метода начинается с set_* - это "сеттер", т.е. метод что-то принимает на вход, и изменяет какое-то
-    #                                            внутренне значение объекта, и ничего не возвращает.
-    #  .
-    #  Геттеры + сеттеры используют, как правило, парами. Когда нужно защитить какое-то внутреннее состояние от
-    #  вмешательств извне. Как правило это касается приватных полей.
-
-# TODO: пример
-class A:
-    def __init__(self):
-        self.__x = 100500
-    def get_x(self):
-        return self.__x
-    def set_x(self, new_x):
-        self.__x = new_x
+        self.stat_for_generate = sorted(self.stat.items(), key=itemgetter(1), reverse=True)
+        return self.stat_for_generate
 
 
 zfile_name = 'python_snippets\\voyna-i-mir.txt'
+
 statistics = Statistics(zfile_name)
 statistics.get_data()
-# TODO: вдруг нам понядобится сохранить собранную статистику, или отправить на сервер, или еще что-то с ней сделать.
-#  Как получить отсортированные данные? Вызываем "get_sorted_stat", ждем что он вернет данные, а он оказывается
-#  не только сортирует данные, но еще и выводит на экран. Т.е. метод слишком много на себя берет, он нарушает
-#  "принцип единства ответственности" (помните в 06 модуле было?)
-#  .
-#  Так можно скатить к одному методу, который будет все делать. И плохо ли это? Плохо, потому что когда мы начнем
-#  делать часть 2, мы не смогли бы перегрузить один метод "сортировать_данные", а пришлось бы весь алгоритм переписать.
-#  Помимо "принциппа единства ответственности" есть и другие, есть аббревиатура S.O.L.I.D.
 statistics.get_sorted_stat()
+statistics.statistics_output()
 
-# TODO: пришло время сделать часть 2. Посмотрим, много ли кода придется дублировать.
+
+class Statistics1(Statistics):
+
+    def get_sorted_stat(self):
+        self.stat_for_generate = sorted(self.stat.items(), key=itemgetter(1), reverse=False)
+        return self.stat_for_generate
+
+
+statistics_1 = Statistics1(zfile_name)
+statistics_1.get_data()
+statistics_1.get_sorted_stat()
+statistics_1.statistics_output()
+
+
+class Statistics2(Statistics):
+
+    def get_sorted_stat(self):
+        self.stat_for_generate = sorted(self.stat.items(), key=itemgetter(0), reverse=False)
+        return self.stat_for_generate
+
+
+statistics_2 = Statistics2(zfile_name)
+statistics_2.get_data()
+statistics_2.get_sorted_stat()
+statistics_2.statistics_output()
+
+
+class Statistics3(Statistics):
+
+    def get_sorted_stat(self):
+        self.stat_for_generate = sorted(self.stat.items(), key=itemgetter(0), reverse=True)
+        return self.stat_for_generate
+
+
+statistics_3 = Statistics3(zfile_name)
+statistics_3.get_data()
+statistics_3.get_sorted_stat()
+statistics_3.statistics_output()
+
+
 # После зачета первого этапа нужно сделать упорядочивание статистики
 #  - по частоте по возрастанию
 #  - по алфавиту по возрастанию
