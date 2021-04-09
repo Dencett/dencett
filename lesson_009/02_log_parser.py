@@ -33,14 +33,20 @@ class Events:
         self.filename = filename
         self.val_vocabulary = defaultdict(int)
 
-    def get_data(self, adjustment):
+    def collect_data(self):
         with open(self.filename, mode='r') as file:
             for line in file:
-                val1, val2, key = line.split()
-                if 'NOK' in line:
-                    val = val1[1:] + ' ' + val2[:5]
-                    adjustment_val = '[' + val[:adjustment] + ']'
-                    self.val_vocabulary[adjustment_val] += 1
+                self.collect_for_line(line=line,)
+
+    def collect_for_line(self, line):
+        val1, val2, key = line.split()
+        if 'NOK' in line:
+            val = val1[1:] + ' ' + val2[:5]
+            self.adjustment(val)
+
+    def adjustment(self, val):
+        adjustment_val = '[' + val[:] + ']'
+        self.val_vocabulary[adjustment_val] += 1
 
     def dictionary_output(self, file_name):
         with open(file_name, 'w', encoding='utf-8') as file:
@@ -49,22 +55,48 @@ class Events:
 
 
 filename = 'events.txt'
+
 events = Events(filename)
-events.get_data(None)
+events.collect_data()
 events.dictionary_output('result-file.txt')
 
-
-# TODO: пришло время сделать часть 2. Посмотрим, много ли кода придется дублировать.
-#  Тут как раз случай, описанный в 01 задаче. get_data делает почти все сам, это создаст сложности с созданием
-#  наследников.
-#  Подсказка: все классы отличаются только одним - как парсится строка. АЛгоритм у них единый!
-#  .
-#  Обязательно изучить! https://refactoring.guru/ru/design-patterns/template-method/
-#  Если уже читали - перечитайте, должно вдохновить на правильное изменение метода get_data.
 
 # После зачета первого этапа нужно сделать группировку событий
 #  - по часам
 #  - по месяцу
 #  - по году
 
-# TODO: тут должны появиться 3 класса-наследника
+class Events1(Events):
+
+    def adjustment(self, val):
+        adjustment_val = '[' + val[:-6] + ']'
+        self.val_vocabulary[adjustment_val] += 1
+
+
+events_1 = Events1(filename)
+events_1.collect_data()
+events_1.dictionary_output('result-file.txt')
+
+
+class Events2(Events):
+
+    def adjustment(self, val):
+        adjustment_val = '[' + val[:-9] + ']'
+        self.val_vocabulary[adjustment_val] += 1
+
+
+events_2 = Events2(filename)
+events_2.collect_data()
+events_2.dictionary_output('result-file.txt')
+
+
+class Events3(Events):
+
+    def adjustment(self, val):
+        adjustment_val = '[' + val[:-12] + ']'
+        self.val_vocabulary[adjustment_val] += 1
+
+
+events_3 = Events3(filename)
+events_3.collect_data()
+events_3.dictionary_output('result-file.txt')
