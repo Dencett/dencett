@@ -36,7 +36,7 @@ class Statistics:
         self.stat = defaultdict(int)
         self.stat_for_generate = None
 
-    def get_data(self):
+    def collect_data(self):
         with open(self.filename, 'r', encoding='cp1251') as file:
             for line in file:
                 self.collect_for_line(line=line)
@@ -51,62 +51,58 @@ class Statistics:
         print('+---------+----------+\n'
               '|  буква  | частота  |\n' 
               '+---------+----------+')
-        for char, quantity in self.stat_for_generate:
+        for char, quantity in self.sorted_stat():
             total += quantity
             print(f'|{char:^9}|{quantity:^10}|')
         print(f'+---------+----------+\n'
               f'|{"итого":^9}|{total:^10}|\n'
               f'+---------+----------+')
 
-    def get_sorted_stat(self):
-        self.stat_for_generate = sorted(self.stat.items(), key=itemgetter(1), reverse=True)
-        return self.stat_for_generate
+    def sorted_stat(self):
+        return sorted(self.stat.items(), key=itemgetter(1), reverse=True)
 
 
 zfile_name = 'python_snippets\\voyna-i-mir.txt'
 
 statistics = Statistics(zfile_name)
-statistics.get_data()
-statistics.get_sorted_stat()
+statistics.collect_data()
+statistics.sorted_stat()
 statistics.statistics_output()
 
 
 class Statistics1(Statistics):
 
-    def get_sorted_stat(self):
-        self.stat_for_generate = sorted(self.stat.items(), key=itemgetter(1), reverse=False)
-        return self.stat_for_generate
+    def sorted_stat(self):
+        return sorted(self.stat.items(), key=itemgetter(1), reverse=False)
 
 
 statistics_1 = Statistics1(zfile_name)
-statistics_1.get_data()
-statistics_1.get_sorted_stat()
+statistics_1.collect_data()
+statistics_1.sorted_stat()
 statistics_1.statistics_output()
 
 
 class Statistics2(Statistics):
 
-    def get_sorted_stat(self):
-        self.stat_for_generate = sorted(self.stat.items(), key=itemgetter(0), reverse=False)
-        return self.stat_for_generate
+    def sorted_stat(self):
+        return sorted(self.stat.items(), key=itemgetter(0), reverse=False)
 
 
 statistics_2 = Statistics2(zfile_name)
-statistics_2.get_data()
-statistics_2.get_sorted_stat()
+statistics_2.collect_data()
+statistics_2.sorted_stat()
 statistics_2.statistics_output()
 
 
 class Statistics3(Statistics):
 
-    def get_sorted_stat(self):
-        self.stat_for_generate = sorted(self.stat.items(), key=itemgetter(0), reverse=True)
-        return self.stat_for_generate
+    def sorted_stat(self):
+        return sorted(self.stat.items(), key=itemgetter(0), reverse=True)
 
 
 statistics_3 = Statistics3(zfile_name)
-statistics_3.get_data()
-statistics_3.get_sorted_stat()
+statistics_3.collect_data()
+statistics_3.sorted_stat()
 statistics_3.statistics_output()
 
 
