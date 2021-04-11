@@ -33,6 +33,7 @@ class Events:
         self.filename = filename
         self.val_vocabulary = defaultdict(int)
 
+    # TODO: 👍 за замену имени метода.
     def collect_data(self):
         with open(self.filename, mode='r') as file:
             for line in file:
@@ -44,9 +45,14 @@ class Events:
             val = val1[1:] + ' ' + val2[:5]
             self.adjustment(val)
 
+    # TODO: adjustment - регулировка.
+    #  Названия методов должны быть глагоами/сказуемыми. Название переменных - существительными.
     def adjustment(self, val):
         adjustment_val = '[' + val[:] + ']'
+        # TODO: строка ниже повторяется в каждом класс-наследнике. В каждом!
+        #  Как можно реорганизовать метод, чтобы строка ниже перекочевала в collect_for_line?
         self.val_vocabulary[adjustment_val] += 1
+    # TODO: метод выше по факту, парсит строку => parse_line. Как вам такой вариант названия?
 
     def dictionary_output(self, file_name):
         with open(file_name, 'w', encoding='utf-8') as file:
