@@ -33,7 +33,6 @@ class Events:
         self.filename = filename
         self.val_vocabulary = defaultdict(int)
 
-    # TODO: 👍 за замену имени метода.
     def collect_data(self):
         with open(self.filename, mode='r') as file:
             for line in file:
@@ -43,16 +42,11 @@ class Events:
         val1, val2, key = line.split()
         if 'NOK' in line:
             val = val1[1:] + ' ' + val2[:5]
-            self.adjustment(val)
+            self.parse_line(val)
+            self.val_vocabulary[self.parse_line(val)] += 1
 
-    # TODO: adjustment - регулировка.
-    #  Названия методов должны быть глагоами/сказуемыми. Название переменных - существительными.
-    def adjustment(self, val):
-        adjustment_val = '[' + val[:] + ']'
-        # TODO: строка ниже повторяется в каждом класс-наследнике. В каждом!
-        #  Как можно реорганизовать метод, чтобы строка ниже перекочевала в collect_for_line?
-        self.val_vocabulary[adjustment_val] += 1
-    # TODO: метод выше по факту, парсит строку => parse_line. Как вам такой вариант названия?
+    def parse_line(self, val):
+        return '[' + val[:] + ']'
 
     def dictionary_output(self, file_name):
         with open(file_name, 'w', encoding='utf-8') as file:
@@ -74,9 +68,8 @@ events.dictionary_output('result-file.txt')
 
 class Events1(Events):
 
-    def adjustment(self, val):
-        adjustment_val = '[' + val[:-6] + ']'
-        self.val_vocabulary[adjustment_val] += 1
+    def parse_line(self, val):
+        return '[' + val[:-6] + ']'
 
 
 events_1 = Events1(filename)
@@ -86,9 +79,8 @@ events_1.dictionary_output('result-file.txt')
 
 class Events2(Events):
 
-    def adjustment(self, val):
-        adjustment_val = '[' + val[:-9] + ']'
-        self.val_vocabulary[adjustment_val] += 1
+    def parse_line(self, val):
+        return '[' + val[:-9] + ']'
 
 
 events_2 = Events2(filename)
@@ -98,9 +90,8 @@ events_2.dictionary_output('result-file.txt')
 
 class Events3(Events):
 
-    def adjustment(self, val):
-        adjustment_val = '[' + val[:-12] + ']'
-        self.val_vocabulary[adjustment_val] += 1
+    def parse_line(self, val):
+        return '[' + val[:-12] + ']'
 
 
 events_3 = Events3(filename)
