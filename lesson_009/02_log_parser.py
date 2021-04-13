@@ -41,6 +41,7 @@ class Events:
     def collect_for_line(self, line):
         val1, val2, key = line.split()
         if 'NOK' in line:
+            # TODO: что в строках ниже лишнее?
             val = val1[1:] + ' ' + val2[:5]
             self.parse_line(val)
             self.val_vocabulary[self.parse_line(val)] += 1
@@ -97,3 +98,5 @@ class Events3(Events):
 events_3 = Events3(filename)
 events_3.collect_data()
 events_3.dictionary_output('result-file.txt')
+
+# зачет!
