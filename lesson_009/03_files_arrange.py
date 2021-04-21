@@ -39,18 +39,38 @@ import shutil
 # Для этого пригодится шаблон проектирование "Шаблонный метод"
 #   см https://refactoring.guru/ru/design-patterns/template-method
 #   и https://gitlab.skillbox.ru/vadim_shandrinov/python_base_snippets/snippets/4
-# TODO: Начинаем последовательно с части 1.
-#  1. Вручную извлекаем содержимое архива icons.zip в папку "icons";
-#     В "icons", а не во что-то другое. Распакованные файлы в гит не заливаем!)
-#  2. Пишем цикл, который с помощью os.walk() обходит все файлы в цикле;
-#  3. Используем только относительные пути. Читаем как работает os.path.join; Никаких жестко заданных "/" или "//" (только join)
-#  4. Проходим в цикле по всем файлам, получаем информацию о каждом файле os.path.getmtime;
-#  5. На основе временной метки создаем папки. Допустим файл 2017 года, май, 30 число. Создаем иерархию папок:
-#       icons_by_year/2017/05/17
-#  6. Копируем файл в созданную папку.
-#  7. Переходим к следующему файлу.
 
-# TODO здесь ваш код
+
+class Icons:
+
+    def __init__(self):
+        self.path = 'icons'
+        self.new_path = 'icons_by_years'
+
+    def determine_the_file(self):
+        for dirpath, dirnames, filenames in os.walk(self.path):
+            for file in filenames:
+                full_file_path = os.path.join(dirpath, file)
+                self.determine_the_time(full_file_path, file)
+
+    def determine_the_time(self, full_file_path, file):
+        secs = os.path.getmtime(full_file_path)
+        file_time = time.gmtime(secs)
+        self.create_folders(file_time)
+        self.copy_icons(full_file_path, file_time, file)
+
+    def create_folders(self, file_time):
+        os.makedirs(os.path.join(self.new_path, str(file_time[0]), str(file_time[1]), str(file_time[2])),
+                    exist_ok=True)
+
+    def copy_icons(self, full_file_path, file_time, file):
+        shutil.copy2(full_file_path,
+                     os.path.join(self.new_path, str(file_time[0]), str(file_time[1]), str(file_time[2]),
+                                  str(file)))
+
+
+icons = Icons()
+icons.determine_the_file()
 
 # Усложненное задание (делать по желанию)
 # Нужно обрабатывать zip-файл, содержащий фотографии, без предварительного извлечения файлов в папку.
