@@ -41,6 +41,16 @@ import shutil
 #   и https://gitlab.skillbox.ru/vadim_shandrinov/python_base_snippets/snippets/4
 
 
+# TODO: сейчас класс разбирает по папкам даже слишком хорошо. Он должен складывать картинки приблизительно так:
+#  результирующая папка
+#       icons_by_year/2018/05/cat.jpg
+#       icons_by_year/2018/05/man.jpg
+#       icons_by_year/2017/12/new_year_01.jpg
+#  .
+#  А он помимо месяца добавляет еще и день:
+#       icons_by_year/2018/05/24/cat.jpg
+#       icons_by_year/2018/05/25/man.jpg
+#       icons_by_year/2017/12/31/new_year_01.jpg
 class Icons:
 
     def __init__(self):
@@ -69,6 +79,8 @@ class Icons:
                                   str(file)))
 
 
+# TODO: а если мы захотим взять из папки icons и из папки icons2?
+#  А положит в папку icons_by_years и icons_by_years_new?
 icons = Icons()
 icons.determine_the_file()
 
