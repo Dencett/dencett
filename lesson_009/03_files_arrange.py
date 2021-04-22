@@ -89,3 +89,15 @@ icons.determine_the_file()
 # Это относится только к чтению файлов в архиве. В случае паттерна "Шаблонный метод" изменяется способ
 # получения данных (читаем os.walk() или zip.namelist и т.д.)
 # Документация по zipfile: API https://docs.python.org/3/library/zipfile.html
+# TODO: Пример разархивации файла.
+#  Давайте сначала проверять информацию о файле, а потом сразу извлекать его туда, где ему положено лежать.
+#  .
+#  Пример:
+#      file = zip_file.namelist()[100500]               # берем файл из архива
+#      filename = os.path.basename(file)                # получаем имя файла (без абсолютного пути)
+#      if filename:
+#         date = zip_file.getinfo(file).date_time       # получена дата последней модификации. Теперь можно
+#      final_path = f'...'                              # создать путь ... только join! никаких f-строк!)
+#      member = zip_file.open(file)
+#      target = open(..., mode="wb")                    # "wb" - запись бинарных данных (не текст, а бинарный код)
+#      shutil.copyfileobj(member, target)               # копируем из архива
