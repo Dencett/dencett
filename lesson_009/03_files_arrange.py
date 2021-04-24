@@ -53,9 +53,9 @@ import shutil
 #       icons_by_year/2017/12/31/new_year_01.jpg
 class Icons:
 
-    def __init__(self):
-        self.path = 'icons'
-        self.new_path = 'icons_by_years'
+    def __init__(self, path, new_path):
+        self.path = path
+        self.new_path = new_path
 
     def determine_the_file(self):
         for dirpath, dirnames, filenames in os.walk(self.path):
@@ -70,18 +70,20 @@ class Icons:
         self.copy_icons(full_file_path, file_time, file)
 
     def create_folders(self, file_time):
-        os.makedirs(os.path.join(self.new_path, str(file_time[0]), str(file_time[1]), str(file_time[2])),
+        os.makedirs(os.path.join(self.new_path, str(file_time[0]), str(file_time[1])),
                     exist_ok=True)
 
     def copy_icons(self, full_file_path, file_time, file):
         shutil.copy2(full_file_path,
-                     os.path.join(self.new_path, str(file_time[0]), str(file_time[1]), str(file_time[2]),
+                     os.path.join(self.new_path, str(file_time[0]), str(file_time[1]),
                                   str(file)))
 
 
 # TODO: а если мы захотим взять из папки icons и из папки icons2?
 #  А положит в папку icons_by_years и icons_by_years_new?
-icons = Icons()
+path = 'icons'
+new_path = 'icons_by_years'
+icons = Icons(path, new_path)
 icons.determine_the_file()
 
 # Усложненное задание (делать по желанию)
