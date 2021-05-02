@@ -3,6 +3,8 @@
 import os
 import time
 import shutil
+import zipfile
+
 
 # Нужно написать скрипт для упорядочивания фотографий (вообще любых файлов)
 # Скрипт должен разложить файлы из одной папки по годам и месяцам в другую.
@@ -41,16 +43,6 @@ import shutil
 #   и https://gitlab.skillbox.ru/vadim_shandrinov/python_base_snippets/snippets/4
 
 
-# TODO: сейчас класс разбирает по папкам даже слишком хорошо. Он должен складывать картинки приблизительно так:
-#  результирующая папка
-#       icons_by_year/2018/05/cat.jpg
-#       icons_by_year/2018/05/man.jpg
-#       icons_by_year/2017/12/new_year_01.jpg
-#  .
-#  А он помимо месяца добавляет еще и день:
-#       icons_by_year/2018/05/24/cat.jpg
-#       icons_by_year/2018/05/25/man.jpg
-#       icons_by_year/2017/12/31/new_year_01.jpg
 class Icons:
 
     def __init__(self, path, new_path):
@@ -79,27 +71,61 @@ class Icons:
                                   str(file)))
 
 
-# TODO: а если мы захотим взять из папки icons и из папки icons2?
-#  А положит в папку icons_by_years и icons_by_years_new?
 path = 'icons'
 new_path = 'icons_by_years'
-icons = Icons(path, new_path)
-icons.determine_the_file()
+path_zip = 'icons.zip'
+
+# icons = Icons(path, new_path)
+# icons.determine_the_file()
 
 # Усложненное задание (делать по желанию)
 # Нужно обрабатывать zip-файл, содержащий фотографии, без предварительного извлечения файлов в папку.
 # Это относится только к чтению файлов в архиве. В случае паттерна "Шаблонный метод" изменяется способ
 # получения данных (читаем os.walk() или zip.namelist и т.д.)
 # Документация по zipfile: API https://docs.python.org/3/library/zipfile.html
-# TODO: Пример разархивации файла.
-#  Давайте сначала проверять информацию о файле, а потом сразу извлекать его туда, где ему положено лежать.
-#  .
-#  Пример:
-#      file = zip_file.namelist()[100500]               # берем файл из архива
-#      filename = os.path.basename(file)                # получаем имя файла (без абсолютного пути)
-#      if filename:
-#         date = zip_file.getinfo(file).date_time       # получена дата последней модификации. Теперь можно
-#      final_path = f'...'                              # создать путь ... только join! никаких f-строк!)
-#      member = zip_file.open(file)
-#      target = open(..., mode="wb")                    # "wb" - запись бинарных данных (не текст, а бинарный код)
-#      shutil.copyfileobj(member, target)               # копируем из архива
+
+# print(path)
+# zip_file = zipfile.ZipFile('icons.zip')
+# for file in zip_file.namelist():
+#     filename = os.path.basename(file)
+#     if filename:
+#         date = zip_file.getinfo(file).date_time
+#         os.makedirs(os.path.join(new_path, str(date[0]), str(date[1])),
+#                     exist_ok=True)
+#         final_path = os.path.join(new_path, str(date[0]), str(date[1]), filename)
+#         member = zip_file.open(file)
+#         target = open(final_path, mode="wb")
+#         shutil.copyfileobj(member, target)
+
+
+class IconsZip:
+
+    def __init__(self, path_zip, new_path):
+        self.path_zip = path_zip
+        self.new_path = new_path
+
+    def determine_the_file(self):
+        zip_file = zipfile.ZipFile(self.path_zip)
+        for file in zip_file.namelist():
+            filename = os.path.basename(file)
+            if filename:
+                self.determine_the_time(file, filename, zip_file)
+
+    def determine_the_time(self, file, filename, zip_file):
+        date = zip_file.getinfo(file).date_time
+        self.create_folders(date)
+        self.copy_icons(file, filename, date, zip_file)
+
+    def create_folders(self, date):
+        os.makedirs(os.path.join(self.new_path, str(date[0]), str(date[1])),
+                    exist_ok=True)
+
+    def copy_icons(self, file, filename, date, zip_file):
+        final_path = os.path.join(self.new_path, str(date[0]), str(date[1]), filename)
+        member = zip_file.open(file)
+        target = open(final_path, mode="wb")
+        shutil.copyfileobj(member, target)
+
+
+icons_zip = IconsZip(path_zip, new_path)
+icons_zip.determine_the_file()
