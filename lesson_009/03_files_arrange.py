@@ -75,8 +75,8 @@ path = 'icons'
 new_path = 'icons_by_years'
 path_zip = 'icons.zip'
 
-# icons = Icons(path, new_path)
-# icons.determine_the_file()
+icons = Icons(path, new_path)
+icons.determine_the_file()
 
 # Усложненное задание (делать по желанию)
 # Нужно обрабатывать zip-файл, содержащий фотографии, без предварительного извлечения файлов в папку.
@@ -129,3 +129,5 @@ class IconsZip:
 
 icons_zip = IconsZip(path_zip, new_path)
 icons_zip.determine_the_file()
+
+# зачет!
