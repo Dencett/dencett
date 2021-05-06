@@ -67,9 +67,18 @@ list_exc = [IamGodError, DrunkError, CarCrashError, GluttonyError, DepressionErr
 def one_day():
     carma = randint(1, 7)
     dice = randint(1, 13)
+    # TODO: в задании сказано:
+    #       Напишите функцию one_day() которая возвращает количество кармы от 1 до 7
+    #       и может выкидывать исключения:
+    #  .
+    #  Т.е. raise`им исключения, а перехватываем их там, где вызывали one_day
     if dice == 1:
         try:
             raise choice(list_exc)
+        # TODO: и к слову, как перехватить сразу несколько исключений, если мы хотим их обрабатывать одинаково
+        #  * в лекциях был такой момент.
+        #  ** нет, это не значит, просто написать "except:", т.к. это перехват вообще всех исключений, а мы хотим
+        #     перехватить только определенные 6 штук.
         except IamGodError:
             print('Состояние:', IamGodError())
         except DrunkError:
@@ -88,6 +97,7 @@ def one_day():
 while total_carma < ENLIGHTENMENT_CARMA_LEVEL:
     day += 1
     print(day)
+    # TODO: обработчик в студию! Если исключение возникло, то карма не прибавляется.
     total_carma += one_day()
 
 
