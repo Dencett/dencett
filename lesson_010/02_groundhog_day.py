@@ -17,8 +17,78 @@
 # При создании собственных исключений максимально использовать функциональность
 # базовых встроенных исключений.
 
+from random import randint, choice
+
+
 ENLIGHTENMENT_CARMA_LEVEL = 777
 
-# TODO здесь ваш код
+
+class IamGodError(Exception):
+
+    def __str__(self):
+        return 'Я бог'
+
+
+class DrunkError(Exception):
+
+    def __str__(self):
+        return 'Пьяный'
+
+
+class CarCrashError(Exception):
+
+    def __str__(self):
+        return 'Автомобильная авария'
+
+
+class GluttonyError(Exception):
+
+    def __str__(self):
+        return 'Чревоугодие'
+
+
+class DepressionError(Exception):
+
+    def __str__(self):
+        return 'Депрессия'
+
+
+class SuicideError(Exception):
+
+    def __str__(self):
+        return 'Самоубийство'
+
+
+day = 0
+total_carma = 0
+list_exc = [IamGodError, DrunkError, CarCrashError, GluttonyError, DepressionError, SuicideError]
+
+
+def one_day():
+    carma = randint(1, 7)
+    dice = randint(1, 13)
+    if dice == 1:
+        try:
+            raise choice(list_exc)
+        except IamGodError:
+            print('Состояние:', IamGodError())
+        except DrunkError:
+            print('Состояние:', DrunkError())
+        except CarCrashError:
+            print('Состояние:', CarCrashError())
+        except GluttonyError:
+            print('Состояние:', GluttonyError())
+        except DepressionError:
+            print('Состояние:', DepressionError())
+        except SuicideError:
+            print('Состояние:', SuicideError())
+    return carma
+
+
+while total_carma < ENLIGHTENMENT_CARMA_LEVEL:
+    day += 1
+    print(day)
+    total_carma += one_day()
+
 
 # https://goo.gl/JnsDqu
