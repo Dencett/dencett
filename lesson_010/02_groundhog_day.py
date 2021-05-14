@@ -87,3 +87,5 @@ while total_carma < ENLIGHTENMENT_CARMA_LEVEL:
 
 
 # https://goo.gl/JnsDqu
+
+# зачет!
