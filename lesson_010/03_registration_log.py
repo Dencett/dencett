@@ -41,7 +41,7 @@ def check(line):
     if name.isalpha() is False:
         raise NotNameError
     elif age not in range(10, 99):
-        raise ValueError()  # TODO тоже укажите поясняющее сообщение
+        raise ValueError(' Неверные данные')
     else:
         for char in symbols:
             if char not in mail:
@@ -52,19 +52,11 @@ def check(line):
 with open('registrations.txt', mode='r', encoding='utf-8') as ff:
     for line in ff:
         line = line[:-1]
+        bad = open('registration_bad.log', mode='a', encoding='utf-8')
+        good = open('registraton_good.log', mode='a', encoding='utf-8')
         try:
             string = check(line)
-        except (NotNameError, NotEmailError) as exc:
-            bad = open('registration_bad.log', mode='a', encoding='utf-8')  # TODO откройте все три файла одним with до
-                                                                            #  цикла, это эффективнее и увеличит
-                                                                            #   скорость работы
+        except (NotNameError, NotEmailError, ValueError) as exc:
             bad.write(line + f'{exc}' + '\n')
-            bad.close()
-        except ValueError:  # TODO сделайте идентичную обработку исключений чтобы обрабатывать их одной веткой
-            bad = open('registration_bad.log', mode='a', encoding='utf-8')
-            bad.write(line + ' Неверные данные' + '\n')  # TODO вот это сообщение укажите при выбрасывании исключения
-            bad.close()
         else:
-            good = open('registraton_good.log', mode='a', encoding='utf-8')
             good.write(line + '\n')
-            good.close()
