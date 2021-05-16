@@ -35,7 +35,9 @@ class NotEmailError(Exception):
 
 
 def check(line):
-    name, mail, year = line.split(' ')
+    name, mail, year = line.split(' ')  # TODO Тут выбрасывается исключение когда данных в строке меньше чем 3,
+                                        #  сделайте проверку на число элементов списка до распаковки и выбрасывайте
+                                        #  исключение для такого случая
     symbols = ('@', '.')
     age = int(year)
     if name.isalpha() is False:
@@ -49,11 +51,11 @@ def check(line):
     return line
 
 
-with open('registrations.txt', mode='r', encoding='utf-8') as ff:
+with open('registrations.txt', mode='r', encoding='utf-8') as ff, \
+    open('registration_bad.log', mode='a', encoding='utf-8') as bad, \
+        open('registraton_good.log', mode='a', encoding='utf-8') as good:
     for line in ff:
         line = line[:-1]
-        bad = open('registration_bad.log', mode='a', encoding='utf-8')
-        good = open('registraton_good.log', mode='a', encoding='utf-8')
         try:
             string = check(line)
         except (NotNameError, NotEmailError, ValueError) as exc:
