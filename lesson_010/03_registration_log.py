@@ -35,20 +35,24 @@ class NotEmailError(Exception):
 
 
 def check(line):
-    name, mail, year = line.split(' ')  # TODO Тут выбрасывается исключение когда данных в строке меньше чем 3,
-                                        #  сделайте проверку на число элементов списка до распаковки и выбрасывайте
-                                        #  исключение для такого случая
-    symbols = ('@', '.')
-    age = int(year)
-    if name.isalpha() is False:
-        raise NotNameError
-    elif age not in range(10, 99):
-        raise ValueError(' Неверные данные')
+    if len(line.split()) == 3:
+        name, mail, year = line.split(' ')
+        symbols = ('@', '.')
+        if year.isdigit() is True:
+            age = int(year)
+        else:
+            raise ValueError(' Неверные данные')
+        if name.isalpha() is False:
+            raise NotNameError
+        elif age not in range(10, 99):
+            raise ValueError(' Неверные данные')
+        else:
+            for char in symbols:
+                if char not in mail:
+                    raise NotEmailError
+        return line
     else:
-        for char in symbols:
-            if char not in mail:
-                raise NotEmailError
-    return line
+        raise ValueError(' Неверные данные')
 
 
 with open('registrations.txt', mode='r', encoding='utf-8') as ff, \
