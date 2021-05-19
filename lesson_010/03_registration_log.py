@@ -35,34 +35,43 @@ class NotEmailError(Exception):
 
 
 def check(line):
-    if len(line.split()) == 3:
-        name, mail, year = line.split(' ')
-        symbols = ('@', '.')
-        if year.isdigit() is True:
-            age = int(year)
-        else:
-            raise ValueError(' Неверные данные')
-        if name.isalpha() is False:
-            raise NotNameError
-        elif age not in range(10, 99):
-            raise ValueError(' Неверные данные')
-        else:
-            for char in symbols:
-                if char not in mail:
-                    raise NotEmailError
-        return line
+    data = line.split()
+    if len(data) < 3:
+        ValueError(' Неверные данные')  # TODO укажите точнее проблему (и далее везде)
+    name, mail, year = line.split(' ')
+    symbols = ('@', '.')
+    if year.isdigit() is True:
+        age = int(year)
     else:
         raise ValueError(' Неверные данные')
+    if name.isalpha() is False:
+        raise NotNameError
+    elif age not in range(10, 99):
+        raise ValueError(' Неверные данные')
+    else:
+        for char in symbols:
+            if char not in mail:
+                raise NotEmailError
+    return line
 
 
 with open('registrations.txt', mode='r', encoding='utf-8') as ff, \
     open('registration_bad.log', mode='a', encoding='utf-8') as bad, \
         open('registraton_good.log', mode='a', encoding='utf-8') as good:
+    # TODO Имена файлов надо присваивать константам и использовать в основном коде только их.
+    #  Имена констант пишутся большими буквами. Располагают константы в начале модуля, сразу после
+    #  импортов сторонних модулей.
+    #  Может возникнуть необходимость изменить имя файла и через константу это делать удобнее - константа это
+    #  единое место изменения, а примениться она может во многих местах. Поэтому вверху её легко найти для изменения
+    #  без необходимости перелопачивания кода проекта.
+
     for line in ff:
         line = line[:-1]
         try:
             string = check(line)
         except (NotNameError, NotEmailError, ValueError) as exc:
-            bad.write(line + f'{exc}' + '\n')
+            bad.write(line + f'{exc}' + '\n')  # TODO f-строки позволяют избежать конкатенации, исправьте, пожалуйста
         else:
             good.write(line + '\n')
+
+# зачет!
