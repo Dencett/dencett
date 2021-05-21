@@ -72,4 +72,5 @@ with open(FF, mode='r', encoding='utf-8') as ff, \
         else:
             good.write(f'{line} \n')
 
+
 # зачет!
