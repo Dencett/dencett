@@ -37,3 +37,5 @@ draw_hexagon(point=sd.get_point(400, 400), start_angle=13, length=90)
 
 
 sd.pause()
+
+# зачет!
