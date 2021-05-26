@@ -28,29 +28,29 @@ class PrimeNumbers:
 
     def __init__(self, n):
         self.prime_numbers = []
-        self.n = n  # TODO назовите атрибуты полными словами в соответствии с их назначением
-        self.i = 0
+        self.number_of_iterations = n
+        self.iteration = 0
 
     def __iter__(self):
-        self.i = 1
+        self.iteration = 1
         return self
 
     def __next__(self):
-        while self.i < self.n:
-            self.i += 1
+        while self.iteration < self.number_of_iterations:
+            self.iteration += 1
             for prime in self.prime_numbers:
-                if self.i % prime == 0:
+                if self.iteration % prime == 0:
                     break
             else:
-                self.prime_numbers.append(self.i)
-                return self.i
+                self.prime_numbers.append(self.iteration)
+                return self.iteration
         else:
             raise StopIteration()
 
 
-prime_number_iterator = PrimeNumbers(n=10)
-for number in prime_number_iterator:
-    print(number)
+# prime_number_iterator = PrimeNumbers(n=10)
+# for number in prime_number_iterator:
+#     print(number)
 
 # зачет!
 
@@ -59,11 +59,15 @@ for number in prime_number_iterator:
 # Распечатать все простые числа до 10000 в столбик
 
 
-# def prime_numbers_generator(n):
-#     pass
-#     # TODO здесь ваш код
-#
-#
+def prime_numbers_generator(n):
+    for number in range(2, n + 1):
+        for prime in range(2, number):
+            if number % prime == 0:
+                break
+        else:
+            yield number
+
+
 # for number in prime_numbers_generator(n=10000):
 #     print(number)
 
