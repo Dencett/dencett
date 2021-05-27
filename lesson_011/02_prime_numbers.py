@@ -61,7 +61,7 @@ class PrimeNumbers:
 
 def prime_numbers_generator(n):
     for number in range(2, n + 1):
-        for prime in range(2, number):
+        for prime in range(2, number):  # TODO в исходной функции более оптимальное решение, просто повторите его тут
             if number % prime == 0:
                 break
         else:
