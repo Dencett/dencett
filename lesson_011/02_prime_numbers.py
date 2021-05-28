@@ -14,6 +14,7 @@ def get_prime_numbers(n):
             prime_numbers.append(number)
     return prime_numbers
 
+
 # for number in get_prime_numbers(10000):
 #     print(number)
 
@@ -60,16 +61,18 @@ class PrimeNumbers:
 
 
 def prime_numbers_generator(n):
+    prime_numbers = []
     for number in range(2, n + 1):
-        for prime in range(2, number):  # TODO в исходной функции более оптимальное решение, просто повторите его тут
+        for prime in prime_numbers:
             if number % prime == 0:
                 break
         else:
+            prime_numbers.append(number)
             yield number
 
 
-# for number in prime_numbers_generator(n=10000):
-#     print(number)
+for number in prime_numbers_generator(n=10000):
+    print(number)
 
 
 # Часть 3
