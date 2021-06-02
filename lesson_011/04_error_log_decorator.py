@@ -9,8 +9,13 @@
 
 
 def log_errors(func):
-    pass
-    # TODO здесь ваш код
+    def fun_error(args):
+        data = args.split()
+        if len(data) < 3:
+            raise ValueError('Недостаточно данных')
+        result = func(args)
+        return result
+    return fun_error
 
 
 # Проверить работу на следующих функциях
