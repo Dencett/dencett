@@ -9,11 +9,14 @@
 
 
 def log_errors(func):
-    def fun_error(args):
-        data = args.split()
+    def fun_error(args):  # TODO список неименованных параметром правильно указать со звёздочкой, а так же не забыть
+                          #  именованные: *args, **kwargs
+        data = args.split()  # TODO этого делать не надо!
         if len(data) < 3:
             raise ValueError('Недостаточно данных')
-        result = func(args)
+            # TODO Декоратор должен только "поймать" исключение, записать в лог, и пробросить исключение далее,
+            #  чтобы код который запустил декорированную функцию тоже мог обработать её исключение
+        result = func(*args, **kwargs)
         return result
     return fun_error
 

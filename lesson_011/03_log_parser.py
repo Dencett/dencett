@@ -53,7 +53,7 @@ class Events:
         while self.result:
             self.result = False
             return self.val_vocabulary[-1], self.event_count
-        raise StopIteration()
+        raise StopIteration()  # TODO перед завершением работы итератора надо закрыть файл
 
 
 events = Events(FILENAME)
