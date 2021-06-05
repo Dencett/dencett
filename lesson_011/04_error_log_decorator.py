@@ -9,15 +9,16 @@
 
 
 def log_errors(func):
-    def fun_error(args):  # TODO список неименованных параметром правильно указать со звёздочкой, а так же не забыть
-                          #  именованные: *args, **kwargs
-        data = args.split()  # TODO этого делать не надо!
-        if len(data) < 3:
-            raise ValueError('Недостаточно данных')
-            # TODO Декоратор должен только "поймать" исключение, записать в лог, и пробросить исключение далее,
-            #  чтобы код который запустил декорированную функцию тоже мог обработать её исключение
-        result = func(*args, **kwargs)
-        return result
+    def fun_error(*args, **kwargs):
+        try:
+            result = func(*args, **kwargs)
+            return result
+        except ZeroDivisionError as exp:
+            log_string = f'{func.__name__} {type(exp)} you cannot divide by zero!!!'
+            print(log_string)
+        except Exception as exp:
+            log_string = f'{func.__name__} {type(exp)} {exp}'
+            print(log_string)
     return fun_error
 
 
