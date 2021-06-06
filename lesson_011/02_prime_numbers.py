@@ -73,8 +73,8 @@ def prime_numbers_generator(n):
             yield number
 
 
-for number in prime_numbers_generator(n=10000):
-    print(number)
+# for number in prime_numbers_generator(n=10000):
+#     print(number)
 
 # зачет!
 
@@ -94,7 +94,7 @@ for number in prime_numbers_generator(n=10000):
 #
 # Подсказка: возможно, нужно будет добавить параметр в итератор/генератор.
 
-def prime_lucky_numbers_generator(n):
+def prime_lucky_numbers_generator(n):  # TODO Исправьте стиль кода
     for number in range(10, n + 1):
         str_number = str(number)
         part = math.floor(len(str_number) / 2)
@@ -102,10 +102,15 @@ def prime_lucky_numbers_generator(n):
         number_part2 = sum(map(int, str_number[:- part - 1:-1]))
         if number_part1 == number_part2:
             yield number
+# TODO 1) Согласно заданию, надо создать три функции-фильтра (ФФ). ФФ принимает число и возвращает булево значение.
+#  Пока нет ни одной такой функции
+#  2) После создания ФФ нужно придумать несколько вариантов "скрещения" генератора простых чисел и ФФ. Например, создать
+#  генератор простых чисел (новый, не надо модифицировать код задания 2, скопируйте сюда и правьте) с дополнительным
+#  параметром для ФФ.
 
 
-# for number in prime_lucky_numbers_generator(n=10000):
-#     print(number)
+for number in prime_lucky_numbers_generator(n=10000):
+    print(number)
 
 
 def prime_palindromic_numbers_generator(n):

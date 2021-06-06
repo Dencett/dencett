@@ -69,7 +69,7 @@ def events(filename):
         for line in file:
             val1, val2, key = line.split()
             if 'NOK' in line:
-                val = val1[1:] + ' ' + val2[:5]
+                val = f'{val1[1:]}  {val2[:5]}'  # f-cтроки удобны
                 val_vocabulary[val] += 1
         for group_time, event_count in val_vocabulary.items():
             yield group_time, event_count
@@ -79,3 +79,4 @@ def events(filename):
 # for group_time, event_count in grouped_events:
 #     print(f'[{group_time}] {event_count}')
 
+# зачет!

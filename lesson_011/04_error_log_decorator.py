@@ -16,9 +16,11 @@ def log_errors(func):
         except ZeroDivisionError as exp:
             log_string = f'{func.__name__} {type(exp)} you cannot divide by zero!!!'
             print(log_string)
-        except Exception as exp:
-            log_string = f'{func.__name__} {type(exp)} {exp}'
+        except Exception as exp: # TODO сделайте одной этой веткой, сообщение о делении на ноль будет "автоматически"
+            log_string = f'{func.__name__} {type(exp)} {exp}'  # TODO также нужно вывести параметры функции с котоыми
+                                                               #  она была вызвана
             print(log_string)
+            # TODO нужно выбросить пойманное исключение дальше
     return fun_error
 
 
