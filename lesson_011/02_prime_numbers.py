@@ -94,54 +94,48 @@ def prime_numbers_generator(n):
 #
 # Подсказка: возможно, нужно будет добавить параметр в итератор/генератор.
 
-def prime_lucky_numbers_generator(n):  # TODO Исправьте стиль кода
-    for number in range(10, n + 1):
-        str_number = str(number)
-        part = math.floor(len(str_number) / 2)
-        number_part1 = sum(map(int, str_number[:part]))
-        number_part2 = sum(map(int, str_number[:- part - 1:-1]))
-        if number_part1 == number_part2:
+def lucky_numbers_generator(number):
+    str_number = str(number)
+    part = math.floor(len(str_number) / 2)
+    number_part1 = sum(map(int, str_number[:part]))
+    number_part2 = sum(map(int, str_number[:- part - 1:-1]))
+    if number_part1 == number_part2:
+        return True
+    else:
+        return False
+
+
+def check_palindromic_numbers(number):
+    str_number = str(number)
+    reverse_number = (str_number[::-1])
+    if str_number == reverse_number:
+        return True
+    else:
+        return False
+
+
+def check_square_numbers(number):
+    root = number ** 0.5
+    if root == int(root):
+        return True
+    else:
+        return False
+
+
+def get_numbers_generator(FF, quantity):
+    for number in range(1, quantity + 1):
+        if FF(number) is True:
             yield number
-# TODO 1) Согласно заданию, надо создать три функции-фильтра (ФФ). ФФ принимает число и возвращает булево значение.
-#  Пока нет ни одной такой функции
-#  2) После создания ФФ нужно придумать несколько вариантов "скрещения" генератора простых чисел и ФФ. Например, создать
-#  генератор простых чисел (новый, не надо модифицировать код задания 2, скопируйте сюда и правьте) с дополнительным
-#  параметром для ФФ.
 
 
-for number in prime_lucky_numbers_generator(n=10000):
+for number in get_numbers_generator(lucky_numbers_generator, 1000):
     print(number)
 
 
-def prime_palindromic_numbers_generator(n):
-    for number in range(10, n + 1):
-        str_number = str(number)
-        reverse_number = (str_number[::-1])
-        if str_number == reverse_number:
-            yield number
-
-# for number in prime_palindromic_numbers_generator(n=10000):
-#     print(number)
+for number in get_numbers_generator(check_palindromic_numbers, 1000):
+    print(number)
 
 
-def prime_nonhypotenuse_numbers_generator(n):
-    prime_numbers = []
-    for number in range(1, n + 1):
-        cycle = True
-        for prime_1 in prime_numbers:
-            if cycle == True:
-                for prime_2 in prime_numbers:
-                    if prime_1 ** 2 + prime_2 ** 2 == number ** 2:
-                        cycle = False
-                        prime_numbers.append(number)
-                        break
-            else:
-                break
-        else:
-            prime_numbers.append(number)
-            yield number
-
-
-# for number in prime_nonhypotenuse_numbers_generator(n=10000):
-#     print(number)
+for number in get_numbers_generator(check_square_numbers, 1000):
+    print(number)
 

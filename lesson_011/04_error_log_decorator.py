@@ -13,14 +13,17 @@ def log_errors(func):
         try:
             result = func(*args, **kwargs)
             return result
-        except ZeroDivisionError as exp:
-            log_string = f'{func.__name__} {type(exp)} you cannot divide by zero!!!'
-            print(log_string)
-        except Exception as exp: # TODO сделайте одной этой веткой, сообщение о делении на ноль будет "автоматически"
-            log_string = f'{func.__name__} {type(exp)} {exp}'  # TODO также нужно вывести параметры функции с котоыми
-                                                               #  она была вызвана
+        except Exception as exp:  # TODO сделайте одной этой веткой, сообщение о делении на ноль будет "автоматически"
+            log_string = f'{func.__name__} {type(exp)} {args} {exp}'  # TODO также нужно вывести параметры функции с котоыми
+                                                                      #  она была вызвана
+
+            # Вопрос: как указать <параметры вызова>, там получается и *args, и **kwargs
+            # и также, если количество данных меньше, то так и оставлять?
+
             print(log_string)
             # TODO нужно выбросить пойманное исключение дальше
+
+            # Вопрос: не особо понял, как выбросить пойманное исключение
     return fun_error
 
 
