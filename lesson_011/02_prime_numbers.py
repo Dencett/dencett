@@ -99,7 +99,7 @@ def lucky_numbers_generator(number):
     part = math.floor(len(str_number) / 2)
     number_part1 = sum(map(int, str_number[:part]))
     number_part2 = sum(map(int, str_number[:- part - 1:-1]))
-    if number_part1 == number_part2:
+    if number_part1 == number_part2:  # TODO это не pythonic way, просто укажите сравнение в return, этого достаточно
         return True
     else:
         return False
@@ -109,7 +109,7 @@ def check_palindromic_numbers(number):
     str_number = str(number)
     reverse_number = (str_number[::-1])
     if str_number == reverse_number:
-        return True
+        return True  # TODO Аналогично предыдущему (и далее поправьте)
     else:
         return False
 
@@ -122,10 +122,13 @@ def check_square_numbers(number):
         return False
 
 
-def get_numbers_generator(FF, quantity):
+def get_numbers_generator(FF, quantity):  # TODO параметр функции это обычная переменная (хоть и локальная), её имя
+                                          #  поэтому - маленьким буквами
     for number in range(1, quantity + 1):
         if FF(number) is True:
             yield number
+# TODO требуется "скрестить" напрямую генератор и фильт, для этого можно добавить параметр генератору и выбрасывать
+#  найденные простые числа соотвествующие и фильтру. Или воспользоваться встроенной функцией filter
 
 
 for number in get_numbers_generator(lucky_numbers_generator, 1000):
