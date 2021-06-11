@@ -7,26 +7,23 @@
 # Формат лога: <имя функции> <параметры вызова> <тип ошибки> <текст ошибки>
 # Лог файл открывать каждый раз при ошибке в режиме 'a'
 
+FE = "function_errors.log"
+
 
 def log_errors(func):
     def fun_error(*args, **kwargs):
         try:
             result = func(*args, **kwargs)
             return result
-        except Exception as exp:  # TODO сделайте одной этой веткой, сообщение о делении на ноль будет "автоматически"
-            log_string = f'{func.__name__} {type(exp)} {args}  {exp}'  # TODO также нужно вывести параметры функции с котоыми
-                                                                      #  она была вызвана
+        except Exception as exp:
+            log_string = f'{func.__name__} {type(exp)} {args if args else ""}{kwargs if kwargs else ""} {exp}'
+            with open(FE, mode='a', encoding='utf-8') as function_errors:
+                function_errors.write(f'{log_string}\n')
+            try:
+                raise func(*args, **kwargs)
+            except ZeroDivisionError as exp:
+                print(f'Invalid format: {exp}')
 
-            # Вопрос: как указать вместе *args, и **kwargs
-            # и также, если количество данных меньше, то так и оставлять?
-            # TODO просто добавьте кварги также как арги, если вас смущают пустые скобки, то можно сделать так:
-            #  {kwargs if kwargs else ""}
-            print(log_string)
-            # TODO нужно выбросить пойманное исключение дальше
-
-            # Вопрос: не особо понял, как выбросить пойманное исключение
-            # TODO как обычно, с помощью raise, причём если не указать какое именно исключени, то выбросится именно то
-            #  что поймано (чего нам и надо)
     return fun_error
 
 
