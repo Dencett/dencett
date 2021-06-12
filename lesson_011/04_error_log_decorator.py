@@ -19,10 +19,12 @@ def log_errors(func):
             log_string = f'{func.__name__} {type(exp)} {args if args else ""}{kwargs if kwargs else ""} {exp}'
             with open(FE, mode='a', encoding='utf-8') as function_errors:
                 function_errors.write(f'{log_string}\n')
-            try:
-                raise func(*args, **kwargs)
-            except ZeroDivisionError as exp:
-                print(f'Invalid format: {exp}')
+            raise exp  # можно даже просто raise - выбросится именно пойманное исключение
+            # try:  А функцию func вызвали уже раннее, второй раз её выполнять смысла нет
+            #     raise func(*args, **kwargs)  Выбросить исключение надо именнно "дальше", а не ловить его тут.
+            #                           Надо чтобы код вызвавший декорированную функцию сам мог обработать исключение
+            # except ZeroDivisionError as exp:
+            #     print(f'Invalid format: {exp}')
 
     return fun_error
 
@@ -66,3 +68,5 @@ perky(param=42)
 # @log_errors('function_errors.log')
 # def func():
 #     pass
+
+# зачет!

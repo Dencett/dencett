@@ -94,7 +94,8 @@ def prime_numbers_generator(n):
 #
 # Подсказка: возможно, нужно будет добавить параметр в итератор/генератор.
 
-def lucky_numbers_generator(number):
+def lucky_numbers_generator(number):  # TODO это не генератор, а функция-фильтр (и так и должно быть, только поправьте
+                                      # имя на is_lucky_number - обычно фильтры так называют)
     str_number = str(number)
     part = math.floor(len(str_number) / 2)
     number_part1 = sum(map(int, str_number[:part]))
@@ -102,24 +103,37 @@ def lucky_numbers_generator(number):
     return number_part1 == number_part2
 
 
-def check_palindromic_numbers(number):
+def check_palindromic_numbers(number):  # TODO is_palindrom_number
     str_number = str(number)
     reverse_number = (str_number[::-1])
     return str_number == reverse_number
 
 
-def check_square_numbers(number):
+def check_square_numbers(number):  # TODO is_square_number
     root = number ** 0.5
     return root == int(root)
 
 
-def get_numbers_generator(quantity):
-    for number in range(1, quantity + 1):
-        if lucky_numbers_generator(number) \
-                and check_palindromic_numbers(number) \
-                and check_square_numbers(number) is True:
-            yield number
+# def get_numbers_generator(quantity):
+#     for number in range(1, quantity + 1):
+#         if lucky_numbers_generator(number) \
+#                 and check_palindromic_numbers(number) \
+#                 and check_square_numbers(number) is True:
+#             yield number
+
+def prime_numbers_generator_filtered(n, filter_func):
+    prime_numbers = []
+    for number in range(2, n + 1):
+        for prime in prime_numbers:
+            if number % prime == 0:
+                break
+        else:
+            prime_numbers.append(number)
+            yield number  # TODO этот код надо выполнять только если filter_func(number) возвратит True
 
 
-for number in get_numbers_generator(100000):
+for number in prime_numbers_generator_filtered(100000, is_lucky_number):
     print(number)
+
+# TODO Второй вариант сделайте с помощью filter: http://pythonicway.com/python-functinal-programming нужно использовать
+#  prime_numbers_generator и любую из ваших функций-фильтров
