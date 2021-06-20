@@ -121,7 +121,7 @@ def prime_numbers_generator_filtered(n, filter_func):
                 break
         else:
             prime_numbers.append(number)
-            if filter_func(number) is True:
+            if filter_func(number) is True:  # TODO это не pythonic way, проще и вернее так: if filter_func(number):
                 yield number
 
 
@@ -145,7 +145,8 @@ def prime_numbers_generator_filtered(n, filter_func):
 #             prime_numbers.append(number)
 #             filter(lambda number: filter_func(number) is True, prime_numbers)
 #             yield number
-#
+# todo Нет, это делается не так: функции filter передаётся исходных (не доработанный) генератор и функция-фильтр, всё
+#  решение в одну строку (или в две если считать цикл который итерирует по результату фильтрации).
 #
 # for number in prime_numbers_generator_filtered2(1000, is_square_number):
 #     print(number)
