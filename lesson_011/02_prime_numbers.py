@@ -116,24 +116,40 @@ def is_square_number(number):
 def prime_numbers_generator_filtered(n, filter_func):
     prime_numbers = []
     for number in range(2, n + 1):
-        if filter_func(number) is True:  # TODO Нельзя нарушать алгоритм поиска простых чисел... (см. далее)
-            for prime in prime_numbers:
-                if number % prime == 0:
-                    break
-            else:
-                prime_numbers.append(number)
-                yield number  # TODO только эта строка должна зависеть от фильтра: если найденное простое удовлетворяет
-                # фильтру - тогда возвращаем его
+        for prime in prime_numbers:
+            if number % prime == 0:
+                break
+        else:
+            prime_numbers.append(number)
+            if filter_func(number) is True:
+                yield number
 
 
-for number in prime_numbers_generator_filtered(1000, is_lucky_number):
-    print(number)
+# for number in prime_numbers_generator_filtered(1000, is_lucky_number):
+#     print(number)
+#
+# for number in prime_numbers_generator_filtered(1000, is_palindromic_number):
+#     print(number)
+#
+# for number in prime_numbers_generator_filtered(1000, is_square_number):
+#     print(number)
 
-for number in prime_numbers_generator_filtered(1000, is_palindromic_number):
-    print(number)
+#
+# def prime_numbers_generator_filtered2(n, filter_func):
+#     prime_numbers = []
+#     for number in range(2, n + 1):
+#         for prime in prime_numbers:
+#             if number % prime == 0:
+#                 break
+#         else:
+#             prime_numbers.append(number)
+#             filter(lambda number: filter_func(number) is True, prime_numbers)
+#             yield number
+#
+#
+# for number in prime_numbers_generator_filtered2(1000, is_square_number):
+#     print(number)
 
-for number in prime_numbers_generator_filtered(1000, is_square_number):
-    print(number)
 
 # TODO Также нужен второй вариант, например с помощью встроенной функции filter:
 #  http://pythonicway.com/python-functinal-programming
