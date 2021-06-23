@@ -135,7 +135,8 @@ def prime_numbers_generator_filtered(n, filter_func):
 #     print(number)
 
 #
-def prime_numbers_generator_filtered2(n):
+def prime_numbers_generator_filtered2(n):  # TODO надо было использовать исходный генератор из части 2, и он не
+                                           #  фильтрованный
     prime_numbers = []
     for number in range(2, n + 1):
         for prime in prime_numbers:
@@ -157,3 +158,5 @@ for number in numbers_generator_filtered:
 numbers_generator_filtered = list(filter(is_square_number, prime_numbers_generator_filtered2(1000)))
 for number in numbers_generator_filtered:
     print(number)
+
+# зачет!
