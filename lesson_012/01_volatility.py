@@ -73,4 +73,54 @@
 #     def run(self):
 #         <обработка данных>
 
-# TODO написать код в однопоточном/однопроцессорном стиле
+
+import os
+from operator import itemgetter
+
+
+class Trader():
+    def __init__(self, path):
+        self.path = path
+        self.path_list = []
+        self.volatility_dict = {}
+        self.zero_volatility = []
+
+    def run(self):
+        for link in self.path_list:
+            with open(link) as file:
+                prices_list = []
+                for line in file:
+                    secid, tradetime, price, quantity = line.split(',')
+                    if price.isalpha():
+                        continue
+                    prices_list.append(float(price))
+                half_sum = (max(prices_list) + min(prices_list)) / 2
+                volatility = round(((max(prices_list) - min(prices_list)) / half_sum) * 100, 2)
+                if volatility > 0:
+                    self.volatility_dict[secid] = volatility
+                else:
+                    self.zero_volatility.append(secid)
+
+    def get_path_list(self):
+        for name, dirs, files in os.walk(self.path):
+            for file in files:
+                path = os.path.join(name, file)
+                self.path_list.append(path)
+
+    def measure_volatility(self):
+        order_of_volatility = sorted(self.volatility_dict.items(), key=itemgetter(1), reverse=True)
+        print('Максимальная волатильность:')
+        for ticker, volatility in order_of_volatility[:3]:
+            print(f'{ticker} {volatility} %')
+        print('Минимальная волатильность:')
+        for ticker, volatility in order_of_volatility[-1:-4:-1]:
+            print(f'{ticker} {volatility} %')
+        print('Нулевая волатильность:')
+        print(', '.join(self.zero_volatility))
+
+
+if __name__ == '__main__':
+    trader = Trader('trades')
+    trader.get_path_list()
+    trader.run()
+    trader.measure_volatility()
