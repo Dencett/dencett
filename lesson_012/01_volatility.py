@@ -77,71 +77,66 @@
 import os
 from operator import itemgetter
 
+volatility_dict = {}
+zero_volatility = []
 
-# TODO Если класс не явлеятся наследником другого класса, круглые скобки можно убрать.
-class Trader():
+
+class Trader:
     def __init__(self, path):
         self.path = path
-        self.path_list = []
-        self.volatility_dict = {}
-        self.zero_volatility = []
 
     def run(self):
-        for link in self.path_list:
-            with open(link) as file:
-                prices_list = []
-                # TODO Для поиска максимума и минимума не нужно сохранять всё значения.
-                #  Значений может быть очень много, и для их хранения потребуется дополнительная память.
-                #  Задайте начальные значения минимума и максимума и меняйте их, если в одной из строк
-                #  встретится значение больше или меньше заданного.
-                # TODO Можно воспользоваться знанием о том, что файл является итерируемым объектом
-                #  и сначала считать не сохраняя первую строку с заголовками, а потом
-                #  первую строку с данными, из которой можно получить название тикера и начальное
-                #  значение цены для price_min и price_max. Получить следующий элемент итерируемого
-                #  объекта можно, используя функцию next:
-                #  line = next(file)
-                for line in file:
-                    secid, tradetime, price, quantity = line.split(',')
-                    if price.isalpha():
-                        continue
-                    prices_list.append(float(price))
-                half_sum = (max(prices_list) + min(prices_list)) / 2
-                volatility = round(((max(prices_list) - min(prices_list)) / half_sum) * 100, 2)
-                if volatility > 0:
-                    self.volatility_dict[secid] = volatility
-                else:
-                    self.zero_volatility.append(secid)
-
-    def get_path_list(self):
-        for name, dirs, files in os.walk(self.path):
-            for file in files:
-                path = os.path.join(name, file)
-                self.path_list.append(path)
-
-    def measure_volatility(self):
-        order_of_volatility = sorted(self.volatility_dict.items(), key=itemgetter(1), reverse=True)
-        print('Максимальная волатильность:')
-        for ticker, volatility in order_of_volatility[:3]:
-            print(f'{ticker} {volatility} %')
-        print('Минимальная волатильность:')
-        for ticker, volatility in order_of_volatility[-1:-4:-1]:
-            print(f'{ticker} {volatility} %')
-        print('Нулевая волатильность:')
-        print(', '.join(self.zero_volatility))
+        with open(self.path) as file:
+            price_min = None
+            price_max = None
+            while True:
+                line = next(file, 'end')
+                if line == 'end':
+                    break
+                secid, tradetime, price, quantity = line.split(',')
+                if not price.isalpha():
+                    if price_min == None and price_max == None:
+                        price_min = float(price)
+                        price_max = float(price)
+                    if price_min > float(price):
+                        price_min = float(price)
+                    if price_max < float(price):
+                        price_max = float(price)
+            half_sum = (price_max + price_min) / 2
+            volatility = round(((price_max - price_min) / half_sum) * 100, 2)
+            if volatility > 0:
+                volatility_dict[secid] = volatility
+            else:
+                zero_volatility.append(secid)
 
 
-# TODO Класс тикера должен отвечать за обработку одного файла и в нём обязательно
-#  должен быть метод run().
-#  Получение списка файлов и цикл по ним нужно сделать либо в ещё одном классе,
-#  либо в функции. Должно получиться что-то подобное:
-#  tickers_data = {}
-#  for file in files:
-#      ticker = Ticker(file)
-#      ticker.run()
-#      ...  # Обработка результата из ticker.volatility
+def get_path_list(path):
+    file_list = []
+    for name, dirs, files in os.walk(path):
+        for file in files:
+            path = os.path.join(name, file)
+            file_list.append(path)
+    return file_list
+
+
+def measure_volatility():
+    order_of_volatility = sorted(volatility_dict.items(), key=itemgetter(1), reverse=True)
+    print('Максимальная волатильность:')
+    for ticker, volatility in order_of_volatility[:3]:
+        print(f'{ticker} {volatility} %')
+    print('Минимальная волатильность:')
+    for ticker, volatility in order_of_volatility[-1:-4:-1]:
+        print(f'{ticker} {volatility} %')
+    print('Нулевая волатильность:')
+    print(', '.join(zero_volatility))
+
+
+def tickers_files(path):
+    for file in get_path_list(path):
+        trader = Trader(file)
+        trader.run()
+    measure_volatility()
+
 
 if __name__ == '__main__':
-    trader = Trader('trades')
-    trader.get_path_list()
-    trader.run()
-    trader.measure_volatility()
+    tickers_files('trades')
