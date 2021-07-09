@@ -87,6 +87,10 @@ class Trader:
 
     def run(self):
         with open(self.path) as file:
+            # TODO Нужно оптимизировать основной цикл, убрав проверку которая нужна
+            #  только для первой строки, а выполняется для каждой.
+            #  Прочитайте из файла первую строку с данными и сохраните значение
+            #  цены из неё в переменные price_min и price_max.
             price_min = None
             price_max = None
             while True:
@@ -140,3 +144,5 @@ def tickers_files(path):
 
 if __name__ == '__main__':
     tickers_files('trades')
+
+# TODO После исправления замечания переходите ко второй части.
