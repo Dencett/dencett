@@ -87,25 +87,23 @@ class Trader:
 
     def run(self):
         with open(self.path) as file:
-            # TODO Нужно оптимизировать основной цикл, убрав проверку которая нужна
-            #  только для первой строки, а выполняется для каждой.
-            #  Прочитайте из файла первую строку с данными и сохраните значение
-            #  цены из неё в переменные price_min и price_max.
-            price_min = None
-            price_max = None
+            line = next(file)
+            secid, tradetime, price, quantity = line.split(',')
+            price_min = price
+            price_max = price
+            price_header = price
             while True:
                 line = next(file, 'end')
                 if line == 'end':
                     break
                 secid, tradetime, price, quantity = line.split(',')
-                if not price.isalpha():
-                    if price_min == None and price_max == None:
-                        price_min = float(price)
-                        price_max = float(price)
-                    if price_min > float(price):
-                        price_min = float(price)
-                    if price_max < float(price):
-                        price_max = float(price)
+                if price_min == price_header and price_max == price_header:
+                    price_min = float(price)
+                    price_max = float(price)
+                if price_min > float(price):
+                    price_min = float(price)
+                if price_max < float(price):
+                    price_max = float(price)
             half_sum = (price_max + price_min) / 2
             volatility = round(((price_max - price_min) / half_sum) * 100, 2)
             if volatility > 0:
@@ -144,5 +142,3 @@ def tickers_files(path):
 
 if __name__ == '__main__':
     tickers_files('trades')
-
-# TODO После исправления замечания переходите ко второй части.
