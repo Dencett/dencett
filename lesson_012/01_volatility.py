@@ -87,33 +87,18 @@ class Trader:
 
     def run(self):
         with open(self.path) as file:
-            # TODO Перед следующей строкой нужно сделать ещё один вызов функции next,
-            #  чтобы пропустить первую строку с заголовком, которая не используется.
+            next(file)
             line = next(file)
             secid, tradetime, price, quantity = line.split(',')
-            # TODO Если строка с заголовком будет пропускаться, то
-            #  в price_min и price_max нужно будет сохранить число,
-            #  а не строку.
-            price_min = price
-            price_max = price
-            price_header = price
-            # TODO Если сделать цикл for вместо while,
-            #  то можно будет убрать первые 3 строки внутри цикла.
-            while True:
-                line = next(file, 'end')
-                if line == 'end':
-                    break
+            price_min = float(price)
+            price_max = float(price)
+            for line in file:
                 secid, tradetime, price, quantity = line.split(',')
-                # TODO Когда в price_min и price_max будет сохранено число,
-                #  проверка и следующие 2 строки будет не нужны.
-                if price_min == price_header and price_max == price_header:
-                    price_min = float(price)
-                    price_max = float(price)
-                # TODO Значение price лучше сразу один раз преобразовать в float.
-                if price_min > float(price):
-                    price_min = float(price)
-                if price_max < float(price):
-                    price_max = float(price)
+                price = float(price)
+                if price_min > price:
+                    price_min = price
+                if price_max < price:
+                    price_max = price
             half_sum = (price_max + price_min) / 2
             volatility = round(((price_max - price_min) / half_sum) * 100, 2)
             if volatility > 0:
