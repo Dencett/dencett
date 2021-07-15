@@ -23,15 +23,12 @@ import os
 from operator import itemgetter
 from threading import Thread
 
-volatility_dict = {}
-zero_volatility = []
-
 
 class Trader(Thread):
     def __init__(self, path):
         super().__init__()
         self.path = path
-        self.need_stop = False
+        self.data = None
 
     def run(self):
         with open(self.path) as file:
@@ -50,11 +47,9 @@ class Trader(Thread):
             half_sum = (price_max + price_min) / 2
             volatility = round(((price_max - price_min) / half_sum) * 100, 2)
             if volatility > 0:
-                # TODO плохо что класс работает с переменными из глобальной области неявно - передавайте их объекту при
-                #  его создании (т.е. через параметры метода __init__)
-                volatility_dict[secid] = volatility
+                self.data = [secid, volatility]
             else:
-                zero_volatility.append(secid)
+                self.data = secid
 
 
 def get_path_list(path):
@@ -66,16 +61,14 @@ def get_path_list(path):
     return file_list
 
 
-def measure_volatility():
+def measure_volatility(volatility_dict, zero_volatility):
     order_of_volatility = sorted(volatility_dict.items(), key=itemgetter(1), reverse=True)
     print('Максимальная волатильность:')
     for ticker, volatility in order_of_volatility[:3]:
         print(f'{ticker} {volatility} %')
     print('Минимальная волатильность:')
-    for ticker, volatility in order_of_volatility[-1:-4:-1]:
+    for ticker, volatility in order_of_volatility[-3:]:
         print(f'{ticker} {volatility} %')
-    # TODO Если сделать вывод минимальных волатильностей согласно заданию (цитата: Волатильности указывать в порядке
-    #  убывания.), то срез будет проще
     print('Нулевая волатильность:')
     print(', '.join(zero_volatility))
 
@@ -88,9 +81,16 @@ def trader_run(tickers):
 
 
 def tickers_files(path):
+    volatility_dict = {}
+    zero_volatility = []
     tickers = [Trader(file) for file in get_path_list(path)]
     trader_run(tickers)
-    measure_volatility()
+    for ticker in tickers:
+        if type(ticker.data) is list:
+            volatility_dict[ticker.data[0]] = ticker.data[1]
+        else:
+            zero_volatility.append(ticker.data)
+    measure_volatility(volatility_dict, zero_volatility)
 
 
 if __name__ == '__main__':
