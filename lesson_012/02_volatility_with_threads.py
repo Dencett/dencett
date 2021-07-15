@@ -50,6 +50,8 @@ class Trader(Thread):
             half_sum = (price_max + price_min) / 2
             volatility = round(((price_max - price_min) / half_sum) * 100, 2)
             if volatility > 0:
+                # TODO плохо что класс работает с переменными из глобальной области неявно - передавайте их объекту при
+                #  его создании (т.е. через параметры метода __init__)
                 volatility_dict[secid] = volatility
             else:
                 zero_volatility.append(secid)
@@ -72,6 +74,8 @@ def measure_volatility():
     print('Минимальная волатильность:')
     for ticker, volatility in order_of_volatility[-1:-4:-1]:
         print(f'{ticker} {volatility} %')
+    # TODO Если сделать вывод минимальных волатильностей согласно заданию (цитата: Волатильности указывать в порядке
+    #  убывания.), то срез будет проще
     print('Нулевая волатильность:')
     print(', '.join(zero_volatility))
 
