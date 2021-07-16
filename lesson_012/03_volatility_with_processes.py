@@ -66,7 +66,7 @@ def measure_volatility():
     for ticker, volatility in order_of_volatility[:3]:
         print(f'{ticker} {volatility} %')
     print('Минимальная волатильность:')
-    for ticker, volatility in order_of_volatility[-1:-4:-1]:
+    for ticker, volatility in order_of_volatility[-3:]:
         print(f'{ticker} {volatility} %')
     print('Нулевая волатильность:')
     print(', '.join(zero_volatility))

@@ -29,6 +29,8 @@ class Trader(Thread):
         super().__init__()
         self.path = path
         self.data = None
+        self.secid = None
+        self.volatility = None
 
     def run(self):
         with open(self.path) as file:
@@ -46,10 +48,8 @@ class Trader(Thread):
                     price_max = price
             half_sum = (price_max + price_min) / 2
             volatility = round(((price_max - price_min) / half_sum) * 100, 2)
-            if volatility > 0:
-                self.data = [secid, volatility]
-            else:
-                self.data = secid
+            self.secid = secid
+            self.volatility = volatility
 
 
 def get_path_list(path):
@@ -86,13 +86,10 @@ def tickers_files(path):
     tickers = [Trader(file) for file in get_path_list(path)]
     trader_run(tickers)
     for ticker in tickers:
-        if type(ticker.data) is list:
-            volatility_dict[ticker.data[0]] = ticker.data[1]  # TODO можно и так, но тогда лучше в классе завести два
-                                                              #  атрибута - имя_тикера и волательность, для наглядности
-                                                              #  кода. А мой вариант был - передавать создаваемому
-                                                              #  объекту глобальные переменные через параметры __init__
+        if ticker.volatility > 0:
+            volatility_dict[ticker.secid] = ticker.volatility
         else:
-            zero_volatility.append(ticker.data)
+            zero_volatility.append(ticker.secid)
     measure_volatility(volatility_dict, zero_volatility)
 
 
