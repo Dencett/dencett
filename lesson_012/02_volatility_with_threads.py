@@ -87,7 +87,10 @@ def tickers_files(path):
     trader_run(tickers)
     for ticker in tickers:
         if type(ticker.data) is list:
-            volatility_dict[ticker.data[0]] = ticker.data[1]
+            volatility_dict[ticker.data[0]] = ticker.data[1]  # TODO можно и так, но тогда лучше в классе завести два
+                                                              #  атрибута - имя_тикера и волательность, для наглядности
+                                                              #  кода. А мой вариант был - передавать создаваемому
+                                                              #  объекту глобальные переменные через параметры __init__
         else:
             zero_volatility.append(ticker.data)
     measure_volatility(volatility_dict, zero_volatility)
