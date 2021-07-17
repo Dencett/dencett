@@ -94,3 +94,5 @@ def tickers_files(path):
 
 if __name__ == '__main__':
     tickers_files('trades')
+
+# зачет!
