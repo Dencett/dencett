@@ -11,21 +11,19 @@
 import os
 from PIL import Image, ImageDraw, ImageFont, ImageColor
 
-ticker = os.path.join('images', 'ticket_template.png')
-font_path = 'ofont.ru_Roboto.ttf'
-# TODO 1) билет это ticket ;)
-#  2) имена констант пишутся большими буквами
+TICKET = os.path.join('images', 'ticket_template.png')
+FONT_PATH = 'ofont.ru_Roboto.ttf'
+FILLED_TICKET = 'ticker.png'
 
 
 def make_ticket(fio, from_, to, date):
-    image = Image.open(ticker)
+    image = Image.open(TICKET)
     draw = ImageDraw.Draw(image)
-    font = ImageFont.truetype(font_path, size=14)
+    font = ImageFont.truetype(FONT_PATH, size=14)
     data_dict = {fio: (50, 125), from_: (50, 194), to: (50, 260), date: (285, 260)}  # отлично!
     for data, location in data_dict.items():
         draw.text(location, data.upper(), font=font, fill=ImageColor.colormap['black'])
-    image.save('ticker.png')
-    # TODO имя файла также присвойте отдельной константе
+    image.save(FILLED_TICKET)
 
 
 if __name__ == '__main__':
