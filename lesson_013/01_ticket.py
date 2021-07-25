@@ -55,7 +55,7 @@ FILLED_TICKET = 'ticker.png'
 #         draw.text(location, data.upper(), font=font, fill=ImageColor.colormap['black'])
 #     image.save(save_to)
 
-def createParser():
+def createParser():  # TODO имя функции пишут только маленькими буквами с подчёркиванием между словами
     parser = argparse.ArgumentParser()
     parser.add_argument('fio')
     parser.add_argument('from_')
