@@ -46,16 +46,17 @@ FILLED_TICKET = 'ticker.png'
 #   --save_to - необязательный, путь для сохранения заполненнего билета.
 # и заполнять билет.
 
-# def make_ticket(fio, from_, to, date, save_to):
-#     image = Image.open(TICKET)
-#     draw = ImageDraw.Draw(image)
-#     font = ImageFont.truetype(FONT_PATH, size=14)
-#     data_dict = {fio: (50, 125), from_: (50, 194), to: (50, 260), date: (285, 260)}  # отлично!
-#     for data, location in data_dict.items():
-#         draw.text(location, data.upper(), font=font, fill=ImageColor.colormap['black'])
-#     image.save(save_to)
+def make_ticket(fio, from_, to, date, save_to):
+    image = Image.open(TICKET)
+    draw = ImageDraw.Draw(image)
+    font = ImageFont.truetype(FONT_PATH, size=14)
+    data_dict = {fio: (50, 125), from_: (50, 194), to: (50, 260), date: (285, 260)}  # отлично!
+    for data, location in data_dict.items():
+        draw.text(location, data.upper(), font=font, fill=ImageColor.colormap['black'])
+    image.save(save_to)
 
-def createParser():  # TODO имя функции пишут только маленькими буквами с подчёркиванием между словами
+
+def create_parser():
     parser = argparse.ArgumentParser()
     parser.add_argument('fio')
     parser.add_argument('from_')
@@ -66,6 +67,6 @@ def createParser():  # TODO имя функции пишут только мал
 
 
 if __name__ == '__main__':
-    parser = createParser()
+    parser = create_parser()
     ticket_parser = parser.parse_args()
-    print(ticket_parser.fio, ticket_parser.from_, ticket_parser.to, ticket_parser.date, ticket_parser.save_to)
+    make_ticket(ticket_parser.fio, ticket_parser.from_, ticket_parser.to, ticket_parser.date, ticket_parser.save_to)
