@@ -1,4 +1,4 @@
-# import chatbot.keys as cb
+from keys import TOKEN
 import vk_api
 from vk_api import bot_longpoll
 import random
@@ -27,6 +27,6 @@ class Bot:  # TODO РЕР 8 поправьте
             print('Мы пока не можем обрабатывать событие такого типа: ', event.type)
 
 
-# if __name__ == '__main__':
-#     bot = Bot(cb.group_id, cb.token)
-#     bot.run()
+if __name__ == '__main__':
+    bot = Bot(cb.group_id, TOKEN)
+    bot.run()
