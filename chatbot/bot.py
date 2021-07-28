@@ -3,7 +3,7 @@ import vk_api
 from vk_api import bot_longpoll
 import random
 
-class Bot:
+class Bot:  # TODO РЕР 8 поправьте
 
     def __init__(self, group_id, token):
         self.group_id = group_id
