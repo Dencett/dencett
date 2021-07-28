@@ -70,3 +70,5 @@ if __name__ == '__main__':
     parser = create_parser()
     ticket_parser = parser.parse_args()
     make_ticket(ticket_parser.fio, ticket_parser.from_, ticket_parser.to, ticket_parser.date, ticket_parser.save_to)
+
+# зачет!
