@@ -39,7 +39,7 @@ import argparse
 def create_parser():
     parser = argparse.ArgumentParser()
     parser.add_argument('result_1')
-    parser.add_argument('result_2')
+    parser.add_argument('result_2')  # TODO Достаточно одного
     return parser
 
 
@@ -56,3 +56,7 @@ if __name__ == '__main__':
 # При написании кода помнить, что заказчик может захотеть доработок и новых возможностей...
 # И, возможно, вам пригодится паттерн проектирования "Состояние",
 #   см https://clck.ru/Fudd8 и https://refactoring.guru/ru/design-patterns/state
+
+# TODO 1) сумма очков фрейма записанная цифрами не может быть больше 9, так как в этом случае должно быть spare (пример:
+#  55 - не верно, верно 5/)
+#  2)
