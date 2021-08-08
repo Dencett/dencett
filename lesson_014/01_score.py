@@ -38,25 +38,18 @@ import argparse
 
 def create_parser():
     parser = argparse.ArgumentParser()
-    parser.add_argument('result_1')
-    parser.add_argument('result_2')  # TODO Достаточно одного
+    parser.add_argument('result')
     return parser
 
 
 if __name__ == '__main__':
     parser = create_parser()
     frame_parser = parser.parse_args()
-    bowling_1 = Bowling(frame_parser.result_1)
-    bowling_2 = Bowling(frame_parser.result_2)
-    result_1 = bowling_1.gets_score()
-    result_2 = bowling_2.gets_score()
-    print(f"Количество очков для результатов {result_1} - {result_2}.")
+    bowling = Bowling(frame_parser.result)
+    result = bowling.gets_score()
+    print(f"Количество очков для результатов ({frame_parser.result}) - {result}.")
 
 
 # При написании кода помнить, что заказчик может захотеть доработок и новых возможностей...
 # И, возможно, вам пригодится паттерн проектирования "Состояние",
 #   см https://clck.ru/Fudd8 и https://refactoring.guru/ru/design-patterns/state
-
-# TODO 1) сумма очков фрейма записанная цифрами не может быть больше 9, так как в этом случае должно быть spare (пример:
-#  55 - не верно, верно 5/)
-#  2)
