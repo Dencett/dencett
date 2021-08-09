@@ -17,6 +17,8 @@ class FirstThrow(State):
             return 0
         elif element.isdigit():
             return int(element)
+        # TODO также тут можно добавить проверку на символ spare и если таковой попадётся - выбрасывать исключение.
+        #  Аналогично во ВторомБроске со страйком
 
 
 class SecondThrow(State):
