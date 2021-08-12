@@ -1,1 +1,4 @@
 keys.py
+settings.py
+__pycache__
+*.log
