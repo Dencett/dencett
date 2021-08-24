@@ -93,10 +93,168 @@
 # и так далее...
 
 
+from decimal import Decimal
+import json
+import re
+import csv
+import datetime
+
 remaining_time = '123456.0987654321'
 # если изначально не писать число в виде строки - теряется точность!
 field_names = ['current_location', 'current_experience', 'current_date']
+csv_data = []
 
-# TODO тут ваш код
+
+def process_a_string(line):
+    if type(line) is dict:
+        for key in line.keys():
+            # print(re.search(r'[0-9A-Za-z]+', k)[0])
+            tm_line = (re.search(r'tm\d+', key)[0])
+            tm = (re.search(r'\d+', tm_line)[0])
+            return tm
+    else:
+        # print(re.search(r'[0-9A-Za-z]+', ks)[0])
+        exp_line = (re.search(r'exp\d+', line)[0])
+        exp = (re.search(r'\d+', exp_line)[0])
+        tm_line = (re.search(r'tm\d+', line)[0])
+        tm = re.search(r'\d+', tm_line)[0]
+        return exp, tm
+
+
+def add_information_to_csv_file(current_location, current_experience):
+    current_date = datetime.datetime.now().strftime("%d.%m.%Y %H:%M:%S")
+    csv_data.append({field_names[0]: current_location,
+                     field_names[1]: current_experience,
+                     field_names[2]: current_date
+                     })
+
+
+class Dungeon:
+
+    def __init__(self, locations, remaining_time):
+        self.locations = locations
+        self.choice = 0
+        self.choice_dict = {}
+        self.locations_list = []
+        self.location_name = None
+        self.experience = Decimal('0')
+        self.revival = False
+        self.game_over = 'game_over'
+        self.gameplay = True
+        self.remaining_time = Decimal(remaining_time)
+        self.elapsed_time = 0
+
+    def get_started(self):
+        for location in self.locations.keys():
+            self.location_name = location
+        for key in self.locations.keys():
+            self.locations_list = self.locations[key]
+        print(self.location_name)
+        self.revival = False
+        self.remaining_time = Decimal(remaining_time)
+        self.experience = Decimal('0')
+
+    def explore_location(self):
+        print(f'Вы находитесь в {self.location_name}')
+        print(f'У вас {self.experience} опыта и осталось {self.remaining_time} секунд до наводнения')
+        print(f'Прошло уже {datetime.timedelta(seconds=self.elapsed_time)}\n')
+        if self.remaining_time <= 0:
+            print('-----------------------------------\n'
+                  'Вы не успели открыть люк!!! НАВОДНЕНИЕ!!!')
+            self.resurrect()
+
+    def consider_actions(self):
+        print('Внутри вы видите:')
+        for loc in self.locations_list:
+            if type(loc) is dict:
+                self.choice_dict[str(self.choice)] = loc
+                for loc_name in loc.keys():
+                    print(f'- Вход в локацию {loc_name} ')
+            else:
+                self.choice_dict[str(self.choice)] = loc
+                print(f'- Монстра {loc}')
+        print('\nВыберите действие:')
+        for loc in self.locations_list:
+            self.choice += 1
+            if type(loc) is dict:
+                self.choice_dict[str(self.choice)] = loc
+                for key in loc:
+                    print(f'{self.choice}. Перейти в локацию {key} ')
+            else:
+                self.choice_dict[str(self.choice)] = loc
+                print(f'{self.choice}. Убить монстра {loc}')
+        self.choice += 1
+        self.choice_dict[str(self.choice)] = self.game_over
+        print(f'{self.choice}. Сдаться и выйти из игры')
+        self.choice = 0
+
+    def choose_action(self, solution):
+        if solution not in self.choice_dict.keys():
+            print('Выберите заново')
+        else:
+            for choice_key in self.choice_dict.keys():
+                if solution == choice_key:
+                    if type(self.choice_dict[choice_key]) is dict:
+                        for key in self.choice_dict[choice_key].keys():
+                            self.location_name = key
+                            tm = process_a_string(self.choice_dict[choice_key])
+                            self.remaining_time -= Decimal(tm)
+                            self.elapsed_time += float(tm)
+                            print('-----------------------------------')
+                            print(f'Вы перешли в локацию {key}!')
+                            self.locations_list = self.choice_dict[choice_key][key]
+                            if self.locations_list == "You are winner":
+                                if self.experience < 280:
+                                    print('-----------------------------------\n'
+                                          'Увы, Вам не хватает опыта для открытия люка')
+                                    self.resurrect()
+                                else:
+                                    print('Ура, Вы выбрались')
+                                    self.gameplay = False
+                        add_information_to_csv_file(self.location_name, self.experience)
+                    elif self.choice_dict[choice_key] == self.game_over:
+                        self.gameplay = False
+                    else:
+                        print('-----------------------------------')
+                        print('Вы убили монстра!')
+                        exp, tm = process_a_string(self.choice_dict[choice_key])
+                        self.experience += Decimal(exp)
+                        self.remaining_time -= Decimal(tm)
+                        self.elapsed_time += float(tm)
+                        self.locations_list.remove(self.choice_dict[choice_key])
+
+    def resurrect(self):
+        print('Вы теряете сознания!\n'
+              'Приходите в сознание и видите, что вы в начале пещеры!\n'
+              'Ну, на этот-то раз у вас все получится!\n'
+              'Вы осторожно входите в пещеру.\n'
+              '-----------------------------------')
+        self.revival = True
+
+
+with open('rpg.json', 'r') as json_file:
+    locations_dict = json.load(json_file)
+    dungeon = Dungeon(locations_dict, remaining_time)
+    while True:
+        if dungeon.gameplay is False:
+            break
+        dungeon.get_started()
+        while True:
+            if dungeon.revival is True:
+                break
+            dungeon.explore_location()
+            if dungeon.revival is True:
+                break
+            dungeon.consider_actions()
+            solution = input('Ваш выбор: ')
+            dungeon.choose_action(solution)
+            if dungeon.gameplay is False:
+                break
+
+
+with open('dungeon.csv', 'w') as csv_file:
+    writer = csv.DictWriter(csv_file, fieldnames=field_names)
+    writer.writeheader()
+    writer.writerows(csv_data)
 
 # Учитывая время и опыт, не забывайте о точности вычислений!
