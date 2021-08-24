@@ -95,7 +95,7 @@ class Test1(TestCase):
     def test_run_ok(self):
         send_mock = Mock()
         api_mock = Mock()
-        api_mock.message.send = send_mock
+        api_mock.message.send = send_mock  # TODO Опечатка, должно быть messages
 
         events = []
         for input_text in self.INPUTS:
