@@ -102,7 +102,9 @@ import datetime
 remaining_time = '123456.0987654321'
 # если изначально не писать число в виде строки - теряется точность!
 field_names = ['current_location', 'current_experience', 'current_date']
-csv_data = []
+# TODO имена констант пишутся большими буквами
+
+csv_data = []  # TODO переменную перенесите к основному коду
 
 
 def process_a_string(line):
@@ -188,7 +190,9 @@ class Dungeon:
         print(f'{self.choice}. Сдаться и выйти из игры')
         self.choice = 0
 
-    def choose_action(self, solution):
+    def choose_action(self, solution):  # TODO Проведите декомпозицию этого метода - выделите логически не делимые части
+                                        #  и вынесите их код в отдельные методы. Например: "переход в локацию",
+                                        #  "окончание игры", "вывод статуса" и т.п.
         if solution not in self.choice_dict.keys():
             print('Выберите заново')
         else:
@@ -253,6 +257,13 @@ with open('rpg.json', 'r') as json_file:
 
 
 with open('dungeon.csv', 'w') as csv_file:
+    # TODO (наверное повторно) Имена файлов надо присваивать константам и использовать в основном коде только их.
+    #  Имена констант пишутся большими буквами. Располагают константы в начале модуля, сразу после
+    #  импортов сторонних модулей.
+    #  Может возникнуть необходимость изменить имя файла и через константу это делать удобнее - константа это
+    #  единое место изменения, а примениться она может во многих местах. Поэтому вверху её легко найти для изменения
+    #  без необходимости перелопачивания кода проекта.
+
     writer = csv.DictWriter(csv_file, fieldnames=field_names)
     writer.writeheader()
     writer.writerows(csv_data)
