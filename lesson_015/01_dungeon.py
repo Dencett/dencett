@@ -99,12 +99,11 @@ import re
 import csv
 import datetime
 
-remaining_time = '123456.0987654321'
-# если изначально не писать число в виде строки - теряется точность!
-field_names = ['current_location', 'current_experience', 'current_date']
-# TODO имена констант пишутся большими буквами
 
-csv_data = []  # TODO переменную перенесите к основному коду
+REMAINING_TIME = '123456.0987654321'
+# если изначально не писать число в виде строки - теряется точность!
+FIELD_NAMES = ['current_location', 'current_experience', 'current_date']
+FILE_CSV = 'dungeon.csv'
 
 
 def process_a_string(line):
@@ -123,17 +122,18 @@ def process_a_string(line):
         return exp, tm
 
 
-def add_information_to_csv_file(current_location, current_experience):
+def add_information_to_csv_file(current_location, current_experience, csv_data):
     current_date = datetime.datetime.now().strftime("%d.%m.%Y %H:%M:%S")
-    csv_data.append({field_names[0]: current_location,
-                     field_names[1]: current_experience,
-                     field_names[2]: current_date
+    csv_data.append({FIELD_NAMES[0]: current_location,
+                     FIELD_NAMES[1]: current_experience,
+                     FIELD_NAMES[2]: current_date
                      })
 
 
 class Dungeon:
 
-    def __init__(self, locations, remaining_time):
+    def __init__(self, locations, remaining_time, csv_data):
+        self.csv_data = csv_data
         self.locations = locations
         self.choice = 0
         self.choice_dict = {}
@@ -153,7 +153,7 @@ class Dungeon:
             self.locations_list = self.locations[key]
         print(self.location_name)
         self.revival = False
-        self.remaining_time = Decimal(remaining_time)
+        self.remaining_time = Decimal(REMAINING_TIME)
         self.experience = Decimal('0')
 
     def explore_location(self):
@@ -190,42 +190,46 @@ class Dungeon:
         print(f'{self.choice}. Сдаться и выйти из игры')
         self.choice = 0
 
-    def choose_action(self, solution):  # TODO Проведите декомпозицию этого метода - выделите логически не делимые части
-                                        #  и вынесите их код в отдельные методы. Например: "переход в локацию",
-                                        #  "окончание игры", "вывод статуса" и т.п.
+    def choose_action(self, solution):
         if solution not in self.choice_dict.keys():
             print('Выберите заново')
         else:
             for choice_key in self.choice_dict.keys():
                 if solution == choice_key:
                     if type(self.choice_dict[choice_key]) is dict:
-                        for key in self.choice_dict[choice_key].keys():
-                            self.location_name = key
-                            tm = process_a_string(self.choice_dict[choice_key])
-                            self.remaining_time -= Decimal(tm)
-                            self.elapsed_time += float(tm)
-                            print('-----------------------------------')
-                            print(f'Вы перешли в локацию {key}!')
-                            self.locations_list = self.choice_dict[choice_key][key]
-                            if self.locations_list == "You are winner":
-                                if self.experience < 280:
-                                    print('-----------------------------------\n'
-                                          'Увы, Вам не хватает опыта для открытия люка')
-                                    self.resurrect()
-                                else:
-                                    print('Ура, Вы выбрались')
-                                    self.gameplay = False
-                        add_information_to_csv_file(self.location_name, self.experience)
+                        self.go_to_location(choice_key)
                     elif self.choice_dict[choice_key] == self.game_over:
                         self.gameplay = False
                     else:
-                        print('-----------------------------------')
-                        print('Вы убили монстра!')
-                        exp, tm = process_a_string(self.choice_dict[choice_key])
-                        self.experience += Decimal(exp)
-                        self.remaining_time -= Decimal(tm)
-                        self.elapsed_time += float(tm)
-                        self.locations_list.remove(self.choice_dict[choice_key])
+                        self.kill_the_monster(choice_key)
+
+    def go_to_location(self, choice_key):
+        for key in self.choice_dict[choice_key].keys():
+            self.location_name = key
+            tm = process_a_string(self.choice_dict[choice_key])
+            self.remaining_time -= Decimal(tm)
+            self.elapsed_time += float(tm)
+            print('-----------------------------------')
+            print(f'Вы перешли в локацию {key}!')
+            self.locations_list = self.choice_dict[choice_key][key]
+            if self.locations_list == "You are winner":
+                if self.experience < 280:
+                    print('-----------------------------------\n'
+                          'Увы, Вам не хватает опыта для открытия люка')
+                    self.resurrect()
+                else:
+                    print('Ура, Вы выбрались')
+                    self.gameplay = False
+        add_information_to_csv_file(self.location_name, self.experience, self.csv_data)
+
+    def kill_the_monster(self, choice_key):
+        print('-----------------------------------')
+        print('Вы убили монстра!')
+        exp, tm = process_a_string(self.choice_dict[choice_key])
+        self.experience += Decimal(exp)
+        self.remaining_time -= Decimal(tm)
+        self.elapsed_time += float(tm)
+        self.locations_list.remove(self.choice_dict[choice_key])
 
     def resurrect(self):
         print('Вы теряете сознания!\n'
@@ -236,9 +240,11 @@ class Dungeon:
         self.revival = True
 
 
+csv_data = []
+
 with open('rpg.json', 'r') as json_file:
     locations_dict = json.load(json_file)
-    dungeon = Dungeon(locations_dict, remaining_time)
+    dungeon = Dungeon(locations_dict, REMAINING_TIME, csv_data)
     while True:
         if dungeon.gameplay is False:
             break
@@ -256,15 +262,8 @@ with open('rpg.json', 'r') as json_file:
                 break
 
 
-with open('dungeon.csv', 'w') as csv_file:
-    # TODO (наверное повторно) Имена файлов надо присваивать константам и использовать в основном коде только их.
-    #  Имена констант пишутся большими буквами. Располагают константы в начале модуля, сразу после
-    #  импортов сторонних модулей.
-    #  Может возникнуть необходимость изменить имя файла и через константу это делать удобнее - константа это
-    #  единое место изменения, а примениться она может во многих местах. Поэтому вверху её легко найти для изменения
-    #  без необходимости перелопачивания кода проекта.
-
-    writer = csv.DictWriter(csv_file, fieldnames=field_names)
+with open(FILE_CSV, 'w') as csv_file:
+    writer = csv.DictWriter(csv_file, fieldnames=FIELD_NAMES)
     writer.writeheader()
     writer.writerows(csv_data)
 
