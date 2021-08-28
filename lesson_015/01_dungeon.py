@@ -268,3 +268,5 @@ with open(FILE_CSV, 'w') as csv_file:
     writer.writerows(csv_data)
 
 # Учитывая время и опыт, не забывайте о точности вычислений!
+
+# зачет!
