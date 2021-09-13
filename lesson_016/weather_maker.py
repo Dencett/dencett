@@ -58,7 +58,7 @@ weather_by_day = {
 class WeatherMaker:
 
     def __init__(self):
-        self.url = 'https://pogoda.mail.ru/prognoz/moskva/'
+        self.url = 'https://pogoda.mail.ru/prognoz/moskva/'  # TODO вынесите урл в константу
         self.weather_list = []
         self.weather_by_day = weather_by_day
 

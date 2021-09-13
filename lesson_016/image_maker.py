@@ -72,10 +72,10 @@ class ImageMaker:
         cv2.imwrite(os.path.join(FILES_IMAGE, f'weather_{self.date}.jpg'), new_image)
 
     def draw_cloudy(self, image_draw):
-        x = 255
+        x = 255  # TODO сделайте константы для применяемых кортежей координат и тут присваивайте распаковкой в одну строку
         y = 255
         z = 255
-        for width_pixel in range(self.width):
+        for width_pixel in range(self.width):  # TODO стоит придумать одну универсальную функцию для рисования
             if width_pixel in range(150):
                 cv2.line(self.image, (width_pixel, 0), (width_pixel, self.height), (x, y, z), 1)
             elif width_pixel >= 150:
@@ -137,6 +137,8 @@ class ImageMaker:
 
     def draw_degree(self, degree_number, indent):
         if degree_number == '0':
+            # TODO эти две строки кода ниже дублируются за исключением окончания, вот его тут и определяйте, а обе
+            #  строки вынесите из условного оператора
             degrees_text = f'{degree_number} градусов Цельсия'
             self.draw_text(degrees_text, indent)
         elif int(degree_number[1:]) in range(10, 21):
@@ -153,6 +155,20 @@ class ImageMaker:
             self.draw_text(degrees_text, indent)
 
     def draw_image(self, weather_data):
+        # TODO попробуйте сделать такую структуру для того чтобы не дублировать код:
+        # weather_funcs = {
+        #     self.cloudy: (self.draw_cloudy, self.cloud_image),
+        #     self.rain: (self.draw_rain, self.rain_image),
+        #     ...
+        # }
+        # напросок варианта использования
+        # for wf in weather_funcs:
+        #     weather_name = set(wf) & set(weather_data['weather_for_the_day'])
+        #     if set(wf) & set(weather_data['weather_for_the_day']):
+        #         func, img = weather_funcs[wf]
+        #         func(img)
+        #         self.draw_current_weather(list(weather_name)[0])
+
         lack_of_text = True
         if lack_of_text:
             for weather_name in self.cloudy:
