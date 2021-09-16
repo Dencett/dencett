@@ -3,7 +3,7 @@ import lxml.html
 import re
 import datetime
 
-# URL = 'https://pogoda.mail.ru/prognoz/moskva/'
+URL = 'https://pogoda.mail.ru/prognoz/moskva/'
 
 re_degree = re.compile(r'[-+]?[\d]+')
 re_weather = re.compile(r'[а-я]+')
@@ -58,7 +58,7 @@ weather_by_day = {
 class WeatherMaker:
 
     def __init__(self):
-        self.url = 'https://pogoda.mail.ru/prognoz/moskva/'  # TODO вынесите урл в константу
+        self.url = URL
         self.weather_list = []
         self.weather_by_day = weather_by_day
 
@@ -86,5 +86,5 @@ class WeatherMaker:
 
 
 # weather_maker = WeatherMaker()
-# print(weather_maker.get_forecast())
+# print(weather_maker.get_forecast()[0]['weather_for_the_day'].split())
 # .strftime('%d.%m.%Y')
