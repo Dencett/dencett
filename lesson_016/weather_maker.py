@@ -77,14 +77,11 @@ class WeatherMaker:
             night_temperature = re.findall(re_degree, ''.join(html_night_temperature))
             weather_for_the_day = re.findall(re_weather, ''.join(html_weather_for_the_day))
             self.weather_list.append(
-                {'daytime_temperature': daytime_temperature[0],
+                {'date': self.weather_by_day[day]['date'],
+                 'daytime_temperature': daytime_temperature[0],
                  'night_temperature': night_temperature[0],
-                 'weather_for_the_day': ' '.join(weather_for_the_day),
-                 'date': self.weather_by_day[day]['date']}
+                 'weather_for_the_day': ' '.join(weather_for_the_day)}
             )
         return self.weather_list
 
 
-# weather_maker = WeatherMaker()
-# print(weather_maker.get_forecast()[0]['weather_for_the_day'].split())
-# .strftime('%d.%m.%Y')
