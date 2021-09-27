@@ -1,5 +1,6 @@
 import cv2
 from weather_maker import WeatherMaker
+from database_updater import DatabaseUpdater
 import os
 import requests
 
@@ -154,7 +155,4 @@ class ImageMaker:
         self.draw_text_date(weather_data['date'].strftime('%d.%m.%Y'))
 
 
-weathermaker = WeatherMaker()
-imagemaker = ImageMaker(weathermaker.get_forecast())
-imagemaker.get_image()
 
